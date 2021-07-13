@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:schedule_task/addTicketsPage.dart';
 import 'package:schedule_task/allTicketsPage.dart';
 import 'package:schedule_task/dashboardPage.dart';
 import 'package:schedule_task/myTicketsPage.dart';
+import 'package:schedule_task/widget/addTickets.dart';
 
 class SideBar extends StatelessWidget {
   const SideBar({
@@ -35,6 +37,10 @@ class SideBar extends StatelessWidget {
                       tooltip: 'All Ticket',
                       ico: Icons.list_alt,
                       page: AllTicketsPage()),
+                  Menu(
+                      tooltip: 'Add Ticket',
+                      ico: Icons.add,
+                      page: AddTicketsPage()),
                 ],
               ),
             ),
