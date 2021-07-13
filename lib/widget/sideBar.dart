@@ -90,11 +90,14 @@ class Menu extends StatelessWidget {
         onTap: () {
           Get.off(page);
         },
-        child: Container(
-          margin: EdgeInsets.only(top: 45),
-          width: 25,
-          height: 25,
-          child: Icon(ico, color: Color.fromRGBO(190, 202, 230, 1)),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Container(
+            margin: EdgeInsets.only(top: 45),
+            width: 25,
+            height: 25,
+            child: Icon(ico, color: Color.fromRGBO(190, 202, 230, 1)),
+          ),
         ),
       ),
     );
