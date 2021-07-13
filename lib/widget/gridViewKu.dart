@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
-class GridViewKu extends StatelessWidget {
+class GridViewKu extends StatefulWidget {
   const GridViewKu({Key? key, required this.cntData}) : super(key: key);
 
   final cntData;
+
+  @override
+  _GridViewKuState createState() => _GridViewKuState();
+}
+
+class _GridViewKuState extends State<GridViewKu> {
+  bool isHovering = false;
+  bool isCheckboxShow = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +32,9 @@ class GridViewKu extends StatelessWidget {
             padding: EdgeInsets.only(left: 15, right: 15),
             color: Color.fromRGBO(241, 245, 250, 1),
             child: Row(children: [
-              Checkbox(value: false, onChanged: (val) {}),
+              Visibility(
+                  visible: isCheckboxShow,
+                  child: Checkbox(value: false, onChanged: (val) {})),
               Container(
                   margin: EdgeInsets.only(left: 30),
                   width: 80,
@@ -55,34 +65,45 @@ class GridViewKu extends StatelessWidget {
             child: ListView.separated(
                 padding: EdgeInsets.only(top: 5),
                 itemBuilder: (context, i) => Container(
-                    height: 40,
-                    padding: EdgeInsets.only(left: 15, right: 15),
-                    child: Row(children: [
-                      Checkbox(value: false, onChanged: (val) {}),
-                      Container(
-                          margin: EdgeInsets.only(left: 30),
-                          width: 80,
-                          child: Text('#$i',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(48, 62, 103, 1),
-                                  fontFamily: 'Poppins',
-                                  fontSize: 13))),
-                      DataKu(width: 70, content: 'PIC'),
-                      Expanded(
-                          child: Container(
-                              margin: EdgeInsets.only(left: 70),
-                              child: Text('Subject',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(48, 62, 103, 1),
-                                      fontFamily: 'Poppins',
-                                      fontSize: 13)))),
-                      DataKu(width: 150, content: 'Priority'),
-                      DataKu(width: 150, content: 'Status'),
-                      DataKu(width: 150, content: 'Support by'),
-                      DataKu(width: 150, content: 'Response Time'),
-                    ])),
+                      height: 40,
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Container(
+                          color: Colors.white,
+                          child: Row(children: [
+                            Visibility(
+                                visible: isCheckboxShow,
+                                child: Checkbox(
+                                    value: false, onChanged: (val) {})),
+                            Container(
+                                margin: EdgeInsets.only(left: 30),
+                                width: 80,
+                                child: Text('#$i',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(48, 62, 103, 1),
+                                        fontFamily: 'Poppins',
+                                        fontSize: 13))),
+                            DataKu(width: 70, content: 'PIC'),
+                            Expanded(
+                                child: Container(
+                                    margin: EdgeInsets.only(left: 70),
+                                    child: Text('Subject',
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(48, 62, 103, 1),
+                                            fontFamily: 'Poppins',
+                                            fontSize: 13)))),
+                            DataKu(width: 150, content: 'Priority'),
+                            DataKu(width: 150, content: 'Status'),
+                            DataKu(width: 150, content: 'Support by'),
+                            DataKu(width: 150, content: 'Response Time'),
+                          ]),
+                        ),
+                      ),
+                    ),
                 separatorBuilder: (context, i) => Divider(),
-                itemCount: cntData),
+                itemCount: widget.cntData),
           ),
         )
       ],
