@@ -39,7 +39,7 @@ class _AddTicketsPageState extends State<AddTicketsPage> {
                             elevation: 3,
                             child: Container(
                                 padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-                                height: 600,
+                                height: 360,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(5)),

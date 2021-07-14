@@ -165,11 +165,12 @@ class ShowEntries extends StatelessWidget {
                 fontSize: 13)),
         SizedBox(width: 5),
         SizedBox(
-          height: 35,
+          height: 40,
           width: 60,
           child: TextField(
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
+              style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(left: 10, right: 10),
                   border: OutlineInputBorder(
@@ -194,26 +195,25 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Row(
-        children: [
-          Text('Search',
-              style: TextStyle(
-                  color: Color.fromRGBO(101, 109, 154, 1),
-                  fontFamily: 'Poppins',
-                  fontSize: 13)),
-          SizedBox(width: 5),
-          SizedBox(
-              height: 35,
-              width: 200,
-              child: TextField(
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 10, right: 10),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(233, 236, 239, 1))))))
-        ],
-      ),
+    return Row(
+      children: [
+        Text('Search',
+            style: TextStyle(
+                color: Color.fromRGBO(101, 109, 154, 1),
+                fontFamily: 'Poppins',
+                fontSize: 13)),
+        SizedBox(width: 10),
+        SizedBox(
+            height: 40,
+            width: 200,
+            child: TextField(
+                style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 10, right: 10),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromRGBO(233, 236, 239, 1))))))
+      ],
     );
   }
 }
