@@ -93,7 +93,7 @@ class Menu extends StatelessWidget {
           fontWeight: FontWeight.w600),
       child: GestureDetector(
         onTap: () {
-          Get.off(page);
+          Get.off(page, transition: Transition.noTransition);
         },
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
