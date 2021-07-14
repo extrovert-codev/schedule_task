@@ -54,7 +54,7 @@ class AddTickets extends StatelessWidget {
                 },
                 child: Button(label: 'Save', color: Colors.green)),
             SizedBox(width: 10),
-            Button(label: 'Delete', color: Colors.red)
+            // Button(label: 'Delete', color: Colors.red)
           ],
         )
       ],
