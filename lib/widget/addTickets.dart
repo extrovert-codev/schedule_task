@@ -41,7 +41,18 @@ class AddTickets extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Button(label: 'Save', color: Colors.green),
+            GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: Container(
+                              height: 100, width: 100, color: Colors.white),
+                        );
+                      });
+                },
+                child: Button(label: 'Save', color: Colors.green)),
             SizedBox(width: 10),
             Button(label: 'Delete', color: Colors.red)
           ],
