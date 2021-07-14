@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:schedule_task/dashboardPage.dart';
+import 'package:schedule_task/addTicketsPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,6 +10,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false, home: DashboardPage());
+        debugShowCheckedModeBanner: false, home: AddTicketsPage());
   }
 }

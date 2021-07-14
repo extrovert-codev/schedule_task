@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_task/Widget/sideBar.dart';
-import 'package:schedule_task/widget/gridViewKu.dart';
+import 'package:schedule_task/widget/addTickets.dart';
 import 'package:schedule_task/widget/topBar.dart';
 
 class AddTicketsPage extends StatefulWidget {
@@ -50,7 +50,7 @@ class _AddTicketsPageState extends State<AddTicketsPage> {
                                       SizedBox(height: 18),
                                       Expanded(
                                           child: Container(
-                                        child: GridViewKu(cntData: 2),
+                                        child: AddTickets(),
                                       ))
                                     ])),
                           ),
