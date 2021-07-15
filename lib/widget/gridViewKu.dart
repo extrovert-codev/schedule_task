@@ -173,9 +173,7 @@ class ShowEntries extends StatelessWidget {
               style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(left: 10, right: 10),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromRGBO(233, 236, 239, 1))))),
+                  border: OutlineInputBorder())),
         ),
         SizedBox(width: 5),
         Text('entires',
@@ -210,9 +208,7 @@ class Search extends StatelessWidget {
                 style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(left: 10, right: 10),
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(233, 236, 239, 1))))))
+                    border: OutlineInputBorder())))
       ],
     );
   }

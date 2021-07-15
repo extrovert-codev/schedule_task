@@ -12,7 +12,7 @@ class MDIPage extends StatefulWidget {
 }
 
 class _MDIPageState extends State<MDIPage> {
-  Widget pageSelected = HomePage();
+  Widget pageSelected = AddTicketsPage();
 
   @override
   Widget build(BuildContext context) {
@@ -22,84 +22,11 @@ class _MDIPageState extends State<MDIPage> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 70,
-                color: Color.fromRGBO(80, 110, 228, 1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 15, bottom: 30),
-                              width: 50,
-                              height: 50,
-                              child: Image.asset('images/Trisco.png',
-                                  fit: BoxFit.fill),
-                            ),
-                            menu('Home', Icons.home, HomePage()),
-                            menu('My Ticket', Icons.list, MyTicketsPage()),
-                            menu(
-                                'All Ticket', Icons.list_alt, AllTicketsPage()),
-                            menu('Add Ticket', Icons.add, AddTicketsPage()),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      child: Column(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(bottom: 25),
-                              width: 25,
-                              height: 25,
-                              child: Icon(Icons.chat_rounded,
-                                  color: Color.fromRGBO(190, 202, 230, 1))),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(100)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              sideBar(),
               Expanded(
                 child: Column(
                   children: [
-                    Container(
-                      padding: EdgeInsets.only(right: 38),
-                      height: 70,
-                      color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(Icons.notifications_none,
-                              color: Color.fromRGBO(112, 129, 185, 1),
-                              size: 30),
-                          Container(
-                              margin: EdgeInsets.only(left: 17, right: 12),
-                              height: 36,
-                              width: 36,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(112, 129, 185, 1),
-                                  borderRadius: BorderRadius.circular(100))),
-                          Text('Dika',
-                              style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 14,
-                                  color: Color.fromRGBO(112, 129, 185, 1))),
-                          Icon(Icons.keyboard_arrow_down,
-                              color: Color.fromRGBO(112, 129, 185, 1), size: 15)
-                        ],
-                      ),
-                    ),
+                    TopBar(),
                     Expanded(
                         child: Padding(
                             padding: EdgeInsets.all(20), child: pageSelected))
@@ -108,6 +35,55 @@ class _MDIPageState extends State<MDIPage> {
               ),
             ],
           )),
+    );
+  }
+
+  Container sideBar() {
+    return Container(
+      width: 70,
+      color: Color.fromRGBO(80, 110, 228, 1),
+      child: Column(
+        children: [
+          Expanded(
+            child: SizedBox(
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 15, bottom: 30),
+                    width: 50,
+                    height: 50,
+                    child: Image.asset('images/Trisco.png', fit: BoxFit.fill),
+                  ),
+                  menu('Home', Icons.home, HomePage()),
+                  menu('My Ticket', Icons.list, MyTicketsPage()),
+                  menu('Add Ticket', Icons.add, AddTicketsPage()),
+                  menu('All Ticket', Icons.list_alt, AllTicketsPage()),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            child: Column(
+              children: [
+                Container(
+                    margin: EdgeInsets.only(bottom: 25),
+                    width: 25,
+                    height: 25,
+                    child: Icon(Icons.chat_rounded,
+                        color: Color.fromRGBO(190, 202, 230, 1))),
+                Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(100)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -137,6 +113,42 @@ class _MDIPageState extends State<MDIPage> {
             child: Icon(ico, color: Color.fromRGBO(190, 202, 230, 1)),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class TopBar extends StatelessWidget {
+  const TopBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(right: 38),
+      height: 70,
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Icon(Icons.notifications_none,
+              color: Color.fromRGBO(112, 129, 185, 1), size: 30),
+          Container(
+              margin: EdgeInsets.only(left: 17, right: 12),
+              height: 36,
+              width: 36,
+              decoration: BoxDecoration(
+                  color: Color.fromRGBO(112, 129, 185, 1),
+                  borderRadius: BorderRadius.circular(100))),
+          Text('Dika',
+              style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 14,
+                  color: Color.fromRGBO(112, 129, 185, 1))),
+          Icon(Icons.keyboard_arrow_down,
+              color: Color.fromRGBO(112, 129, 185, 1), size: 15)
+        ],
       ),
     );
   }

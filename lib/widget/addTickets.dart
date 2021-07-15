@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'button.dart';
 
-class AddTickets extends StatelessWidget {
+class AddTickets extends StatefulWidget {
   const AddTickets({Key? key}) : super(key: key);
+
+  @override
+  _AddTicketsState createState() => _AddTicketsState();
+}
+
+enum ValPriority { low, medium, critical }
+
+class _AddTicketsState extends State<AddTickets> {
+  ValPriority? valPriority = ValPriority.low;
 
   @override
   Widget build(BuildContext context) {
@@ -11,52 +20,132 @@ class AddTickets extends StatelessWidget {
       children: [
         Row(
           children: [
-            Flexible(flex: 1, child: TextBox(label: 'Supporter')),
+            Flexible(flex: 1, child: DropDownButtonKu(label: 'Supporter')),
             SizedBox(width: 40),
-            Flexible(flex: 1, child: TextBox(label: 'PIC')),
-            SizedBox(width: 40),
-            Flexible(flex: 1, child: TextBox(label: 'PIC Dept'))
+            Flexible(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Priority',
+                      style: TextStyle(
+                          color: Color.fromRGBO(101, 109, 154, 1),
+                          fontFamily: 'Poppins',
+                          fontSize: 13)),
+                  SizedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Radio(
+                                activeColor: Color.fromRGBO(80, 110, 228, 1),
+                                value: ValPriority.low,
+                                groupValue: valPriority,
+                                onChanged: (ValPriority? val) {
+                                  setState(() {
+                                    valPriority = val;
+                                  });
+                                }),
+                            Text('Low')
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio(
+                                activeColor: Color.fromRGBO(80, 110, 228, 1),
+                                value: ValPriority.medium,
+                                groupValue: valPriority,
+                                onChanged: (ValPriority? val) {
+                                  setState(() {
+                                    valPriority = val;
+                                  });
+                                }),
+                            Text('Medium')
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Radio(
+                                activeColor: Color.fromRGBO(80, 110, 228, 1),
+                                value: ValPriority.critical,
+                                groupValue: valPriority,
+                                onChanged: (ValPriority? val) {
+                                  setState(() {
+                                    valPriority = val;
+                                  });
+                                }),
+                            Text('Critical')
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
         SizedBox(height: 10),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: SizedBox(
-                child: Column(
-                  children: [
-                    TextBox(label: 'Priority'),
-                    SizedBox(height: 10),
-                    TextBox(label: 'Status')
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(width: 40),
-            Flexible(flex: 2, child: TextBox(label: 'Subject')),
-          ],
-        ),
+        Row(children: [
+          Flexible(flex: 1, child: TextBox(label: 'PIC')),
+          SizedBox(width: 40),
+          Flexible(flex: 1, child: DropDownButtonKu(label: 'PIC Dept'))
+        ]),
+        SizedBox(height: 10),
+        Flexible(flex: 2, child: TextBox(label: 'Subject')),
         SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            GestureDetector(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Container(
-                              height: 100, width: 100, color: Colors.white),
-                        );
-                      });
-                },
-                child: Button(label: 'Save', color: Colors.green)),
+            Button(label: 'Save', color: Colors.green),
             SizedBox(width: 10),
             Button(label: 'Delete', color: Colors.red)
           ],
         )
+      ],
+    );
+  }
+}
+
+class DropDownButtonKu extends StatelessWidget {
+  const DropDownButtonKu({Key? key, required this.label}) : super(key: key);
+
+  final label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label,
+            style: TextStyle(
+                color: Color.fromRGBO(101, 109, 154, 1),
+                fontFamily: 'Poppins',
+                fontSize: 13)),
+        SizedBox(height: 5),
+        SizedBox(
+          height: 40,
+          child: Container(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: Color.fromRGBO(158, 158, 158, 1))),
+            child: Center(
+                child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                isExpanded: true,
+                items: ['One', 'Two', 'Free', 'Four']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text('AAAAAAAAAAA'),
+                  );
+                }).toList(),
+              ),
+            )),
+          ),
+        ),
       ],
     );
   }
@@ -87,9 +176,7 @@ class TextBox extends StatelessWidget {
                   contentPadding: (label == 'Subject')
                       ? EdgeInsets.all(10)
                       : EdgeInsets.only(left: 10, right: 10),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromRGBO(233, 236, 239, 1))))),
+                  border: OutlineInputBorder())),
         ),
       ],
     );
