@@ -115,8 +115,7 @@ class ColumnKu extends StatelessWidget {
   const ColumnKu({Key? key, required this.width, required this.title})
       : super(key: key);
 
-  final width;
-  final title;
+  final width, title;
 
   @override
   Widget build(BuildContext context) {
@@ -134,8 +133,7 @@ class DataKu extends StatelessWidget {
   const DataKu({Key? key, required this.width, required this.content})
       : super(key: key);
 
-  final width;
-  final content;
+  final width, content;
 
   @override
   Widget build(BuildContext context) {

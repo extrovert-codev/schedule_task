@@ -9,9 +9,7 @@ class MyStatus extends StatelessWidget {
       required this.title})
       : super(key: key);
 
-  final IconData ico;
-  final String cnt, title;
-  final Color color;
+  final ico, cnt, title, color;
 
   @override
   Widget build(BuildContext context) {

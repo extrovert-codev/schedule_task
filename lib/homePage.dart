@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
             child: Row(children: [
               MyStatus(
                   color: Color.fromRGBO(41, 178, 237, 1),
-                  ico: Icons.tag,
+                  ico: Icons.timeline,
                   cnt: '2',
                   title: 'TICKETS ON GOING'),
               SizedBox(width: 50),

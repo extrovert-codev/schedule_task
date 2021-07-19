@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:schedule_task/homePage.dart';
 import 'package:schedule_task/mdiPage.dart';
 
 void main() {

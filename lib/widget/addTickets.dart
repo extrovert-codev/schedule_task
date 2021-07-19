@@ -13,6 +13,7 @@ enum ValPriority { low, medium, critical }
 
 class _AddTicketsState extends State<AddTickets> {
   ValPriority? valPriority = ValPriority.low;
+  String? supporterSelectedValue, picSelectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,50 @@ class _AddTicketsState extends State<AddTickets> {
       children: [
         Row(
           children: [
-            Flexible(flex: 1, child: DropDownButtonKu(label: 'Supporter')),
+            Flexible(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Supporter',
+                      style: TextStyle(
+                          color: Color.fromRGBO(101, 109, 154, 1),
+                          fontFamily: 'Poppins',
+                          fontSize: 13)),
+                  SizedBox(height: 5),
+                  SizedBox(
+                    height: 40,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(
+                              color: Color.fromRGBO(158, 158, 158, 1))),
+                      child: Center(
+                          child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: supporterSelectedValue,
+                          isExpanded: true,
+                          items: ['One', 'Two', 'Free', 'Four']
+                              .map<DropdownMenuItem<String>>((value) {
+                            return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins', fontSize: 14)));
+                          }).toList(),
+                          onChanged: (String? val) {
+                            setState(() {
+                              supporterSelectedValue = val;
+                            });
+                          },
+                        ),
+                      )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(width: 40),
             Flexible(
               flex: 1,
@@ -90,7 +134,50 @@ class _AddTicketsState extends State<AddTickets> {
         Row(children: [
           Flexible(flex: 1, child: TextBox(label: 'PIC')),
           SizedBox(width: 40),
-          Flexible(flex: 1, child: DropDownButtonKu(label: 'PIC Dept'))
+          Flexible(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('PIC Dept',
+                    style: TextStyle(
+                        color: Color.fromRGBO(101, 109, 154, 1),
+                        fontFamily: 'Poppins',
+                        fontSize: 13)),
+                SizedBox(height: 5),
+                SizedBox(
+                  height: 40,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(
+                            color: Color.fromRGBO(158, 158, 158, 1))),
+                    child: Center(
+                        child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        value: picSelectedValue,
+                        isExpanded: true,
+                        items: ['One', 'Two', 'Free', 'Four']
+                            .map<DropdownMenuItem<String>>((value) {
+                          return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value,
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins', fontSize: 14)));
+                        }).toList(),
+                        onChanged: (String? val) {
+                          setState(() {
+                            picSelectedValue = val;
+                          });
+                        },
+                      ),
+                    )),
+                  ),
+                ),
+              ],
+            ),
+          )
         ]),
         SizedBox(height: 10),
         Flexible(flex: 2, child: TextBox(label: 'Subject')),
@@ -103,49 +190,6 @@ class _AddTicketsState extends State<AddTickets> {
             Button(label: 'Delete', color: Colors.red)
           ],
         )
-      ],
-    );
-  }
-}
-
-class DropDownButtonKu extends StatelessWidget {
-  const DropDownButtonKu({Key? key, required this.label}) : super(key: key);
-
-  final label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label,
-            style: TextStyle(
-                color: Color.fromRGBO(101, 109, 154, 1),
-                fontFamily: 'Poppins',
-                fontSize: 13)),
-        SizedBox(height: 5),
-        SizedBox(
-          height: 40,
-          child: Container(
-            padding: EdgeInsets.only(left: 10, right: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Color.fromRGBO(158, 158, 158, 1))),
-            child: Center(
-                child: DropdownButtonHideUnderline(
-              child: DropdownButton(
-                isExpanded: true,
-                items: ['One', 'Two', 'Free', 'Four']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text('AAAAAAAAAAA'),
-                  );
-                }).toList(),
-              ),
-            )),
-          ),
-        ),
       ],
     );
   }
