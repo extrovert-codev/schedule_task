@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:schedule_task/model/addTickets/PICModel.dart';
 import 'button.dart';
 
 class AddTickets extends StatefulWidget {
@@ -14,6 +14,30 @@ enum ValPriority { low, medium, critical }
 class _AddTicketsState extends State<AddTickets> {
   ValPriority? valPriority = ValPriority.low;
   String? supporterSelectedValue, picSelectedValue;
+
+  List<dynamic> picID = [];
+  List<dynamic> picName = [];
+
+  Future refreshData() async {
+    picID = [];
+    picName = [];
+
+    PICModel.execAPI().then((value) {
+      setState(() {
+        if (value != []) {
+          for (int i = 0; i < value.length; i++) {
+            picID.add(value[i].employeeID);
+            picName.add(value[i].name);
+          }
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,8 +182,7 @@ class _AddTicketsState extends State<AddTickets> {
                       child: DropdownButton(
                         value: picSelectedValue,
                         isExpanded: true,
-                        items: ['One', 'Two', 'Free', 'Four']
-                            .map<DropdownMenuItem<String>>((value) {
+                        items: picName.map<DropdownMenuItem<String>>((value) {
                           return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value,
@@ -185,7 +208,11 @@ class _AddTicketsState extends State<AddTickets> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Button(label: 'Save', color: Colors.green),
+            GestureDetector(
+              onTap: (){
+                 refreshData();
+              },
+              child: Button(label: 'Save', color: Colors.green)),
             SizedBox(width: 10),
             Button(label: 'Delete', color: Colors.red)
           ],
