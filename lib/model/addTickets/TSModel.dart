@@ -2,21 +2,24 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class TSModel {
-  var employeeID, name;
+  var employeeID, name, siteID, deptID, posID;
 
-  TSModel({this.employeeID, this.name});
+  TSModel({this.employeeID, this.name, this.siteID, this.deptID, this.posID});
 
   factory TSModel.getTS(Map<String, dynamic> object) {
     return TSModel(
         employeeID: object['employee_id'],
-        name: object['name']);
+        name: object['name'],
+        siteID: object['site_id'],
+        deptID: object['department_id'],
+        posID: object['position_id']);
   }
 
   static Future<List<TSModel>> execAPI() async {
     var client = http.Client();
     try {
       var url =
-          'http://localhost/rest-api/schedule-task-api/api/Employee?isTS=True';
+          'http://192.168.5.99:8080/rest-api/hrms-rest-server/api/addticketsemployee';
       var result = await client.get(Uri.parse(url), headers: {
         'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
         'API-KEYS':
