@@ -3,7 +3,6 @@ import 'package:schedule_task/addTicketsPage.dart';
 import 'package:schedule_task/allTicketsPage.dart';
 import 'package:schedule_task/homePage.dart';
 import 'package:schedule_task/myTicketsPage.dart';
-import 'package:schedule_task/widget/addTickets.dart';
 
 class MDIPage extends StatefulWidget {
   const MDIPage({Key? key}) : super(key: key);

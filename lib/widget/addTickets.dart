@@ -71,7 +71,8 @@ class _AddTicketsState extends State<AddTickets> {
                       child: Center(
                           child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          hint: Text('Select TS',
+                          hint: Text('--Select TS--',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'Poppins', fontSize: 14)),
                           value: tsSelectedValue,
@@ -184,7 +185,8 @@ class _AddTicketsState extends State<AddTickets> {
                     child: Center(
                         child: DropdownButtonHideUnderline(
                       child: DropdownButton(
-                        hint: Text('Select PIC',
+                        hint: Text('--Select PIC--',
+                            textAlign: TextAlign.center,
                             style:
                                 TextStyle(fontFamily: 'Poppins', fontSize: 14)),
                         value: picSelectedValue,
