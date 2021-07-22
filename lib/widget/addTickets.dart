@@ -12,13 +12,14 @@ class AddTickets extends StatefulWidget {
 enum ValPriority { low, medium, critical }
 
 class _AddTicketsState extends State<AddTickets> {
+  TextEditingController txtSubject = TextEditingController();
   ValPriority? valPriority = ValPriority.low;
   String? supporterSelectedValue, picSelectedValue;
 
   List<dynamic> picID = [];
   List<dynamic> picName = [];
 
-  Future refreshData() async {
+  Future addDropDownItems() async {
     picID = [];
     picName = [];
 
@@ -200,23 +201,31 @@ class _AddTicketsState extends State<AddTickets> {
             ),
           ),
           SizedBox(width: 20),
-          Flexible(flex: 1, child: TextBox(label: 'PIC Site', readOnly: true)),
+          Flexible(
+              flex: 1,
+              child: LabelKu(label: 'PIC Site', content: 'ini kontent nay')),
           SizedBox(width: 20),
           Flexible(
-              flex: 1, child: TextBox(label: 'PIC Department', readOnly: true)),
+              flex: 1,
+              child:
+                  LabelKu(label: 'PIC Department', content: 'ini kontent nay')),
           SizedBox(width: 20),
           Flexible(
-              flex: 1, child: TextBox(label: 'PIC Position', readOnly: true))
+              flex: 1,
+              child: LabelKu(label: 'PIC Position', content: 'ini kontent nay'))
         ]),
         SizedBox(height: 10),
-        Flexible(flex: 2, child: TextBox(label: 'Subject', readOnly: false)),
+        Flexible(
+            flex: 2,
+            child: TextBox(
+                controller: txtSubject, label: 'Subject', readOnly: false)),
         SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             GestureDetector(
                 onTap: () {
-                  refreshData();
+                  addDropDownItems();
                 },
                 child: Button(label: 'Save', color: Colors.green)),
             SizedBox(width: 10),
@@ -228,11 +237,46 @@ class _AddTicketsState extends State<AddTickets> {
   }
 }
 
-class TextBox extends StatelessWidget {
-  const TextBox({Key? key, required this.label, required this.readOnly})
+class LabelKu extends StatelessWidget {
+  const LabelKu({Key? key, required this.label, required this.content})
       : super(key: key);
 
-  final label, readOnly;
+  final label, content;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label,
+            style: TextStyle(
+                color: Color.fromRGBO(101, 109, 154, 1),
+                fontFamily: 'Poppins',
+                fontSize: 13)),
+        SizedBox(height: 5),
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: Color.fromRGBO(158, 158, 158, 1)),
+              borderRadius: BorderRadius.circular(3.5)),
+          child: Center(
+            child: Text(content,
+                style: TextStyle(fontFamily: 'Poppins', fontSize: 14)),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class TextBox extends StatelessWidget {
+  const TextBox(
+      {Key? key,
+      required this.controller,
+      required this.label,
+      required this.readOnly})
+      : super(key: key);
+
+  final controller, label, readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -246,15 +290,14 @@ class TextBox extends StatelessWidget {
                 fontSize: 13)),
         SizedBox(height: 5),
         SizedBox(
-          height: (label == 'Subject') ? 150 : 40,
+          height: 150,
           child: TextField(
+              controller: controller,
               readOnly: readOnly,
-              maxLines: (label == 'Subject') ? 100 : 1,
+              maxLines: 100,
               style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
               decoration: InputDecoration(
-                  contentPadding: (label == 'Subject')
-                      ? EdgeInsets.all(10)
-                      : EdgeInsets.only(left: 10, right: 10),
+                  contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder())),
         ),
       ],
