@@ -50,7 +50,7 @@ class _AddTicketsState extends State<AddTickets> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Supporter',
+                  Text('Technical Support',
                       style: TextStyle(
                           color: Color.fromRGBO(101, 109, 154, 1),
                           fontFamily: 'Poppins',
@@ -156,14 +156,12 @@ class _AddTicketsState extends State<AddTickets> {
         ),
         SizedBox(height: 10),
         Row(children: [
-          Flexible(flex: 1, child: TextBox(label: 'PIC')),
-          SizedBox(width: 40),
           Flexible(
-            flex: 1,
+            flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('PIC Dept',
+                Text('PIC',
                     style: TextStyle(
                         color: Color.fromRGBO(101, 109, 154, 1),
                         fontFamily: 'Poppins',
@@ -200,19 +198,27 @@ class _AddTicketsState extends State<AddTickets> {
                 ),
               ],
             ),
-          )
+          ),
+          SizedBox(width: 20),
+          Flexible(flex: 1, child: TextBox(label: 'PIC Site', readOnly: true)),
+          SizedBox(width: 20),
+          Flexible(
+              flex: 1, child: TextBox(label: 'PIC Department', readOnly: true)),
+          SizedBox(width: 20),
+          Flexible(
+              flex: 1, child: TextBox(label: 'PIC Position', readOnly: true))
         ]),
         SizedBox(height: 10),
-        Flexible(flex: 2, child: TextBox(label: 'Subject')),
+        Flexible(flex: 2, child: TextBox(label: 'Subject', readOnly: false)),
         SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             GestureDetector(
-              onTap: (){
-                 refreshData();
-              },
-              child: Button(label: 'Save', color: Colors.green)),
+                onTap: () {
+                  refreshData();
+                },
+                child: Button(label: 'Save', color: Colors.green)),
             SizedBox(width: 10),
             Button(label: 'Delete', color: Colors.red)
           ],
@@ -223,9 +229,10 @@ class _AddTicketsState extends State<AddTickets> {
 }
 
 class TextBox extends StatelessWidget {
-  const TextBox({Key? key, required this.label}) : super(key: key);
+  const TextBox({Key? key, required this.label, required this.readOnly})
+      : super(key: key);
 
-  final label;
+  final label, readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -241,6 +248,7 @@ class TextBox extends StatelessWidget {
         SizedBox(
           height: (label == 'Subject') ? 150 : 40,
           child: TextField(
+              readOnly: readOnly,
               maxLines: (label == 'Subject') ? 100 : 1,
               style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
               decoration: InputDecoration(
