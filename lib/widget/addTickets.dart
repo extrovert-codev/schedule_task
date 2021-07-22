@@ -14,38 +14,25 @@ enum ValPriority { low, medium, critical }
 
 class _AddTicketsState extends State<AddTickets> {
   TextEditingController txtSubject = TextEditingController();
+
   ValPriority? valPriority = ValPriority.low;
   String? tsSelectedValue, picSelectedValue;
 
-  List<dynamic> picID = [];
-  List<dynamic> picName = [];
-  List<dynamic> tsID = [];
-  List<dynamic> tsName = [];
+  List<dynamic> picData = [];
+  List<dynamic> tsData = [];
 
   Future addDropDownItems() async {
-    picID = [];
-    picName = [];
+    picData = [];
     PICModel.execAPI().then((value) {
       setState(() {
-        if (value != []) {
-          for (int i = 0; i < value.length; i++) {
-            picID.add(value[i].employeeID);
-            picName.add(value[i].name);
-          }
-        }
+        picData = value;
       });
     });
 
-    tsID = [];
-    tsName = [];
+    tsData = [];
     TSModel.execAPI().then((value) {
       setState(() {
-        if (value != []) {
-          for (int i = 0; i < value.length; i++) {
-            tsID.add(value[i].employeeID);
-            tsName.add(value[i].name);
-          }
-        }
+        tsData = value;
       });
     });
   }
@@ -53,6 +40,7 @@ class _AddTicketsState extends State<AddTickets> {
   @override
   void initState() {
     super.initState();
+    this.addDropDownItems();
   }
 
   @override
@@ -83,18 +71,21 @@ class _AddTicketsState extends State<AddTickets> {
                       child: Center(
                           child: DropdownButtonHideUnderline(
                         child: DropdownButton(
+                          hint: Text('Select TS',
+                              style: TextStyle(
+                                  fontFamily: 'Poppins', fontSize: 14)),
                           value: tsSelectedValue,
                           isExpanded: true,
-                          items: tsName.map<DropdownMenuItem<String>>((value) {
-                            return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value,
+                          items: tsData.map((value) {
+                            return DropdownMenuItem(
+                                value: value['employee_id'].toString(),
+                                child: Text(value['name'].toString(),
                                     style: TextStyle(
                                         fontFamily: 'Poppins', fontSize: 14)));
                           }).toList(),
-                          onChanged: (String? val) {
+                          onChanged: (val) {
                             setState(() {
-                              tsSelectedValue = val;
+                              tsSelectedValue = val.toString();
                             });
                           },
                         ),
@@ -193,18 +184,21 @@ class _AddTicketsState extends State<AddTickets> {
                     child: Center(
                         child: DropdownButtonHideUnderline(
                       child: DropdownButton(
+                        hint: Text('Select PIC',
+                            style:
+                                TextStyle(fontFamily: 'Poppins', fontSize: 14)),
                         value: picSelectedValue,
                         isExpanded: true,
-                        items: picName.map<DropdownMenuItem<String>>((value) {
-                          return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,
+                        items: picData.map((value) {
+                          return DropdownMenuItem(
+                              value: value['employee_id'].toString(),
+                              child: Text(value['name'].toString(),
                                   style: TextStyle(
                                       fontFamily: 'Poppins', fontSize: 14)));
                         }).toList(),
-                        onChanged: (String? val) {
+                        onChanged: (val) {
                           setState(() {
-                            picSelectedValue = val;
+                            picSelectedValue = val.toString();
                           });
                         },
                       ),
@@ -238,9 +232,7 @@ class _AddTicketsState extends State<AddTickets> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             GestureDetector(
-                onTap: () {
-                  addDropDownItems();
-                },
+                onTap: () {},
                 child: Button(label: 'Save', color: Colors.green)),
             SizedBox(width: 10),
             Button(label: 'Delete', color: Colors.red)
