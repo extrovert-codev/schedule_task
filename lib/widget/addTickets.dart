@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_task/model/addTickets/PICModel.dart';
+import 'package:schedule_task/model/addTickets/TSModel.dart';
 import 'button.dart';
 
 class AddTickets extends StatefulWidget {
@@ -14,21 +15,35 @@ enum ValPriority { low, medium, critical }
 class _AddTicketsState extends State<AddTickets> {
   TextEditingController txtSubject = TextEditingController();
   ValPriority? valPriority = ValPriority.low;
-  String? supporterSelectedValue, picSelectedValue;
+  String? tsSelectedValue, picSelectedValue;
 
   List<dynamic> picID = [];
   List<dynamic> picName = [];
+  List<dynamic> tsID = [];
+  List<dynamic> tsName = [];
 
   Future addDropDownItems() async {
     picID = [];
     picName = [];
-
     PICModel.execAPI().then((value) {
       setState(() {
         if (value != []) {
           for (int i = 0; i < value.length; i++) {
             picID.add(value[i].employeeID);
             picName.add(value[i].name);
+          }
+        }
+      });
+    });
+
+    tsID = [];
+    tsName = [];
+    TSModel.execAPI().then((value) {
+      setState(() {
+        if (value != []) {
+          for (int i = 0; i < value.length; i++) {
+            tsID.add(value[i].employeeID);
+            tsName.add(value[i].name);
           }
         }
       });
@@ -68,10 +83,9 @@ class _AddTicketsState extends State<AddTickets> {
                       child: Center(
                           child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          value: supporterSelectedValue,
+                          value: tsSelectedValue,
                           isExpanded: true,
-                          items: ['One', 'Two', 'Free', 'Four']
-                              .map<DropdownMenuItem<String>>((value) {
+                          items: tsName.map<DropdownMenuItem<String>>((value) {
                             return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value,
@@ -80,7 +94,7 @@ class _AddTicketsState extends State<AddTickets> {
                           }).toList(),
                           onChanged: (String? val) {
                             setState(() {
-                              supporterSelectedValue = val;
+                              tsSelectedValue = val;
                             });
                           },
                         ),
@@ -255,6 +269,7 @@ class LabelKu extends StatelessWidget {
                 fontSize: 13)),
         SizedBox(height: 5),
         Container(
+          height: 40,
           decoration: BoxDecoration(
               border: Border.all(color: Color.fromRGBO(158, 158, 158, 1)),
               borderRadius: BorderRadius.circular(3.5)),
