@@ -172,21 +172,40 @@ class DataKu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: width,
-        child: Text(content,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                color: (content == 'Critical')
-                    ? Color.fromRGBO(242, 77, 86, 1)
-                    : (content == 'Finish')
-                        ? Color.fromRGBO(45, 223, 214, 1)
-                        : (content == 'Waiting List')
-                            ? Color.fromRGBO(255, 91, 91, 1)
-                            : (content == 'On Going')
-                                ? Color.fromRGBO(237, 170, 41, 1)
-                                : Color.fromRGBO(48, 62, 103, 1),
-                fontFamily: 'Poppins',
-                fontSize: 13)));
+        child: (content == 'Finish' ||
+                content == 'Waiting List' ||
+                content == 'On Going')
+            ? Center(
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: (content == 'Finish')
+                          ? Color.fromRGBO(224, 249, 244, 1)
+                          : (content == 'Waiting List')
+                              ? Color.fromRGBO(255, 220, 220, 1)
+                              : Color.fromRGBO(255, 244, 189, 1),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                    child: Text(content,
+                        style: TextStyle(
+                            color: (content == 'Finish')
+                                ? Color.fromRGBO(45, 223, 214, 1)
+                                : (content == 'Waiting List')
+                                    ? Color.fromRGBO(255, 91, 91, 1)
+                                    : Color.fromRGBO(237, 170, 41, 1),
+                            fontFamily: 'Poppins',
+                            fontSize: 13)),
+                  ),
+                ),
+            )
+            : Text(content,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: (content == 'Critical')
+                        ? Color.fromRGBO(242, 77, 86, 1)
+                        : Color.fromRGBO(48, 62, 103, 1),
+                    fontFamily: 'Poppins',
+                    fontSize: 13)));
   }
 }
 

@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                     SizedBox(height: 18),
                     Expanded(
                         child: Container(
-                      child: GridViewKu(cntData: 2, tsID: null, ),
+                      child: GridViewKu(cntData: 2, tsID: 1906),
                     ))
                   ])),
         ),
