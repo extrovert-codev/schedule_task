@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
 
 class TSModel {
-  static Future<List<dynamic>> execAPI() async {
+  static Future<List<dynamic>> getTS() async {
     var url = gScript.apiLink + '/Employee?isTS=True';
     var result = await http.get(Uri.parse(url), headers: {
       'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',

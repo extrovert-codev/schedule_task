@@ -23,14 +23,14 @@ class _AddTicketsState extends State<AddTickets> {
 
   Future addDropDownItems() async {
     picData = [];
-    PICModel.execAPI().then((value) {
+    PICModel.getPIC().then((value) {
       setState(() {
         picData = value;
       });
     });
 
     tsData = [];
-    TSModel.execAPI().then((value) {
+    TSModel.getTS().then((value) {
       setState(() {
         tsData = value;
       });

@@ -32,7 +32,7 @@ class AllTicketsPage extends StatelessWidget {
                     SizedBox(height: 18),
                     Expanded(
                         child: Container(
-                      child: GridViewKu(cntData: 10),
+                      child: GridViewKu(cntData: 10, tsID: null),
                     )),
                     SizedBox(height: 25),
                     Row(
@@ -45,48 +45,48 @@ class AllTicketsPage extends StatelessWidget {
                                 fontSize: 14)),
                         Row(children: [
                           Container(
-                          height: 34,
-                          width: 83,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Color.fromRGBO(234, 240, 249, 1)),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(5),
-                                  bottomLeft: Radius.circular(5))),
-                          child: Center(
-                              child: Text('Previous',
-                                  style: TextStyle(
-                                      color:
-                                          Color.fromRGBO(187, 197, 229, 1),
-                                      fontFamily: 'Poppins',
-                                      fontSize: 14)))),
+                              height: 34,
+                              width: 83,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Color.fromRGBO(234, 240, 249, 1)),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(5),
+                                      bottomLeft: Radius.circular(5))),
+                              child: Center(
+                                  child: Text('Previous',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(187, 197, 229, 1),
+                                          fontFamily: 'Poppins',
+                                          fontSize: 14)))),
                           Container(
-                          height: 34,
-                          width: 30,
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(80, 110, 228, 1)),
-                          child: Center(
-                              child: Text('1',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Poppins',
-                                      fontSize: 14)))),
+                              height: 34,
+                              width: 30,
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(80, 110, 228, 1)),
+                              child: Center(
+                                  child: Text('1',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Poppins',
+                                          fontSize: 14)))),
                           Container(
-                          height: 34,
-                          width: 55,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Color.fromRGBO(234, 240, 249, 1)),
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(5),
-                                  bottomRight: Radius.circular(5))),
-                          child: Center(
-                              child: Text('Next',
-                                  style: TextStyle(
-                                      color:
-                                          Color.fromRGBO(187, 197, 229, 1),
-                                      fontFamily: 'Poppins',
-                                      fontSize: 14)))),
+                              height: 34,
+                              width: 55,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Color.fromRGBO(234, 240, 249, 1)),
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(5),
+                                      bottomRight: Radius.circular(5))),
+                              child: Center(
+                                  child: Text('Next',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(187, 197, 229, 1),
+                                          fontFamily: 'Poppins',
+                                          fontSize: 14)))),
                         ])
                       ],
                     )

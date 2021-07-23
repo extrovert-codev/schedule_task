@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_task/model/gridView/ticketModel.dart';
 
 class GridViewKu extends StatefulWidget {
-  const GridViewKu({Key? key, required this.cntData}) : super(key: key);
+  const GridViewKu({Key? key, required this.cntData, required this.tsID})
+      : super(key: key);
 
-  final cntData;
+  final cntData, tsID;
 
   @override
   _GridViewKuState createState() => _GridViewKuState();
@@ -11,7 +13,24 @@ class GridViewKu extends StatefulWidget {
 
 class _GridViewKuState extends State<GridViewKu> {
   bool isHovering = false;
-  bool isCheckboxShow = true;
+  bool isCheckboxShow = false;
+
+  List<dynamic> gridData = [];
+
+  Future refreshData() async {
+    gridData = [];
+    TicketModel.getTicket(widget.tsID).then((value) {
+      setState(() {
+        gridData = value;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.refreshData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +73,7 @@ class _GridViewKuState extends State<GridViewKu> {
                               fontSize: 13)))),
               ColumnKu(width: 150, title: 'Priority'),
               ColumnKu(width: 150, title: 'Status'),
-              ColumnKu(width: 150, title: 'Support by'),
+              ColumnKu(width: 150, title: 'Technical Support'),
               ColumnKu(width: 150, title: 'Response Time'),
             ])),
         Container(height: 1.5, color: Colors.grey[300]),
@@ -79,31 +98,45 @@ class _GridViewKuState extends State<GridViewKu> {
                             Container(
                                 margin: EdgeInsets.only(left: 30),
                                 width: 80,
-                                child: Text('#$i',
+                                child: Text(
+                                    '#' + gridData[i]['ticket_id'].toString(),
                                     style: TextStyle(
                                         color: Color.fromRGBO(48, 62, 103, 1),
                                         fontFamily: 'Poppins',
                                         fontSize: 13))),
-                            DataKu(width: 70, content: 'PIC'),
+                            DataKu(
+                                width: 70,
+                                content: gridData[i]['picname'].toString()),
                             Expanded(
                                 child: Container(
                                     margin: EdgeInsets.only(left: 70),
-                                    child: Text('Subject',
+                                    child: Text(
+                                        gridData[i]['subject'].toString(),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             color:
                                                 Color.fromRGBO(48, 62, 103, 1),
                                             fontFamily: 'Poppins',
                                             fontSize: 13)))),
-                            DataKu(width: 150, content: 'Priority'),
-                            DataKu(width: 150, content: 'Status'),
-                            DataKu(width: 150, content: 'Support by'),
+                            DataKu(
+                                width: 150,
+                                content:
+                                    gridData[i]['priorityname'].toString()),
+                            DataKu(
+                                width: 150,
+                                content: gridData[i]['statusname'].toString()),
+                            DataKu(
+                                width: 150,
+                                content: gridData[i]['technicalsupportname']
+                                    .toString()),
                             DataKu(width: 150, content: 'Response Time'),
                           ]),
                         ),
                       ),
                     ),
                 separatorBuilder: (context, i) => Divider(),
-                itemCount: widget.cntData),
+                itemCount: gridData.length),
           ),
         )
       ],
@@ -140,8 +173,18 @@ class DataKu extends StatelessWidget {
     return Container(
         width: width,
         child: Text(content,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
-                color: Color.fromRGBO(48, 62, 103, 1),
+                color: (content == 'Critical')
+                    ? Color.fromRGBO(242, 77, 86, 1)
+                    : (content == 'Finish')
+                        ? Color.fromRGBO(45, 223, 214, 1)
+                        : (content == 'Waiting List')
+                            ? Color.fromRGBO(255, 91, 91, 1)
+                            : (content == 'On Going')
+                                ? Color.fromRGBO(237, 170, 41, 1)
+                                : Color.fromRGBO(48, 62, 103, 1),
                 fontFamily: 'Poppins',
                 fontSize: 13)));
   }
