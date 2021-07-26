@@ -12,7 +12,8 @@ class MDIPage extends StatefulWidget {
 }
 
 class _MDIPageState extends State<MDIPage> {
-  Widget pageSelected = HomePage(tsID: 1906);
+  // Widget pageSelected = HomePage(tsID: 1906);
+  Widget pageSelected = AddTicketsPage();
 
   @override
   Widget build(BuildContext context) {

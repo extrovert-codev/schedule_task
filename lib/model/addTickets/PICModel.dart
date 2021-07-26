@@ -23,3 +23,25 @@ class PICModel {
     }
   }
 }
+
+class PICDetailModel {
+  final List<dynamic>? listPICDetailData;
+
+  PICDetailModel({this.listPICDetailData});
+
+  static Future getPICDetail(empID) async {
+    var url = gScript.apiLink + '/Employee?employee_id=$empID';
+    print(url);
+    var result = await http.get(Uri.parse(url), headers: {
+      'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
+      'API-KEYS':
+          '\$2y\$10\$EaoautcFP3mNIZ/Kg5OIMurSdS9dgsqNQ0vTrYGe83CCikxhLGuOi'
+    });
+
+    if (result.statusCode == 200) {
+      return PICDetailModel(listPICDetailData: jsonDecode(result.body)['data']);
+    } else {
+      throw Exception('Failed to load PIC Detail');
+    }
+  }
+}

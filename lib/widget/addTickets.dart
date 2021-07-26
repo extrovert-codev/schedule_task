@@ -17,12 +17,16 @@ class _AddTicketsState extends State<AddTickets> {
 
   ValPriority? valPriority = ValPriority.low;
   String? tsSelectedValue, picSelectedValue;
+  String? picDept, picPos, picSite;
 
   List<dynamic> picData = [];
   List<dynamic> tsData = [];
 
   Future addDropDownItems() async {
     picData = [];
+    picDept = '';
+    picPos = '';
+    picSite = '';
     PICModel.getPIC().then((value) {
       setState(() {
         picData = value.listPICData;
@@ -80,7 +84,10 @@ class _AddTicketsState extends State<AddTickets> {
                           items: tsData.map((value) {
                             return DropdownMenuItem(
                                 value: value['employee_id'].toString(),
-                                child: Text(value['name'].toString(),
+                                child: Text(
+                                    value['name'].toString() +
+                                        ' | ' +
+                                        value['nik'].toString(),
                                     style: TextStyle(
                                         fontFamily: 'Poppins', fontSize: 14)));
                           }).toList(),
@@ -111,9 +118,9 @@ class _AddTicketsState extends State<AddTickets> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        radioButtonKu(ValPriority.low, 'low'),
-                        radioButtonKu(ValPriority.medium, 'medium'),
-                        radioButtonKu(ValPriority.critical, 'critical')
+                        radioButtonKu(ValPriority.low, 'Low'),
+                        radioButtonKu(ValPriority.medium, 'Medium'),
+                        radioButtonKu(ValPriority.critical, 'Critical')
                       ],
                     ),
                   ),
@@ -155,13 +162,28 @@ class _AddTicketsState extends State<AddTickets> {
                         items: picData.map((value) {
                           return DropdownMenuItem(
                               value: value['employee_id'].toString(),
-                              child: Text(value['name'].toString(),
+                              child: Text(
+                                  value['name'].toString() +
+                                      ' | ' +
+                                      value['nik'].toString(),
                                   style: TextStyle(
                                       fontFamily: 'Poppins', fontSize: 14)));
                         }).toList(),
                         onChanged: (val) {
                           setState(() {
                             picSelectedValue = val.toString();
+                            PICDetailModel.getPICDetail(picSelectedValue)
+                                .then((value) {
+                              setState(() {
+                                picDept = value.listPICDetailData[0]
+                                        ['department']
+                                    .toString();
+                                picPos = value.listPICDetailData[0]['position']
+                                    .toString();
+                                picSite = value.listPICDetailData[0]['site']
+                                    .toString();
+                              });
+                            });
                           });
                         },
                       ),
@@ -173,17 +195,14 @@ class _AddTicketsState extends State<AddTickets> {
           ),
           SizedBox(width: 20),
           Flexible(
-              flex: 1,
-              child: LabelKu(label: 'PIC Site', content: 'ini kontent nay')),
+              flex: 1, child: LabelKu(label: 'PIC Site', content: picSite)),
           SizedBox(width: 20),
           Flexible(
               flex: 1,
-              child:
-                  LabelKu(label: 'PIC Department', content: 'ini kontent nay')),
+              child: LabelKu(label: 'PIC Department', content: picDept)),
           SizedBox(width: 20),
           Flexible(
-              flex: 1,
-              child: LabelKu(label: 'PIC Position', content: 'ini kontent nay'))
+              flex: 1, child: LabelKu(label: 'PIC Position', content: picPos))
         ]),
         SizedBox(height: 10),
         Flexible(

@@ -27,4 +27,20 @@ class TicketModel {
       throw Exception('Failed to load Ticket');
     }
   }
+
+  static Future postTicket() async {
+    var url = gScript.apiLink + '/Tickets';
+
+    var result = await http.get(Uri.parse(url), headers: {
+      'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
+      'API-KEYS':
+          '\$2y\$10\$EaoautcFP3mNIZ/Kg5OIMurSdS9dgsqNQ0vTrYGe83CCikxhLGuOi'
+    });
+
+    if (result.statusCode == 200) {
+      return TicketModel(listTicketData: jsonDecode(result.body)['data']);
+    } else {
+      throw Exception('Failed to load Ticket');
+    }
+  }
 }
