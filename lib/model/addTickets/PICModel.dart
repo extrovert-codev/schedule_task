@@ -3,8 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
 
 class PICModel {
-  static Future<List<dynamic>> getPIC() async {
-    var url =  gScript.apiLink + '/Employee';
+  final List<dynamic>? listPICData;
+
+  PICModel({this.listPICData});
+
+  static Future getPIC() async {
+    var url = gScript.apiLink + '/Employee';
+
     var result = await http.get(Uri.parse(url), headers: {
       'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
       'API-KEYS':
@@ -12,14 +17,7 @@ class PICModel {
     });
 
     if (result.statusCode == 200) {
-      var jsonObject = jsonDecode(result.body)['data'];
-
-      List<dynamic> listPICData = [];
-      for (int i = 0; i < jsonObject.length; i++) {
-        listPICData.add(jsonObject[i]);
-      }
-
-      return listPICData;
+      return PICModel(listPICData: jsonDecode(result.body)['data']);
     } else {
       throw Exception('Failed to load PIC');
     }

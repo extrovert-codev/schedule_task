@@ -19,8 +19,10 @@ class _GridViewKuState extends State<GridViewKu> {
 
   Future refreshData() async {
     gridData = [];
-    await TicketModel.getTicket(widget.tsID).then((value) {
-      gridData = value.listTicketData;
+    TicketModel.getTicket(widget.tsID).then((value) {
+      setState(() {
+        gridData = value.listTicketData;
+      });
     });
   }
 

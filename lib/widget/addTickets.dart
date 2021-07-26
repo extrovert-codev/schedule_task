@@ -25,14 +25,14 @@ class _AddTicketsState extends State<AddTickets> {
     picData = [];
     PICModel.getPIC().then((value) {
       setState(() {
-        picData = value;
+        picData = value.listPICData;
       });
     });
 
     tsData = [];
     TSModel.getTS().then((value) {
       setState(() {
-        tsData = value;
+        tsData = value.listTSData;
       });
     });
   }
@@ -111,48 +111,9 @@ class _AddTicketsState extends State<AddTickets> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Radio(
-                                activeColor: Color.fromRGBO(80, 110, 228, 1),
-                                value: ValPriority.low,
-                                groupValue: valPriority,
-                                onChanged: (ValPriority? val) {
-                                  setState(() {
-                                    valPriority = val;
-                                  });
-                                }),
-                            Text('Low')
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                                activeColor: Color.fromRGBO(80, 110, 228, 1),
-                                value: ValPriority.medium,
-                                groupValue: valPriority,
-                                onChanged: (ValPriority? val) {
-                                  setState(() {
-                                    valPriority = val;
-                                  });
-                                }),
-                            Text('Medium')
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                                activeColor: Color.fromRGBO(80, 110, 228, 1),
-                                value: ValPriority.critical,
-                                groupValue: valPriority,
-                                onChanged: (ValPriority? val) {
-                                  setState(() {
-                                    valPriority = val;
-                                  });
-                                }),
-                            Text('Critical')
-                          ],
-                        ),
+                        radioButtonKu(ValPriority.low, 'low'),
+                        radioButtonKu(ValPriority.medium, 'medium'),
+                        radioButtonKu(ValPriority.critical, 'critical')
                       ],
                     ),
                   ),
@@ -240,6 +201,23 @@ class _AddTicketsState extends State<AddTickets> {
             Button(label: 'Delete', color: Colors.red)
           ],
         )
+      ],
+    );
+  }
+
+  Row radioButtonKu(ValPriority value, label) {
+    return Row(
+      children: [
+        Radio(
+            activeColor: Color.fromRGBO(80, 110, 228, 1),
+            value: value,
+            groupValue: valPriority,
+            onChanged: (ValPriority? val) {
+              setState(() {
+                valPriority = val;
+              });
+            }),
+        Text(label)
       ],
     );
   }
