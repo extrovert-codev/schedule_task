@@ -13,15 +13,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int? alltickets, waitinglist, ongoing, finish;
+  int? ongoing, finish;
 
   Future refreshData() async {
-    MyStatusModel.getMyStatus(widget.tsID).then((value) {
-      // print(value);
-      // alltickets = value[0]['alltickets'];
-      // waitinglist = value.waitinglist;
-      // ongoing = value.ongoing;
-      // finish = value.finish;
+    ongoing = 0;
+    finish = 0;
+
+    await MyStatusModel.getMyStatus(widget.tsID).then((value) {
+      setState(() {
+        ongoing = value.listMyStatusData[0]['ongoing'];
+        finish = value.listMyStatusData[0]['finish'];
+      });
     });
   }
 

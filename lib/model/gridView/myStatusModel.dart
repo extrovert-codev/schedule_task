@@ -3,13 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
 
 class MyStatusModel {
-  final dynamic alltickets, waitinglist, ongoing, finish;
+  final List<dynamic>? listMyStatusData;
 
-  MyStatusModel({this.alltickets, this.waitinglist, this.ongoing, this.finish});
+  MyStatusModel({this.listMyStatusData});
 
   static Future getMyStatus(tsID) async {
     var url = gScript.apiLink + '/MyStatus?technicalsupport_id=$tsID';
- 
+
     var result = await http.get(Uri.parse(url), headers: {
       'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
       'API-KEYS':
@@ -17,14 +17,7 @@ class MyStatusModel {
     });
 
     if (result.statusCode == 200) {
-          print(jsonDecode(result.body));
-          print(jsonDecode(result.body)['data']);
-          print(jsonDecode(result.body)['data'][0]['alltickets']);
-      return MyStatusModel(
-          alltickets: jsonDecode(result.body)['alltickets'],
-          waitinglist: jsonDecode(result.body)['waitinglist'],
-          ongoing: jsonDecode(result.body)['ongoing'],
-          finish: jsonDecode(result.body)['finish']);
+      return MyStatusModel(listMyStatusData: jsonDecode(result.body)['data']);
     } else {
       throw Exception('Failed to load My Status');
     }
