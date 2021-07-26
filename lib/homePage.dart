@@ -1,9 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_task/model/gridView/myStatusModel.dart';
 import 'package:schedule_task/widget/homePage/myStatus.dart';
 import 'package:schedule_task/widget/gridViewKu.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key, required this.tsID}) : super(key: key);
+
+  final tsID;
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int? alltickets, waitinglist, ongoing, finish;
+
+  Future refreshData() async {
+    MyStatusModel.getMyStatus(widget.tsID).then((value) {
+      // print(value);
+      // alltickets = value[0]['alltickets'];
+      // waitinglist = value.waitinglist;
+      // ongoing = value.ongoing;
+      // finish = value.finish;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.refreshData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +41,13 @@ class HomePage extends StatelessWidget {
               MyStatus(
                   color: Color.fromRGBO(41, 178, 237, 1),
                   ico: Icons.timeline,
-                  cnt: '2',
+                  cnt: ongoing.toString(),
                   title: 'TICKETS ON GOING'),
               SizedBox(width: 50),
               MyStatus(
                   color: Color.fromRGBO(45, 223, 214, 1),
                   ico: Icons.check,
-                  cnt: '467',
+                  cnt: finish.toString(),
                   title: 'TICKETS COMPLETE'),
               SizedBox(width: 50),
               MyStatus(

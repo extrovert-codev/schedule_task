@@ -20,9 +20,7 @@ class _GridViewKuState extends State<GridViewKu> {
   Future refreshData() async {
     gridData = [];
     TicketModel.getTicket(widget.tsID).then((value) {
-      setState(() {
-        gridData = value;
-      });
+      gridData = value.listTicketData;
     });
   }
 
@@ -176,7 +174,7 @@ class DataKu extends StatelessWidget {
                 content == 'Waiting List' ||
                 content == 'On Going')
             ? Center(
-              child: Container(
+                child: Container(
                   decoration: BoxDecoration(
                       color: (content == 'Finish')
                           ? Color.fromRGBO(224, 249, 244, 1)
@@ -196,7 +194,7 @@ class DataKu extends StatelessWidget {
                             fontSize: 13)),
                   ),
                 ),
-            )
+              )
             : Text(content,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

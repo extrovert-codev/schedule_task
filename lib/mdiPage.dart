@@ -12,7 +12,7 @@ class MDIPage extends StatefulWidget {
 }
 
 class _MDIPageState extends State<MDIPage> {
-  Widget pageSelected = HomePage();
+  Widget pageSelected = HomePage(tsID: 1906);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _MDIPageState extends State<MDIPage> {
                     height: 50,
                     child: Image.asset('images/Trisco.png', fit: BoxFit.fill),
                   ),
-                  menu('Home', Icons.home, HomePage()),
+                  menu('Home', Icons.home, HomePage(tsID: 1906)),
                   menu('My Ticket', Icons.list, MyTicketsPage()),
                   menu('Add Ticket', Icons.add, AddTicketsPage()),
                   menu('All Ticket', Icons.list_alt, AllTicketsPage()),
