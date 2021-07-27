@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
 
 class PICModel {
-  final List<dynamic>? listPICData;
+  List<dynamic>? listPICData;
 
   PICModel({this.listPICData});
 
@@ -25,13 +25,13 @@ class PICModel {
 }
 
 class PICDetailModel {
-  final List<dynamic>? listPICDetailData;
+  List<dynamic>? listPICDetailData;
 
   PICDetailModel({this.listPICDetailData});
 
   static Future getPICDetail(empID) async {
     var url = gScript.apiLink + '/Employee?employee_id=$empID';
-    print(url);
+
     var result = await http.get(Uri.parse(url), headers: {
       'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
       'API-KEYS':

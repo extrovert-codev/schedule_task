@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
 
 class TSModel {
-  final List<dynamic>? listTSData;
+  List<dynamic>? listTSData;
 
   TSModel({this.listTSData});
 

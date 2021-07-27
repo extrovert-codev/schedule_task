@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
 
 class MyStatusModel {
-  final List<dynamic>? listMyStatusData;
+  List<dynamic>? listMyStatusData;
 
   MyStatusModel({this.listMyStatusData});
 

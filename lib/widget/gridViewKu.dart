@@ -29,7 +29,7 @@ class _GridViewKuState extends State<GridViewKu> {
   @override
   void initState() {
     super.initState();
-    this.refreshData();
+    refreshData();
   }
 
   @override

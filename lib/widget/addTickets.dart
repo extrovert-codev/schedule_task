@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:schedule_task/model/addTickets/PICModel.dart';
 import 'package:schedule_task/model/addTickets/TSModel.dart';
+import 'package:schedule_task/model/gridView/ticketModel.dart';
 import 'button.dart';
 
 class AddTickets extends StatefulWidget {
@@ -214,7 +216,30 @@ class _AddTicketsState extends State<AddTickets> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  TicketModel.postTicket(
+                          picSelectedValue.toString(),
+                          txtSubject.text,
+                          0.toString(),
+                          tsSelectedValue.toString(),
+                          'xcd')
+                      .then((value) {
+                    Alert(
+                        context: context,
+                        title: 'Success!',
+                        desc: 'Data saved!',
+                        type: AlertType.success,
+                        buttons: [
+                          DialogButton(
+                              color: Color.fromARGB(255, 15, 193, 167),
+                              child: Text('OK',
+                                  style: TextStyle(color: Colors.white)),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              })
+                        ]).show();
+                  });
+                },
                 child: Button(label: 'Save', color: Colors.green)),
             SizedBox(width: 10),
             Button(label: 'Delete', color: Colors.red)
