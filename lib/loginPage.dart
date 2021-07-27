@@ -48,27 +48,15 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 20),
                   TextBox(controller: txtNIK, label: 'NIK'),
                   SizedBox(height: 10),
-                  TextBox(controller: txtPassword, label: 'Password'),
+                  TextBox(
+                      controller: txtPassword,
+                      label: 'Password',
+                      isPassword: true),
                   SizedBox(height: 10),
                   GestureDetector(
                       onTap: () {
                         LoginModel.getLogin(txtNIK.text).then((value) {
-                          yr = DateFormat('yyyy').format(DateTime.parse(
-                              value.listLoginData[0]['dob'].toString()));
-                          mth = DateFormat('MM').format(DateTime.parse(
-                              value.listLoginData[0]['dob'].toString()));
-                          dy = DateFormat('dd').format(DateTime.parse(
-                              value.listLoginData[0]['dob'].toString()));
-                          pass = int.parse(yr) + int.parse(mth) + int.parse(dy);
-                          if (txtPassword.text == pass.toString()) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MDIPage(
-                                        tsID: value.listLoginData[0]
-                                                ['employee_id']
-                                            .toString())));
-                          } else {
+                          if (value.listLoginData == null) {
                             Alert(
                                 context: context,
                                 title: 'Opss!',
@@ -86,6 +74,42 @@ class _LoginPageState extends State<LoginPage> {
                                         });
                                       })
                                 ]).show();
+                          } else {
+                            yr = DateFormat('yyyy').format(DateTime.parse(
+                                value.listLoginData[0]['dob'].toString()));
+                            mth = DateFormat('MM').format(DateTime.parse(
+                                value.listLoginData[0]['dob'].toString()));
+                            dy = DateFormat('dd').format(DateTime.parse(
+                                value.listLoginData[0]['dob'].toString()));
+                            pass =
+                                int.parse(yr) + int.parse(mth) + int.parse(dy);
+                            if (txtPassword.text == pass.toString()) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MDIPage(
+                                          tsID: value.listLoginData[0]
+                                                  ['employee_id']
+                                              .toString())));
+                            } else {
+                              Alert(
+                                  context: context,
+                                  title: 'Opss!',
+                                  desc: 'Wrong NIK or password!',
+                                  type: AlertType.error,
+                                  buttons: [
+                                    DialogButton(
+                                        color: Color.fromRGBO(80, 110, 228, 1),
+                                        child: Text('OK',
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                        onPressed: () {
+                                          setState(() {
+                                            Navigator.pop(context);
+                                          });
+                                        })
+                                  ]).show();
+                            }
                           }
                         });
                       },
@@ -127,10 +151,14 @@ class Button extends StatelessWidget {
 }
 
 class TextBox extends StatelessWidget {
-  const TextBox({Key? key, required this.controller, required this.label})
+  const TextBox(
+      {Key? key,
+      required this.controller,
+      required this.label,
+      this.isPassword})
       : super(key: key);
 
-  final controller, label;
+  final controller, label, isPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -147,6 +175,7 @@ class TextBox extends StatelessWidget {
           height: 40,
           child: TextField(
               controller: controller,
+              obscureText: (isPassword == true) ? true : false,
               style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
               decoration: InputDecoration(
                   hintText: label,

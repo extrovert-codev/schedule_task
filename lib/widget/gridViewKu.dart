@@ -22,7 +22,9 @@ class _GridViewKuState extends State<GridViewKu> {
     gridData = [];
     TicketModel.getTicket(widget.tsID).then((value) {
       setState(() {
-        gridData = value.listTicketData;
+        if (value.listTicketData != null) {
+          gridData = value.listTicketData;
+        }
       });
     });
   }
@@ -84,69 +86,73 @@ class _GridViewKuState extends State<GridViewKu> {
           child: SizedBox(
             child: ListView.separated(
                 padding: EdgeInsets.only(top: 5),
-                itemBuilder: (context, i) => Container(
-                      height: 40,
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TicketDescPage(
-                                        subject: gridData[i]['subject']
-                                            .toString())));
-                          },
-                          child: Container(
-                            color: Colors.white,
-                            child: Row(children: [
-                              Visibility(
-                                  visible: isCheckboxShow,
-                                  child: Checkbox(
-                                      value: false, onChanged: (val) {})),
-                              Container(
-                                  margin: EdgeInsets.only(left: 30),
-                                  width: 80,
-                                  child: Text(
-                                      '#' + gridData[i]['ticket_id'].toString(),
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(48, 62, 103, 1),
-                                          fontFamily: 'Poppins',
-                                          fontSize: 13))),
-                              DataKu(
-                                  width: 70,
-                                  content: gridData[i]['picname'].toString()),
-                              Expanded(
-                                  child: Container(
-                                      margin: EdgeInsets.only(left: 70),
-                                      child: Text(
-                                          gridData[i]['subject'].toString(),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  48, 62, 103, 1),
-                                              fontFamily: 'Poppins',
-                                              fontSize: 13)))),
-                              DataKu(
-                                  width: 150,
-                                  content:
-                                      gridData[i]['priorityname'].toString()),
-                              DataKu(
-                                  width: 150,
-                                  content:
-                                      gridData[i]['statusname'].toString()),
-                              DataKu(
-                                  width: 150,
-                                  content: gridData[i]['technicalsupportname']
-                                      .toString()),
-                              DataKu(width: 150, content: 'Response Time'),
-                            ]),
+                itemBuilder: (context, i) => (gridData.length == 0)
+                    ? Container()
+                    : Container(
+                        height: 40,
+                        padding: EdgeInsets.only(left: 15, right: 15),
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TicketDescPage(
+                                          subject: gridData[i]['subject']
+                                              .toString())));
+                            },
+                            child: Container(
+                              color: Colors.white,
+                              child: Row(children: [
+                                Visibility(
+                                    visible: isCheckboxShow,
+                                    child: Checkbox(
+                                        value: false, onChanged: (val) {})),
+                                Container(
+                                    margin: EdgeInsets.only(left: 30),
+                                    width: 80,
+                                    child: Text(
+                                        '#' +
+                                            gridData[i]['ticket_id'].toString(),
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(48, 62, 103, 1),
+                                            fontFamily: 'Poppins',
+                                            fontSize: 13))),
+                                DataKu(
+                                    width: 70,
+                                    content: gridData[i]['picname'].toString()),
+                                Expanded(
+                                    child: Container(
+                                        margin: EdgeInsets.only(left: 70),
+                                        child: Text(
+                                            gridData[i]['subject'].toString(),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    48, 62, 103, 1),
+                                                fontFamily: 'Poppins',
+                                                fontSize: 13)))),
+                                DataKu(
+                                    width: 150,
+                                    content:
+                                        gridData[i]['priorityname'].toString()),
+                                DataKu(
+                                    width: 150,
+                                    content:
+                                        gridData[i]['statusname'].toString()),
+                                DataKu(
+                                    width: 150,
+                                    content: gridData[i]['technicalsupportname']
+                                        .toString()),
+                                DataKu(width: 150, content: 'Response Time'),
+                              ]),
+                            ),
                           ),
                         ),
                       ),
-                    ),
                 separatorBuilder: (context, i) => Divider(),
                 itemCount: gridData.length),
           ),

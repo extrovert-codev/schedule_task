@@ -12,7 +12,7 @@ class TicketDescPage extends StatelessWidget {
       body: ListView(
         children: [
           Container(height: 500, color: Colors.amber, child: Text(subject)),
-          Button(color: Colors.red, label: 'Back')
+          Container(child: Button(color: Colors.red, label: 'Back'))
         ],
       ),
     );

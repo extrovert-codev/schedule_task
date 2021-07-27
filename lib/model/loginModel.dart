@@ -8,9 +8,8 @@ class LoginModel {
   LoginModel({this.listLoginData});
 
   static Future getLogin(nik) async {
-    var url = gScript.apiLink + '/Login?nik=$nik';
-
-    var result = await http.get(Uri.parse(url), headers: {
+    var result = await http
+        .get(Uri.parse(gScript.apiLink + '/Login?nik=$nik'), headers: {
       'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
       'API-KEYS':
           '\$2y\$10\$EaoautcFP3mNIZ/Kg5OIMurSdS9dgsqNQ0vTrYGe83CCikxhLGuOi'
@@ -19,7 +18,7 @@ class LoginModel {
     if (result.statusCode == 200) {
       return LoginModel(listLoginData: jsonDecode(result.body)['data']);
     } else {
-      throw Exception('Failed to login');
+      return LoginModel(listLoginData: null);
     }
   }
 }

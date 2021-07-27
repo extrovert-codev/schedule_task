@@ -21,7 +21,7 @@ class TicketModel {
     } else {
       url = gScript.apiLink + '/Tickets';
     }
-print(url);
+    print(url);
     var result = await http.get(Uri.parse(url), headers: {
       'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
       'API-KEYS':
@@ -31,7 +31,7 @@ print(url);
     if (result.statusCode == 200) {
       return TicketModel(listTicketData: jsonDecode(result.body)['data']);
     } else {
-      throw Exception('Failed to load Ticket');
+      return TicketModel(listTicketData: null);
     }
   }
 

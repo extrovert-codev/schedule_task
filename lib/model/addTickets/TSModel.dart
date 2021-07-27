@@ -18,7 +18,7 @@ class TSModel {
     if (result.statusCode == 200) {
       return TSModel(listTSData: jsonDecode(result.body)['data']);
     } else {
-      return null;
+      return TSModel(listTSData: null);
     }
   }
 }

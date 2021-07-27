@@ -19,7 +19,7 @@ class MyStatusModel {
     if (result.statusCode == 200) {
       return MyStatusModel(listMyStatusData: jsonDecode(result.body)['data']);
     } else {
-      return null;
+      return MyStatusModel(listMyStatusData: null);
     }
   }
 }
