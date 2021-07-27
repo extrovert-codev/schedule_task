@@ -18,7 +18,7 @@ class TSModel {
     if (result.statusCode == 200) {
       return TSModel(listTSData: jsonDecode(result.body)['data']);
     } else {
-      throw Exception('Failed to load TS');
+      return null;
     }
   }
 }

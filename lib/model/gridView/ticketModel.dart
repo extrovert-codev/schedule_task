@@ -21,7 +21,7 @@ class TicketModel {
     } else {
       url = gScript.apiLink + '/Tickets';
     }
-
+print(url);
     var result = await http.get(Uri.parse(url), headers: {
       'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
       'API-KEYS':

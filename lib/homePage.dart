@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
     ongoing = 0;
     finish = 0;
 
-    await MyStatusModel.getMyStatus(widget.tsID).then((value) {
+    MyStatusModel.getMyStatus(widget.tsID).then((value) {
       setState(() {
         ongoing = value.listMyStatusData[0]['ongoing'];
         finish = value.listMyStatusData[0]['finish'];
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    refreshData();
+    this.refreshData();
   }
 
   @override
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: 18),
                     Expanded(
                         child: Container(
-                      child: GridViewKu(cntData: 2, tsID: 1906),
+                      child: GridViewKu(cntData: 2, tsID: widget.tsID),
                     ))
                   ])),
         ),

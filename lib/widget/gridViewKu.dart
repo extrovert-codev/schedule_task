@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_task/model/gridView/ticketModel.dart';
+import 'package:schedule_task/ticketDescPage.dart';
 
 class GridViewKu extends StatefulWidget {
   const GridViewKu({Key? key, required this.cntData, required this.tsID})
@@ -88,50 +89,61 @@ class _GridViewKuState extends State<GridViewKu> {
                       padding: EdgeInsets.only(left: 15, right: 15),
                       child: MouseRegion(
                         cursor: SystemMouseCursors.click,
-                        child: Container(
-                          color: Colors.white,
-                          child: Row(children: [
-                            Visibility(
-                                visible: isCheckboxShow,
-                                child: Checkbox(
-                                    value: false, onChanged: (val) {})),
-                            Container(
-                                margin: EdgeInsets.only(left: 30),
-                                width: 80,
-                                child: Text(
-                                    '#' + gridData[i]['ticket_id'].toString(),
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(48, 62, 103, 1),
-                                        fontFamily: 'Poppins',
-                                        fontSize: 13))),
-                            DataKu(
-                                width: 70,
-                                content: gridData[i]['picname'].toString()),
-                            Expanded(
-                                child: Container(
-                                    margin: EdgeInsets.only(left: 70),
-                                    child: Text(
-                                        gridData[i]['subject'].toString(),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(48, 62, 103, 1),
-                                            fontFamily: 'Poppins',
-                                            fontSize: 13)))),
-                            DataKu(
-                                width: 150,
-                                content:
-                                    gridData[i]['priorityname'].toString()),
-                            DataKu(
-                                width: 150,
-                                content: gridData[i]['statusname'].toString()),
-                            DataKu(
-                                width: 150,
-                                content: gridData[i]['technicalsupportname']
-                                    .toString()),
-                            DataKu(width: 150, content: 'Response Time'),
-                          ]),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TicketDescPage(
+                                        subject: gridData[i]['subject']
+                                            .toString())));
+                          },
+                          child: Container(
+                            color: Colors.white,
+                            child: Row(children: [
+                              Visibility(
+                                  visible: isCheckboxShow,
+                                  child: Checkbox(
+                                      value: false, onChanged: (val) {})),
+                              Container(
+                                  margin: EdgeInsets.only(left: 30),
+                                  width: 80,
+                                  child: Text(
+                                      '#' + gridData[i]['ticket_id'].toString(),
+                                      style: TextStyle(
+                                          color: Color.fromRGBO(48, 62, 103, 1),
+                                          fontFamily: 'Poppins',
+                                          fontSize: 13))),
+                              DataKu(
+                                  width: 70,
+                                  content: gridData[i]['picname'].toString()),
+                              Expanded(
+                                  child: Container(
+                                      margin: EdgeInsets.only(left: 70),
+                                      child: Text(
+                                          gridData[i]['subject'].toString(),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  48, 62, 103, 1),
+                                              fontFamily: 'Poppins',
+                                              fontSize: 13)))),
+                              DataKu(
+                                  width: 150,
+                                  content:
+                                      gridData[i]['priorityname'].toString()),
+                              DataKu(
+                                  width: 150,
+                                  content:
+                                      gridData[i]['statusname'].toString()),
+                              DataKu(
+                                  width: 150,
+                                  content: gridData[i]['technicalsupportname']
+                                      .toString()),
+                              DataKu(width: 150, content: 'Response Time'),
+                            ]),
+                          ),
                         ),
                       ),
                     ),

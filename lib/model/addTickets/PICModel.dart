@@ -41,7 +41,7 @@ class PICDetailModel {
     if (result.statusCode == 200) {
       return PICDetailModel(listPICDetailData: jsonDecode(result.body)['data']);
     } else {
-      throw Exception('Failed to load PIC Detail');
+      return null;
     }
   }
 }

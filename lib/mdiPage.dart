@@ -5,15 +5,22 @@ import 'package:schedule_task/homePage.dart';
 import 'package:schedule_task/myTicketsPage.dart';
 
 class MDIPage extends StatefulWidget {
-  const MDIPage({Key? key}) : super(key: key);
+  const MDIPage({Key? key, required this.tsID}) : super(key: key);
+
+  final tsID;
 
   @override
   _MDIPageState createState() => _MDIPageState();
 }
 
 class _MDIPageState extends State<MDIPage> {
-  Widget pageSelected = HomePage(tsID: 1906);
-  // Widget pageSelected = AddTicketsPage();
+  Widget? pageSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    pageSelected = HomePage(tsID: widget.tsID);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +57,17 @@ class _MDIPageState extends State<MDIPage> {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 15, bottom: 30),
-                    width: 50,
-                    height: 50,
-                    child: Image.asset('images/Trisco.png', fit: BoxFit.fill),
-                  ),
-                  menu('Home', Icons.home, HomePage(tsID: 1906)),
-                  menu('My Ticket', Icons.list, MyTicketsPage()),
+                      margin: EdgeInsets.only(top: 15, bottom: 30),
+                      width: 50,
+                      height: 50,
+                      child:
+                          Image.asset('images/Trisco.png', fit: BoxFit.fill)),
+                  menu('Home', Icons.home, HomePage(tsID: widget.tsID)),
+                  menu('My Ticket', Icons.list,
+                      MyTicketsPage(tsID: widget.tsID)),
                   menu('Add Ticket', Icons.add, AddTicketsPage()),
-                  menu('All Ticket', Icons.list_alt, AllTicketsPage()),
+                  menu('All Ticket', Icons.list_alt,
+                      AllTicketsPage()),
                 ],
               ),
             ),

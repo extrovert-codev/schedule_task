@@ -12,23 +12,23 @@ class AddTickets extends StatefulWidget {
   _AddTicketsState createState() => _AddTicketsState();
 }
 
-enum ValPriority { low, medium, critical }
+enum Priority { low, medium, critical }
 
 class _AddTicketsState extends State<AddTickets> {
   TextEditingController txtSubject = TextEditingController();
-
-  ValPriority? valPriority = ValPriority.low;
-  String? tsSelectedValue, picSelectedValue;
-  String? picDept, picPos, picSite;
-
-  List<dynamic> picData = [];
-  List<dynamic> tsData = [];
+  Priority? priority;
+  int? tsSelectedValue, picSelectedValue, valPriority;
+  String? txtTS, txtTPICName, txtPicDept, txtPicPos, txtPicSite;
+  List<dynamic> picData = [], tsData = [];
 
   Future addDropDownItems() async {
+    priority = Priority.low;
+    valPriority = 0;
+    txtPicDept = '';
+    txtPicPos = '';
+    txtPicSite = '';
+
     picData = [];
-    picDept = '';
-    picPos = '';
-    picSite = '';
     PICModel.getPIC().then((value) {
       setState(() {
         picData = value.listPICData;
@@ -85,7 +85,7 @@ class _AddTicketsState extends State<AddTickets> {
                           isExpanded: true,
                           items: tsData.map((value) {
                             return DropdownMenuItem(
-                                value: value['employee_id'].toString(),
+                                value: value['employee_id'],
                                 child: Text(
                                     value['name'].toString() +
                                         ' | ' +
@@ -93,9 +93,9 @@ class _AddTicketsState extends State<AddTickets> {
                                     style: TextStyle(
                                         fontFamily: 'Poppins', fontSize: 14)));
                           }).toList(),
-                          onChanged: (val) {
+                          onChanged: (dynamic val) {
                             setState(() {
-                              tsSelectedValue = val.toString();
+                              tsSelectedValue = int.parse(val);
                             });
                           },
                         ),
@@ -120,9 +120,9 @@ class _AddTicketsState extends State<AddTickets> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        radioButtonKu(ValPriority.low, 'Low'),
-                        radioButtonKu(ValPriority.medium, 'Medium'),
-                        radioButtonKu(ValPriority.critical, 'Critical')
+                        radioButtonKu(Priority.low, 'Low'),
+                        radioButtonKu(Priority.medium, 'Medium'),
+                        radioButtonKu(Priority.critical, 'Critical')
                       ],
                     ),
                   ),
@@ -163,7 +163,7 @@ class _AddTicketsState extends State<AddTickets> {
                         isExpanded: true,
                         items: picData.map((value) {
                           return DropdownMenuItem(
-                              value: value['employee_id'].toString(),
+                              value: value['employee_id'],
                               child: Text(
                                   value['name'].toString() +
                                       ' | ' +
@@ -171,19 +171,17 @@ class _AddTicketsState extends State<AddTickets> {
                                   style: TextStyle(
                                       fontFamily: 'Poppins', fontSize: 14)));
                         }).toList(),
-                        onChanged: (val) {
+                        onChanged: (dynamic val) {
                           setState(() {
-                            picSelectedValue = val.toString();
+                            picSelectedValue = val;
                             PICDetailModel.getPICDetail(picSelectedValue)
                                 .then((value) {
                               setState(() {
-                                picDept = value.listPICDetailData[0]
-                                        ['department']
-                                    .toString();
-                                picPos = value.listPICDetailData[0]['position']
-                                    .toString();
-                                picSite = value.listPICDetailData[0]['site']
-                                    .toString();
+                                txtPicDept =
+                                    value.listPICDetailData[0]['department'];
+                                txtPicPos =
+                                    value.listPICDetailData[0]['position'];
+                                txtPicSite = value.listPICDetailData[0]['site'];
                               });
                             });
                           });
@@ -197,20 +195,19 @@ class _AddTicketsState extends State<AddTickets> {
           ),
           SizedBox(width: 20),
           Flexible(
-              flex: 1, child: LabelKu(label: 'PIC Site', content: picSite)),
+              flex: 1, child: LabelKu(label: 'PIC Site', content: txtPicSite)),
           SizedBox(width: 20),
           Flexible(
               flex: 1,
-              child: LabelKu(label: 'PIC Department', content: picDept)),
+              child: LabelKu(label: 'PIC Department', content: txtPicDept)),
           SizedBox(width: 20),
           Flexible(
-              flex: 1, child: LabelKu(label: 'PIC Position', content: picPos))
+              flex: 1,
+              child: LabelKu(label: 'PIC Position', content: txtPicPos))
         ]),
         SizedBox(height: 10),
         Flexible(
-            flex: 2,
-            child: TextBox(
-                controller: txtSubject, label: 'Subject', readOnly: false)),
+            flex: 2, child: TextBox(controller: txtSubject, label: 'Subject')),
         SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -220,7 +217,7 @@ class _AddTicketsState extends State<AddTickets> {
                   TicketModel.postTicket(
                           picSelectedValue.toString(),
                           txtSubject.text,
-                          0.toString(),
+                          valPriority.toString(),
                           tsSelectedValue.toString(),
                           'xcd')
                       .then((value) {
@@ -231,11 +228,16 @@ class _AddTicketsState extends State<AddTickets> {
                         type: AlertType.success,
                         buttons: [
                           DialogButton(
-                              color: Color.fromARGB(255, 15, 193, 167),
+                              color: Color.fromRGBO(80, 110, 228, 1),
                               child: Text('OK',
                                   style: TextStyle(color: Colors.white)),
                               onPressed: () {
-                                Navigator.pop(context);
+                                setState(() {
+                                  priority = Priority.low;
+                                  valPriority = 0;
+                                  txtSubject.text = '';
+                                  Navigator.pop(context);
+                                });
                               })
                         ]).show();
                   });
@@ -249,16 +251,23 @@ class _AddTicketsState extends State<AddTickets> {
     );
   }
 
-  Row radioButtonKu(ValPriority value, label) {
+  Row radioButtonKu(Priority value, label) {
     return Row(
       children: [
         Radio(
             activeColor: Color.fromRGBO(80, 110, 228, 1),
             value: value,
-            groupValue: valPriority,
-            onChanged: (ValPriority? val) {
+            groupValue: priority,
+            onChanged: (Priority? value) {
               setState(() {
-                valPriority = val;
+                priority = value;
+                if (priority.toString() == 'low') {
+                  valPriority = 0;
+                } else if (priority.toString() == 'medium') {
+                  valPriority = 1;
+                } else {
+                  valPriority = 2;
+                }
               });
             }),
         Text(label)
@@ -300,14 +309,10 @@ class LabelKu extends StatelessWidget {
 }
 
 class TextBox extends StatelessWidget {
-  const TextBox(
-      {Key? key,
-      required this.controller,
-      required this.label,
-      required this.readOnly})
+  const TextBox({Key? key, required this.controller, required this.label})
       : super(key: key);
 
-  final controller, label, readOnly;
+  final controller, label;
 
   @override
   Widget build(BuildContext context) {
@@ -324,7 +329,6 @@ class TextBox extends StatelessWidget {
           height: 150,
           child: TextField(
               controller: controller,
-              readOnly: readOnly,
               maxLines: 100,
               style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
               decoration: InputDecoration(

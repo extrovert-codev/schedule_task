@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_task/widget/gridViewKu.dart';
 
-class MyTicketsPage extends StatelessWidget {
-  const MyTicketsPage({Key? key}) : super(key: key);
+class MyTicketsPage extends StatefulWidget {
+  const MyTicketsPage({Key? key, required this.tsID}) : super(key: key);
 
+  final tsID;
+
+  @override
+  _MyTicketsPageState createState() => _MyTicketsPageState();
+}
+
+class _MyTicketsPageState extends State<MyTicketsPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -32,7 +39,7 @@ class MyTicketsPage extends StatelessWidget {
                     SizedBox(height: 18),
                     Expanded(
                         child: Container(
-                      child: GridViewKu(cntData: 2, tsID: 1906),
+                      child: GridViewKu(cntData: 2, tsID: widget.tsID),
                     ))
                   ])),
         ),
