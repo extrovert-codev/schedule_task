@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:schedule_task/mdiPage.dart';
 import 'package:schedule_task/model/loginModel.dart';
@@ -37,15 +38,11 @@ class _LoginPageState extends State<LoginPage> {
                   Container(
                       height: 150,
                       width: 150,
-                      child:
-                          Image.asset('images/Trisco2.png', fit: BoxFit.fill)),
-                  SizedBox(height: 5),
+                      child: Image.asset('assets/images/Trisco2.png')),
+                  SizedBox(height: 10),
                   Text('Schedule Task',
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 25)),
-                  SizedBox(height: 20),
+                      style: TextStyle(fontFamily: 'Poppins', fontSize: 25)),
+                  SizedBox(height: 10),
                   TextBox(controller: txtNIK, label: 'NIK'),
                   SizedBox(height: 10),
                   TextBox(
@@ -55,8 +52,12 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 10),
                   GestureDetector(
                       onTap: () {
+                        EasyLoading.show(
+                            status: 'Loading',
+                            maskType: EasyLoadingMaskType.black);
                         LoginModel.getLogin(txtNIK.text).then((value) {
                           if (value.listLoginData == null) {
+                            EasyLoading.dismiss();
                             Alert(
                                 context: context,
                                 title: 'Opss!',
@@ -75,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                                       })
                                 ]).show();
                           } else {
+                            EasyLoading.dismiss();
                             yr = DateFormat('yyyy').format(DateTime.parse(
                                 value.listLoginData[0]['dob'].toString()));
                             mth = DateFormat('MM').format(DateTime.parse(

@@ -61,7 +61,7 @@ class _MDIPageState extends State<MDIPage> {
                       width: 50,
                       height: 50,
                       child:
-                          Image.asset('images/Trisco.png', fit: BoxFit.fill)),
+                          Image.asset('assets/images/Trisco.png', fit: BoxFit.fill)),
                   menu('Home', Icons.home, HomePage(tsID: widget.tsID)),
                   menu('My Ticket', Icons.list,
                       MyTicketsPage(tsID: widget.tsID)),

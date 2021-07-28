@@ -15,6 +15,7 @@ class AddTickets extends StatefulWidget {
 enum Priority { low, medium, critical }
 
 class _AddTicketsState extends State<AddTickets> {
+  bool isLoading = false;
   TextEditingController txtSubject = TextEditingController();
   Priority? priority;
   int? tsSelectedValue, picSelectedValue, valPriority;
@@ -22,6 +23,7 @@ class _AddTicketsState extends State<AddTickets> {
   List<dynamic> picData = [], tsData = [];
 
   Future addDropDownItems() async {
+    isLoading = true;
     priority = Priority.low;
     valPriority = 0;
     txtPicDept = '';
@@ -32,6 +34,7 @@ class _AddTicketsState extends State<AddTickets> {
     PICModel.getPIC().then((value) {
       setState(() {
         picData = value.listPICData;
+        isLoading = false;
       });
     });
 
@@ -51,204 +54,236 @@ class _AddTicketsState extends State<AddTickets> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Flexible(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return (isLoading == true)
+        ? Center(child: CircularProgressIndicator())
+        : Column(
+            children: [
+              Row(
                 children: [
-                  Text('Technical Support',
-                      style: TextStyle(
-                          color: Color.fromRGBO(101, 109, 154, 1),
-                          fontFamily: 'Poppins',
-                          fontSize: 13)),
-                  SizedBox(height: 5),
-                  SizedBox(
-                    height: 40,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(
-                              color: Color.fromRGBO(158, 158, 158, 1))),
-                      child: Center(
-                          child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          hint: Text('--Select TS--',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: 'Poppins', fontSize: 14)),
-                          value: tsSelectedValue,
-                          isExpanded: true,
-                          items: tsData.map((value) {
-                            return DropdownMenuItem(
-                                value: value['employee_id'],
-                                child: Text(
-                                    value['name'].toString() +
-                                        ' | ' +
-                                        value['nik'].toString(),
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins', fontSize: 14)));
-                          }).toList(),
-                          onChanged: (dynamic val) {
-                            setState(() {
-                              tsSelectedValue = int.parse(val);
-                            });
-                          },
-                        ),
-                      )),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(width: 40),
-            Flexible(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Priority',
-                      style: TextStyle(
-                          color: Color.fromRGBO(101, 109, 154, 1),
-                          fontFamily: 'Poppins',
-                          fontSize: 13)),
-                  SizedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Flexible(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        radioButtonKu(Priority.low, 'Low'),
-                        radioButtonKu(Priority.medium, 'Medium'),
-                        radioButtonKu(Priority.critical, 'Critical')
+                        Text('Technical Support',
+                            style: TextStyle(
+                                color: Color.fromRGBO(101, 109, 154, 1),
+                                fontFamily: 'Poppins',
+                                fontSize: 13)),
+                        SizedBox(height: 5),
+                        SizedBox(
+                          height: 40,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 10, right: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all(
+                                    color: Color.fromRGBO(158, 158, 158, 1))),
+                            child: Center(
+                                child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                hint: Text('--Select TS--',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins', fontSize: 14)),
+                                value: tsSelectedValue,
+                                isExpanded: true,
+                                items: tsData.map((value) {
+                                  return DropdownMenuItem(
+                                      value: value['employee_id'],
+                                      child: Text(
+                                          value['name'].toString() +
+                                              ' | ' +
+                                              value['nik'].toString(),
+                                          style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontSize: 14)));
+                                }).toList(),
+                                onChanged: (dynamic val) {
+                                  setState(() {
+                                    tsSelectedValue = int.parse(val);
+                                  });
+                                },
+                              ),
+                            )),
+                          ),
+                        ),
                       ],
                     ),
                   ),
+                  SizedBox(width: 40),
+                  Flexible(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Priority',
+                            style: TextStyle(
+                                color: Color.fromRGBO(101, 109, 154, 1),
+                                fontFamily: 'Poppins',
+                                fontSize: 13)),
+                        SizedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              radioButtonKu(Priority.low, 'Low'),
+                              radioButtonKu(Priority.medium, 'Medium'),
+                              radioButtonKu(Priority.critical, 'Critical')
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
-        SizedBox(height: 10),
-        Row(children: [
-          Flexible(
-            flex: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('PIC',
-                    style: TextStyle(
-                        color: Color.fromRGBO(101, 109, 154, 1),
-                        fontFamily: 'Poppins',
-                        fontSize: 13)),
-                SizedBox(height: 5),
-                SizedBox(
-                  height: 40,
-                  child: Container(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        border: Border.all(
-                            color: Color.fromRGBO(158, 158, 158, 1))),
-                    child: Center(
-                        child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        hint: Text('--Select PIC--',
-                            textAlign: TextAlign.center,
-                            style:
-                                TextStyle(fontFamily: 'Poppins', fontSize: 14)),
-                        value: picSelectedValue,
-                        isExpanded: true,
-                        items: picData.map((value) {
-                          return DropdownMenuItem(
-                              value: value['employee_id'],
-                              child: Text(
-                                  value['name'].toString() +
-                                      ' | ' +
-                                      value['nik'].toString(),
+              SizedBox(height: 10),
+              Row(children: [
+                Flexible(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('PIC',
+                          style: TextStyle(
+                              color: Color.fromRGBO(101, 109, 154, 1),
+                              fontFamily: 'Poppins',
+                              fontSize: 13)),
+                      SizedBox(height: 5),
+                      SizedBox(
+                        height: 40,
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(
+                                  color: Color.fromRGBO(158, 158, 158, 1))),
+                          child: Center(
+                              child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              hint: Text('--Select PIC--',
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontFamily: 'Poppins', fontSize: 14)));
-                        }).toList(),
-                        onChanged: (dynamic val) {
-                          setState(() {
-                            picSelectedValue = val;
-                            PICDetailModel.getPICDetail(picSelectedValue)
-                                .then((value) {
-                              setState(() {
-                                txtPicDept =
-                                    value.listPICDetailData[0]['department'];
-                                txtPicPos =
-                                    value.listPICDetailData[0]['position'];
-                                txtPicSite = value.listPICDetailData[0]['site'];
-                              });
-                            });
-                          });
-                        },
+                                      fontFamily: 'Poppins', fontSize: 14)),
+                              value: picSelectedValue,
+                              isExpanded: true,
+                              items: picData.map((value) {
+                                return DropdownMenuItem(
+                                    value: value['employee_id'],
+                                    child: Text(
+                                        value['name'].toString() +
+                                            ' | ' +
+                                            value['nik'].toString(),
+                                        style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 14)));
+                              }).toList(),
+                              onChanged: (dynamic val) {
+                                setState(() {
+                                  picSelectedValue = val;
+                                  PICDetailModel.getPICDetail(picSelectedValue)
+                                      .then((value) {
+                                    setState(() {
+                                      txtPicDept = value.listPICDetailData[0]
+                                          ['department'];
+                                      txtPicPos = value.listPICDetailData[0]
+                                          ['position'];
+                                      txtPicSite =
+                                          value.listPICDetailData[0]['site'];
+                                    });
+                                  });
+                                });
+                              },
+                            ),
+                          )),
+                        ),
                       ),
-                    )),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          SizedBox(width: 20),
-          Flexible(
-              flex: 1, child: LabelKu(label: 'PIC Site', content: txtPicSite)),
-          SizedBox(width: 20),
-          Flexible(
-              flex: 1,
-              child: LabelKu(label: 'PIC Department', content: txtPicDept)),
-          SizedBox(width: 20),
-          Flexible(
-              flex: 1,
-              child: LabelKu(label: 'PIC Position', content: txtPicPos))
-        ]),
-        SizedBox(height: 10),
-        Flexible(
-            flex: 2, child: TextBox(controller: txtSubject, label: 'Subject')),
-        SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            GestureDetector(
-                onTap: () {
-                  TicketModel.postTicket(
-                          picSelectedValue.toString(),
-                          txtSubject.text,
-                          valPriority.toString(),
-                          tsSelectedValue.toString(),
-                          'xcd')
-                      .then((value) {
-                    Alert(
-                        context: context,
-                        title: 'Success!',
-                        desc: 'Data saved!',
-                        type: AlertType.success,
-                        buttons: [
-                          DialogButton(
-                              color: Color.fromRGBO(80, 110, 228, 1),
-                              child: Text('OK',
-                                  style: TextStyle(color: Colors.white)),
-                              onPressed: () {
-                                setState(() {
-                                  priority = Priority.low;
-                                  valPriority = 0;
-                                  txtSubject.text = '';
-                                  Navigator.pop(context);
-                                });
-                              })
-                        ]).show();
-                  });
-                },
-                child: Button(label: 'Save', color: Colors.green)),
-            SizedBox(width: 10),
-            Button(label: 'Delete', color: Colors.red)
-          ],
-        )
-      ],
-    );
+                SizedBox(width: 20),
+                Flexible(
+                    flex: 1,
+                    child: LabelKu(label: 'PIC Site', content: txtPicSite)),
+                SizedBox(width: 20),
+                Flexible(
+                    flex: 1,
+                    child:
+                        LabelKu(label: 'PIC Department', content: txtPicDept)),
+                SizedBox(width: 20),
+                Flexible(
+                    flex: 1,
+                    child: LabelKu(label: 'PIC Position', content: txtPicPos))
+              ]),
+              SizedBox(height: 10),
+              Flexible(
+                  flex: 2,
+                  child: TextBox(controller: txtSubject, label: 'Subject')),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        TicketModel.postTicket(
+                                picSelectedValue.toString(),
+                                txtSubject.text,
+                                valPriority.toString(),
+                                tsSelectedValue.toString(),
+                                'xcd')
+                            .then((value) {
+                          if (value == 'success') {
+                            Alert(
+                                context: context,
+                                title: 'Success!',
+                                desc: 'Ticket saved!',
+                                type: AlertType.success,
+                                buttons: [
+                                  DialogButton(
+                                      color: Color.fromRGBO(80, 110, 228, 1),
+                                      child: Text('OK',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        setState(() {
+                                          priority = Priority.low;
+                                          valPriority = 0;
+                                          txtSubject.text = '';
+                                          Navigator.pop(context);
+                                        });
+                                      })
+                                ]).show();
+                          } else {
+                            Alert(
+                                context: context,
+                                title: 'Failed!',
+                                desc: 'Ticket save failed!',
+                                type: AlertType.error,
+                                buttons: [
+                                  DialogButton(
+                                      color: Color.fromRGBO(80, 110, 228, 1),
+                                      child: Text('OK',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        setState(() {
+                                          priority = Priority.low;
+                                          valPriority = 0;
+                                          txtSubject.text = '';
+                                          Navigator.pop(context);
+                                        });
+                                      })
+                                ]).show();
+                          }
+                        });
+                      },
+                      child: Button(label: 'Save', color: Colors.green)),
+                  SizedBox(width: 10),
+                  Button(label: 'Delete', color: Colors.red)
+                ],
+              )
+            ],
+          );
   }
 
   Row radioButtonKu(Priority value, label) {

@@ -3,28 +3,32 @@ import 'package:schedule_task/model/gridView/ticketModel.dart';
 import 'package:schedule_task/ticketDescPage.dart';
 
 class GridViewKu extends StatefulWidget {
-  const GridViewKu({Key? key, required this.cntData, required this.tsID})
+  const GridViewKu(
+      {Key? key, this.isAll, required this.cntData, required this.tsID})
       : super(key: key);
 
-  final cntData, tsID;
+  final isAll, cntData, tsID;
 
   @override
   _GridViewKuState createState() => _GridViewKuState();
 }
 
 class _GridViewKuState extends State<GridViewKu> {
+  bool isLoading = false;
   bool isHovering = false;
   bool isCheckboxShow = false;
 
   List<dynamic> gridData = [];
 
   Future refreshData() async {
+    isLoading = true;
     gridData = [];
     TicketModel.getTicket(widget.tsID).then((value) {
       setState(() {
         if (value.listTicketData != null) {
           gridData = value.listTicketData;
         }
+        isLoading = false;
       });
     });
   }
@@ -37,128 +41,163 @@ class _GridViewKuState extends State<GridViewKu> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Header
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [ShowEntries(), Search()]),
+    return (isLoading == true)
+        ? Center(child: CircularProgressIndicator())
+        : Column(
+            children: [
+              // Header
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [ShowEntries(), Search()]),
 
-        // Columns
-        Container(
-            height: 1.5,
-            margin: EdgeInsets.only(top: 8),
-            color: Colors.grey[300]),
-        Container(
-            height: 65,
-            padding: EdgeInsets.only(left: 15, right: 15),
-            color: Color.fromRGBO(241, 245, 250, 1),
-            child: Row(children: [
-              Visibility(
-                  visible: isCheckboxShow,
-                  child: Checkbox(value: false, onChanged: (val) {})),
+              // Columns
               Container(
-                  margin: EdgeInsets.only(left: 30),
-                  width: 80,
-                  child: Text('ID',
-                      style: TextStyle(
-                          color: Color.fromRGBO(48, 62, 103, 1),
-                          fontFamily: 'Poppins',
-                          fontSize: 13))),
-              ColumnKu(width: 70, title: 'PIC'),
-              Expanded(
-                  child: Container(
-                      margin: EdgeInsets.only(left: 70),
-                      child: Text('Subject',
-                          style: TextStyle(
-                              color: Color.fromRGBO(48, 62, 103, 1),
-                              fontFamily: 'Poppins',
-                              fontSize: 13)))),
-              ColumnKu(width: 150, title: 'Priority'),
-              ColumnKu(width: 150, title: 'Status'),
-              ColumnKu(width: 150, title: 'Technical Support'),
-              ColumnKu(width: 150, title: 'Response Time'),
-            ])),
-        Container(height: 1.5, color: Colors.grey[300]),
+                  height: 1.5,
+                  margin: EdgeInsets.only(top: 8),
+                  color: Colors.grey[300]),
+              Container(
+                  height: 65.0,
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  color: Color.fromRGBO(241, 245, 250, 1),
+                  child: Row(children: [
+                    Visibility(
+                        visible: isCheckboxShow,
+                        child: Checkbox(value: false, onChanged: (val) {})),
+                    Container(
+                        margin: EdgeInsets.only(left: 30),
+                        width: 80.0,
+                        child: Text('ID',
+                            style: TextStyle(
+                                color: Color.fromRGBO(48, 62, 103, 1),
+                                fontFamily: 'Poppins',
+                                fontSize: 13))),
+                    ColumnKu(width: 70.0, title: 'PIC'),
+                    Expanded(
+                        child: Container(
+                            margin: EdgeInsets.only(left: 70),
+                            child: Text('Subject',
+                                style: TextStyle(
+                                    color: Color.fromRGBO(48, 62, 103, 1),
+                                    fontFamily: 'Poppins',
+                                    fontSize: 13)))),
+                    ColumnKu(width: 100.0, title: 'Priority'),
+                    ColumnKu(width: 150.0, title: 'Status'),
+                    ColumnKu(width: 150.0, title: 'Technical Support'),
+                    Visibility(
+                        visible: (widget.isAll == true) ? true : false,
+                        child: ColumnKu(width: 150.0, title: 'Feedback')),
+                    ColumnKu(width: 150.0, title: 'Response Time'),
+                  ])),
+              Container(height: 1.5, color: Colors.grey[300]),
 
-        // Data
-        Expanded(
-          child: SizedBox(
-            child: ListView.separated(
-                padding: EdgeInsets.only(top: 5),
-                itemBuilder: (context, i) => (gridData.length == 0)
-                    ? Container()
-                    : Container(
-                        height: 40,
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => TicketDescPage(
-                                          subject: gridData[i]['subject']
-                                              .toString())));
-                            },
-                            child: Container(
-                              color: Colors.white,
-                              child: Row(children: [
-                                Visibility(
-                                    visible: isCheckboxShow,
-                                    child: Checkbox(
-                                        value: false, onChanged: (val) {})),
-                                Container(
-                                    margin: EdgeInsets.only(left: 30),
-                                    width: 80,
-                                    child: Text(
-                                        '#' +
-                                            gridData[i]['ticket_id'].toString(),
-                                        style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(48, 62, 103, 1),
-                                            fontFamily: 'Poppins',
-                                            fontSize: 13))),
-                                DataKu(
-                                    width: 70,
-                                    content: gridData[i]['picname'].toString()),
-                                Expanded(
-                                    child: Container(
-                                        margin: EdgeInsets.only(left: 70),
-                                        child: Text(
-                                            gridData[i]['subject'].toString(),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    48, 62, 103, 1),
-                                                fontFamily: 'Poppins',
-                                                fontSize: 13)))),
-                                DataKu(
-                                    width: 150,
-                                    content:
-                                        gridData[i]['priorityname'].toString()),
-                                DataKu(
-                                    width: 150,
-                                    content:
-                                        gridData[i]['statusname'].toString()),
-                                DataKu(
-                                    width: 150,
-                                    content: gridData[i]['technicalsupportname']
-                                        .toString()),
-                                DataKu(width: 150, content: 'Response Time'),
-                              ]),
+              // Data
+              Expanded(
+                child: SizedBox(
+                  child: ListView.separated(
+                      padding: EdgeInsets.only(top: 5),
+                      itemBuilder: (context, i) => (gridData.length == 0)
+                          ? Container()
+                          : Container(
+                              height: 40.0,
+                              padding: EdgeInsets.only(left: 15, right: 15),
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TicketDescPage(
+                                                        ticketID: gridData[i]
+                                                                ['ticket_id']
+                                                            .toString(),
+                                                        status: gridData[i]
+                                                                ['statusname']
+                                                            .toString(),
+                                                        subject: gridData[i]
+                                                                ['subject']
+                                                            .toString())))
+                                        .whenComplete(() => refreshData());
+                                  },
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Row(children: [
+                                      Visibility(
+                                          visible: isCheckboxShow,
+                                          child: Checkbox(
+                                              value: false,
+                                              onChanged: (val) {})),
+                                      Container(
+                                          margin: EdgeInsets.only(left: 30),
+                                          width: 80.0,
+                                          child: Text(
+                                              '#' +
+                                                  gridData[i]['ticket_id']
+                                                      .toString(),
+                                              style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      48, 62, 103, 1),
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 13))),
+                                      DataKu(
+                                          width: 70.0,
+                                          content: gridData[i]['picname']
+                                              .toString()),
+                                      Expanded(
+                                          child: Container(
+                                              margin: EdgeInsets.only(left: 70),
+                                              child: Text(
+                                                  gridData[i]['subject']
+                                                      .toString(),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style:
+                                                      TextStyle(
+                                                          color: Color.fromRGBO(
+                                                              48, 62, 103, 1),
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: 13)))),
+                                      DataKu(
+                                          width: 100.0,
+                                          content: gridData[i]['priorityname']
+                                              .toString()),
+                                      DataKu(
+                                          width: 150.0,
+                                          content: gridData[i]['statusname']
+                                              .toString()),
+                                      DataKu(
+                                          width: 150.0,
+                                          content: gridData[i]
+                                                  ['technicalsupportname']
+                                              .toString()),
+                                      Visibility(
+                                          visible: (widget.isAll == true)
+                                              ? true
+                                              : false,
+                                          child: DataKu(
+                                              width: 150.0,
+                                              content: (gridData[i]
+                                                          ['feedback'] !=
+                                                      null)
+                                                  ? gridData[i]['feedback']
+                                                      .toString()
+                                                  : '')),
+                                      DataKu(
+                                          width: 150.0,
+                                          content: 'Response Time'),
+                                    ]),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                separatorBuilder: (context, i) => Divider(),
-                itemCount: gridData.length),
-          ),
-        )
-      ],
-    );
+                      separatorBuilder: (context, i) => Divider(),
+                      itemCount: gridData.length),
+                ),
+              )
+            ],
+          );
   }
 }
 
@@ -193,26 +232,25 @@ class DataKu extends StatelessWidget {
         child: (content == 'Finish' ||
                 content == 'Waiting List' ||
                 content == 'On Going')
-            ? Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: (content == 'Finish')
-                          ? Color.fromRGBO(224, 249, 244, 1)
-                          : (content == 'Waiting List')
-                              ? Color.fromRGBO(255, 220, 220, 1)
-                              : Color.fromRGBO(255, 244, 189, 1),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Center(
-                    child: Text(content,
-                        style: TextStyle(
-                            color: (content == 'Finish')
-                                ? Color.fromRGBO(45, 223, 214, 1)
-                                : (content == 'Waiting List')
-                                    ? Color.fromRGBO(255, 91, 91, 1)
-                                    : Color.fromRGBO(237, 170, 41, 1),
-                            fontFamily: 'Poppins',
-                            fontSize: 13)),
-                  ),
+            ? Container(
+                margin: EdgeInsets.fromLTRB(0, 5, 5, 5),
+                decoration: BoxDecoration(
+                    color: (content == 'Finish')
+                        ? Color.fromRGBO(224, 249, 244, 1)
+                        : (content == 'Waiting List')
+                            ? Color.fromRGBO(255, 220, 220, 1)
+                            : Color.fromRGBO(255, 244, 189, 1),
+                    borderRadius: BorderRadius.circular(5)),
+                child: Center(
+                  child: Text(content,
+                      style: TextStyle(
+                          color: (content == 'Finish')
+                              ? Color.fromRGBO(45, 223, 214, 1)
+                              : (content == 'Waiting List')
+                                  ? Color.fromRGBO(255, 91, 91, 1)
+                                  : Color.fromRGBO(237, 170, 41, 1),
+                          fontFamily: 'Poppins',
+                          fontSize: 13)),
                 ),
               )
             : Text(content,

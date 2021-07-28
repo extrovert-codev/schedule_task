@@ -56,6 +56,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_easyloading",
+      "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_easyloading-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_spinkit",
+      "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_spinkit-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///C:/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -170,7 +182,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-07-27T17:26:21.095237Z",
+  "generated": "2021-07-28T15:59:23.078302Z",
   "generator": "pub",
   "generatorVersion": "2.13.4"
 }
