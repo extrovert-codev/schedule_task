@@ -7,11 +7,11 @@ class EditTicketsPage extends StatefulWidget {
       required this.ticketID,
       required this.picID,
       required this.subject,
-      required this.sPriority,
+      required this.valPriority,
       required this.tsID})
       : super(key: key);
 
-  final ticketID, picID, subject, sPriority,  tsID;
+  final ticketID, picID, subject, valPriority, tsID;
 
   @override
   _EditTicketsPageState createState() => _EditTicketsPageState();
@@ -45,7 +45,7 @@ class _EditTicketsPageState extends State<EditTicketsPage> {
                           ticketID: widget.ticketID,
                           picID: widget.picID,
                           subject: widget.subject,
-                          sPriority: widget.sPriority,
+                          valPriority: widget.valPriority,
                           tsID: widget.tsID),
                     ))
                   ])),

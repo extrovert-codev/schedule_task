@@ -12,11 +12,11 @@ class EditTickets extends StatefulWidget {
       required this.ticketID,
       required this.picID,
       required this.subject,
-      required this.sPriority,
+      required this.valPriority,
       required this.tsID})
       : super(key: key);
 
-  final ticketID, picID, subject, sPriority,  tsID;
+  final ticketID, picID, subject, valPriority, tsID;
 
   @override
   _EditTicketsState createState() => _EditTicketsState();
@@ -32,30 +32,28 @@ class _EditTicketsState extends State<EditTickets> {
   String? txtTS, txtTPICName, txtPicDept, txtPicPos, txtPicSite;
   List<dynamic> picData = [], tsData = [];
 
-  Future addDropDownItems() async {
+  void addDropDownItems() {
     isLoading = true;
-    if (widget.sPriority == 'Low') {
-      valPriority = 0;
-    } else if (widget.sPriority == 'Medium') {
-      valPriority = 1;
+    if (widget.valPriority == '0') {
+      priority = Priority.low;
+    } else if (widget.valPriority == '1') {
+      priority = Priority.medium;
     } else {
-      valPriority = 2;
+      priority = Priority.critical;
     }
+
+    PICDetailModel.getPICDetail(widget.picID).then((value) {
+      setState(() {
+        txtPicDept = value.listPICDetailData[0]['department'];
+        txtPicPos = value.listPICDetailData[0]['position'];
+        txtPicSite = value.listPICDetailData[0]['site'];
+      });
+    });
 
     picData = [];
     PICModel.getPIC().then((value) {
       setState(() {
         picData = value.listPICData;
-        PICDetailModel.getPICDetail(widget.picID).then((value) {
-          setState(() {
-            print(value);
-            print(value.listPICDetailData);
-            txtPicDept = value.listPICDetailData[0]['department'];
-            txtPicPos = value.listPICDetailData[0]['position'];
-            txtPicSite = value.listPICDetailData[0]['site'];
-          });
-        });
-        isLoading = false;
       });
     });
 
@@ -65,6 +63,7 @@ class _EditTicketsState extends State<EditTickets> {
         tsData = value.listTSData;
       });
     });
+    isLoading = false;
   }
 
   @override

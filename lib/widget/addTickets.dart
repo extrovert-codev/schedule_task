@@ -7,7 +7,7 @@ import 'package:schedule_task/model/gridView/ticketModel.dart';
 import 'button.dart';
 
 class AddTickets extends StatefulWidget {
-  const AddTickets({Key? key,required this.empID}) : super(key: key);
+  const AddTickets({Key? key, required this.empID}) : super(key: key);
 
   final empID;
 
@@ -25,7 +25,7 @@ class _AddTicketsState extends State<AddTickets> {
   String? txtTS, txtTPICName, txtPicDept, txtPicPos, txtPicSite;
   List<dynamic> picData = [], tsData = [];
 
-  Future addDropDownItems() async {
+  void addDropDownItems() {
     isLoading = true;
     priority = Priority.low;
     valPriority = 0;
@@ -37,7 +37,6 @@ class _AddTicketsState extends State<AddTickets> {
     PICModel.getPIC().then((value) {
       setState(() {
         picData = value.listPICData;
-        isLoading = false;
       });
     });
 
@@ -47,6 +46,7 @@ class _AddTicketsState extends State<AddTickets> {
         tsData = value.listTSData;
       });
     });
+    isLoading = false;
   }
 
   @override
@@ -337,11 +337,13 @@ class LabelKu extends StatelessWidget {
                 fontSize: 13)),
         SizedBox(height: 5),
         Container(
+          padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
           height: 40,
           decoration: BoxDecoration(
               border: Border.all(color: Color.fromRGBO(158, 158, 158, 1)),
               borderRadius: BorderRadius.circular(3.5)),
-          child: Center(
+          child: Align(
+            alignment: Alignment.centerLeft,
             child: Text(content,
                 style: TextStyle(fontFamily: 'Poppins', fontSize: 14)),
           ),
