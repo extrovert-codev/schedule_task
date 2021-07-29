@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:schedule_task/widget/gridViewKu.dart';
 
 class MyTicketsPage extends StatefulWidget {
-  const MyTicketsPage({Key? key, required this.tsID}) : super(key: key);
+  const MyTicketsPage({Key? key, required this.empID}) : super(key: key);
 
-  final tsID;
+  final empID;
 
   @override
   _MyTicketsPageState createState() => _MyTicketsPageState();
@@ -39,7 +39,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                     SizedBox(height: 18),
                     Expanded(
                         child: Container(
-                      child: GridViewKu(cntData: 2, tsID: widget.tsID),
+                      child: GridViewKu(cntData: 2, empID: widget.empID),
                     ))
                   ])),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:schedule_task/model/addTickets/PICModel.dart';
 import 'package:schedule_task/model/addTickets/TSModel.dart';
@@ -6,7 +7,9 @@ import 'package:schedule_task/model/gridView/ticketModel.dart';
 import 'button.dart';
 
 class AddTickets extends StatefulWidget {
-  const AddTickets({Key? key}) : super(key: key);
+  const AddTickets({Key? key,required this.empID}) : super(key: key);
+
+  final empID;
 
   @override
   _AddTicketsState createState() => _AddTicketsState();
@@ -101,7 +104,7 @@ class _AddTicketsState extends State<AddTickets> {
                                 }).toList(),
                                 onChanged: (dynamic val) {
                                   setState(() {
-                                    tsSelectedValue = int.parse(val);
+                                    tsSelectedValue = val;
                                   });
                                 },
                               ),
@@ -225,14 +228,18 @@ class _AddTicketsState extends State<AddTickets> {
                 children: [
                   GestureDetector(
                       onTap: () {
+                        EasyLoading.show(
+                            status: 'Loading',
+                            maskType: EasyLoadingMaskType.black);
                         TicketModel.postTicket(
                                 picSelectedValue.toString(),
                                 txtSubject.text,
                                 valPriority.toString(),
                                 tsSelectedValue.toString(),
-                                'xcd')
+                                widget.empID.toString())
                             .then((value) {
                           if (value == 'success') {
+                            EasyLoading.dismiss();
                             Alert(
                                 context: context,
                                 title: 'Success!',
@@ -254,6 +261,7 @@ class _AddTicketsState extends State<AddTickets> {
                                       })
                                 ]).show();
                           } else {
+                            EasyLoading.dismiss();
                             Alert(
                                 context: context,
                                 title: 'Failed!',

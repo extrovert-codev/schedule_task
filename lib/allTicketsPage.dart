@@ -32,7 +32,7 @@ class AllTicketsPage extends StatelessWidget {
                     SizedBox(height: 18),
                     Expanded(
                         child: Container(
-                      child: GridViewKu(isAll: true, cntData: 10, tsID: null),
+                      child: GridViewKu(isAll: true, cntData: 10, empID: null),
                     )),
                     SizedBox(height: 25),
                     Row(

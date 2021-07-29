@@ -4,9 +4,9 @@ import 'package:schedule_task/widget/homePage/myStatus.dart';
 import 'package:schedule_task/widget/gridViewKu.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.tsID}) : super(key: key);
+  const HomePage({Key? key, required this.empID}) : super(key: key);
 
-  final tsID;
+  final empID;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
     ongoing = 0;
     finish = 0;
 
-    MyStatusModel.getMyStatus(widget.tsID).then((value) {
+    MyStatusModel.getMyStatus(widget.empID).then((value) {
       setState(() {
         ongoing = value.listMyStatusData[0]['ongoing'];
         finish = value.listMyStatusData[0]['finish'];
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: 18),
                     Expanded(
                         child: Container(
-                      child: GridViewKu(cntData: 2, tsID: widget.tsID),
+                      child: GridViewKu(cntData: 2, empID: widget.empID),
                     ))
                   ])),
         ),

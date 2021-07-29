@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_task/widget/addTickets.dart';
 
-class AddTicketsPage extends StatelessWidget {
-  const AddTicketsPage({Key? key}) : super(key: key);
+class AddTicketsPage extends StatefulWidget {
+  const AddTicketsPage({Key? key, required this.empID}) : super(key: key);
 
+  final empID;
+
+  @override
+  _AddTicketsPageState createState() => _AddTicketsPageState();
+}
+
+class _AddTicketsPageState extends State<AddTicketsPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -27,7 +34,7 @@ class AddTicketsPage extends StatelessWidget {
                     SizedBox(height: 18),
                     Expanded(
                         child: Container(
-                      child: AddTickets(),
+                      child: AddTickets(empID: widget.empID),
                     ))
                   ])),
         ),

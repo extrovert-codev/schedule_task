@@ -14,8 +14,8 @@ class TicketModel {
       useredited;
 
   TicketModel(
-      {this.ticketID,
-      this.listTicketData,
+      {this.listTicketData,
+      this.ticketID,
       this.picID,
       this.subject,
       this.priority,
@@ -65,16 +65,33 @@ class TicketModel {
     } else {
       return 'failed';
     }
-
-    // return TicketModel(
-    //     picID: jsonDecode(result.body)['pic_id'],
-    //     subject: jsonDecode(result.body)['subject'],
-    //     priority: jsonDecode(result.body)['priority'],
-    //     tsID: jsonDecode(result.body)['technicalsupport_id'],
-    //     useredited: jsonDecode(result.body)['useredited']);
   }
 
-  static Future putTicket(ticketID, status, feedback) async {
+  static Future putTicket(
+      ticketID, picID, subject, priority, status, tsID) async {
+    var url = gScript.apiLink + '/Tickets';
+
+    var result = await http.put(Uri.parse(url), headers: {
+      'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
+      'API-KEYS':
+          '\$2y\$10\$EaoautcFP3mNIZ/Kg5OIMurSdS9dgsqNQ0vTrYGe83CCikxhLGuOi'
+    }, body: {
+      'ticket_id': ticketID,
+      'pic_id': picID,
+      'subject': subject,
+      'priority': priority,
+      'status': status,
+      'technicalsupport_id': tsID
+    });
+
+    if (result.statusCode == 201) {
+      return 'success';
+    } else {
+      return 'failed';
+    }
+  }
+
+  static Future putStatusTicket(ticketID, status, feedback) async {
     var url = gScript.apiLink + '/Tickets';
 
     var result = await http.put(Uri.parse(url), headers: {
@@ -88,6 +105,24 @@ class TicketModel {
     });
 
     if (result.statusCode == 201) {
+      return 'success';
+    } else {
+      return 'failed';
+    }
+  }
+
+  static Future deleteTicket(ticketID) async {
+    var url = gScript.apiLink + '/Tickets';
+
+    var result = await http.delete(Uri.parse(url), headers: {
+      'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
+      'API-KEYS':
+          '\$2y\$10\$EaoautcFP3mNIZ/Kg5OIMurSdS9dgsqNQ0vTrYGe83CCikxhLGuOi'
+    }, body: {
+      'ticket_id': ticketID
+    });
+
+    if (result.statusCode == 204) {
       return 'success';
     } else {
       return 'failed';

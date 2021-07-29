@@ -4,10 +4,10 @@ import 'package:schedule_task/ticketDescPage.dart';
 
 class GridViewKu extends StatefulWidget {
   const GridViewKu(
-      {Key? key, this.isAll, required this.cntData, required this.tsID})
+      {Key? key, this.isAll, required this.cntData, required this.empID})
       : super(key: key);
 
-  final isAll, cntData, tsID;
+  final isAll, cntData, empID;
 
   @override
   _GridViewKuState createState() => _GridViewKuState();
@@ -23,7 +23,7 @@ class _GridViewKuState extends State<GridViewKu> {
   Future refreshData() async {
     isLoading = true;
     gridData = [];
-    TicketModel.getTicket(widget.tsID).then((value) {
+    TicketModel.getTicket(widget.empID).then((value) {
       setState(() {
         if (value.listTicketData != null) {
           gridData = value.listTicketData;
@@ -105,20 +105,26 @@ class _GridViewKuState extends State<GridViewKu> {
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TicketDescPage(
-                                                        ticketID: gridData[i]
-                                                                ['ticket_id']
-                                                            .toString(),
-                                                        status: gridData[i]
-                                                                ['statusname']
-                                                            .toString(),
-                                                        subject: gridData[i]
-                                                                ['subject']
-                                                            .toString())))
-                                        .whenComplete(() => refreshData());
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => TicketDescPage(
+                                                ticketID: gridData[i]
+                                                        ['ticket_id']
+                                                    .toString(),
+                                                picID: gridData[i]['pic_id']
+                                                    .toString(),
+                                                priority: gridData[i]
+                                                        ['priority']
+                                                    .toString(),
+                                                tsID: gridData[i]
+                                                        ['technicalsupport_id']
+                                                    .toString(),
+                                                status: gridData[i]
+                                                        ['statusname']
+                                                    .toString(),
+                                                subject: gridData[i]['subject']
+                                                    .toString()))).whenComplete(
+                                        () => refreshData());
                                   },
                                   child: Container(
                                     color: Colors.white,
