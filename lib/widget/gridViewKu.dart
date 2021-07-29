@@ -120,7 +120,7 @@ class _GridViewKuState extends State<GridViewKu> {
                                                         ['technicalsupport_id']
                                                     .toString(),
                                                 status: gridData[i]
-                                                        ['statusname']
+                                                        ['status']
                                                     .toString(),
                                                 subject: gridData[i]['subject']
                                                     .toString()))).whenComplete(
