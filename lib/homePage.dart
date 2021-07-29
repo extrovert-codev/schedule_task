@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int? ongoing, finish;
 
-  Future refreshData() async {
+  void refreshData() {
     ongoing = 0;
     finish = 0;
 

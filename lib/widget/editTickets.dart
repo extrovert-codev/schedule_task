@@ -6,18 +6,25 @@ import 'package:schedule_task/model/addTickets/TSModel.dart';
 import 'package:schedule_task/model/gridView/ticketModel.dart';
 import 'button.dart';
 
-class AddTickets extends StatefulWidget {
-  const AddTickets({Key? key, required this.empID}) : super(key: key);
+class EditTickets extends StatefulWidget {
+  const EditTickets(
+      {Key? key,
+      required this.ticketID,
+      required this.picID,
+      required this.subject,
+      required this.valPriority,
+      required this.tsID})
+      : super(key: key);
 
-  final empID;
+  final ticketID, picID, subject, valPriority, tsID;
 
   @override
-  _AddTicketsState createState() => _AddTicketsState();
+  _EditTicketsState createState() => _EditTicketsState();
 }
 
 enum Priority { low, medium, critical }
 
-class _AddTicketsState extends State<AddTickets> {
+class _EditTicketsState extends State<EditTickets> {
   bool isLoading = false;
   TextEditingController txtSubject = TextEditingController();
   Priority? priority;
@@ -27,11 +34,21 @@ class _AddTicketsState extends State<AddTickets> {
 
   void addDropDownItems() {
     isLoading = true;
-    priority = Priority.low;
-    valPriority = 0;
-    txtPicDept = '';
-    txtPicPos = '';
-    txtPicSite = '';
+    if (widget.valPriority == '0') {
+      priority = Priority.low;
+    } else if (widget.valPriority == '1') {
+      priority = Priority.medium;
+    } else {
+      priority = Priority.critical;
+    }
+
+    PICDetailModel.getPICDetail(widget.picID).then((value) {
+      setState(() {
+        txtPicDept = value.listPICDetailData[0]['department'];
+        txtPicPos = value.listPICDetailData[0]['position'];
+        txtPicSite = value.listPICDetailData[0]['site'];
+      });
+    });
 
     picData = [];
     PICModel.getPIC().then((value) {
@@ -231,19 +248,20 @@ class _AddTicketsState extends State<AddTickets> {
                         EasyLoading.show(
                             status: 'Loading',
                             maskType: EasyLoadingMaskType.black);
-                        TicketModel.postTicket(
+                        TicketModel.putTicket(
+                                widget.ticketID,
                                 picSelectedValue.toString(),
                                 txtSubject.text,
                                 valPriority.toString(),
                                 tsSelectedValue.toString(),
-                                widget.empID.toString())
+                                widget.tsID)
                             .then((value) {
                           if (value == 'success') {
                             EasyLoading.dismiss();
                             Alert(
                                 context: context,
                                 title: 'Success!',
-                                desc: 'Ticket saved!',
+                                desc: 'Ticket updated!',
                                 type: AlertType.success,
                                 buttons: [
                                   DialogButton(
@@ -253,9 +271,7 @@ class _AddTicketsState extends State<AddTickets> {
                                               TextStyle(color: Colors.white)),
                                       onPressed: () {
                                         setState(() {
-                                          priority = Priority.low;
-                                          valPriority = 0;
-                                          txtSubject.text = '';
+                                          Navigator.pop(context);
                                           Navigator.pop(context);
                                         });
                                       })
@@ -265,7 +281,7 @@ class _AddTicketsState extends State<AddTickets> {
                             Alert(
                                 context: context,
                                 title: 'Failed!',
-                                desc: 'Ticket save failed!',
+                                desc: 'Ticket update failed!',
                                 type: AlertType.error,
                                 buttons: [
                                   DialogButton(
@@ -275,9 +291,7 @@ class _AddTicketsState extends State<AddTickets> {
                                               TextStyle(color: Colors.white)),
                                       onPressed: () {
                                         setState(() {
-                                          priority = Priority.low;
-                                          valPriority = 0;
-                                          txtSubject.text = '';
+                                          Navigator.pop(context);
                                           Navigator.pop(context);
                                         });
                                       })
@@ -285,9 +299,58 @@ class _AddTicketsState extends State<AddTickets> {
                           }
                         });
                       },
-                      child: Button(label: 'Save', color: Colors.green)),
+                      child: Button(label: 'Update', color: Colors.green)),
                   SizedBox(width: 10),
-                  Button(label: 'Delete', color: Colors.red)
+                  GestureDetector(
+                      onTap: () {
+                        EasyLoading.show(
+                            status: 'Loading',
+                            maskType: EasyLoadingMaskType.black);
+                        TicketModel.deleteTicket(widget.ticketID).then((value) {
+                          if (value == 'success') {
+                            EasyLoading.dismiss();
+                            Alert(
+                                context: context,
+                                title: 'Success!',
+                                desc: 'Ticket deleted!',
+                                type: AlertType.success,
+                                buttons: [
+                                  DialogButton(
+                                      color: Color.fromRGBO(80, 110, 228, 1),
+                                      child: Text('OK',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        setState(() {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        });
+                                      })
+                                ]).show();
+                          } else {
+                            EasyLoading.dismiss();
+                            Alert(
+                                context: context,
+                                title: 'Failed!',
+                                desc: 'Ticket delete failed!',
+                                type: AlertType.error,
+                                buttons: [
+                                  DialogButton(
+                                      color: Color.fromRGBO(80, 110, 228, 1),
+                                      child: Text('OK',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        setState(() {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        });
+                                      })
+                                ]).show();
+                          }
+                        });
+                      },
+                      child: Button(label: 'Delete', color: Colors.red))
                 ],
               )
             ],
@@ -337,13 +400,11 @@ class LabelKu extends StatelessWidget {
                 fontSize: 13)),
         SizedBox(height: 5),
         Container(
-          padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
           height: 40,
           decoration: BoxDecoration(
               border: Border.all(color: Color.fromRGBO(158, 158, 158, 1)),
               borderRadius: BorderRadius.circular(3.5)),
-          child: Align(
-            alignment: Alignment.centerLeft,
+          child: Center(
             child: Text(content,
                 style: TextStyle(fontFamily: 'Poppins', fontSize: 14)),
           ),

@@ -20,7 +20,7 @@ class _GridViewKuState extends State<GridViewKu> {
 
   List<dynamic> gridData = [];
 
-  Future refreshData() async {
+  void refreshData() {
     isLoading = true;
     gridData = [];
     TicketModel.getTicket(widget.empID).then((value) {
@@ -28,9 +28,9 @@ class _GridViewKuState extends State<GridViewKu> {
         if (value.listTicketData != null) {
           gridData = value.listTicketData;
         }
-        isLoading = false;
       });
     });
+    isLoading = false;
   }
 
   @override
@@ -104,27 +104,24 @@ class _GridViewKuState extends State<GridViewKu> {
                                 cursor: SystemMouseCursors.click,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => TicketDescPage(
-                                                ticketID: gridData[i]
-                                                        ['ticket_id']
-                                                    .toString(),
-                                                picID: gridData[i]['pic_id']
-                                                    .toString(),
-                                                priority: gridData[i]
-                                                        ['priority']
-                                                    .toString(),
-                                                tsID: gridData[i]
-                                                        ['technicalsupport_id']
-                                                    .toString(),
-                                                status: gridData[i]
-                                                        ['status']
-                                                    .toString(),
-                                                subject: gridData[i]['subject']
-                                                    .toString()))).whenComplete(
-                                        () => refreshData());
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return TicketDescPage(
+                                        ticketID:
+                                            gridData[i]['ticket_id'].toString(),
+                                        picID: gridData[i]['pic_id'].toString(),
+                                        valPriority:
+                                            gridData[i]['priority'].toString(),
+                                        tsID: gridData[i]['technicalsupport_id']
+                                            .toString(),
+                                        statusname: gridData[i]['statusname']
+                                            .toString(),
+                                        subject:
+                                            gridData[i]['subject'].toString(),
+                                        feedback:
+                                            gridData[i]['feedback'].toString(),
+                                      );
+                                    })).whenComplete(() => refreshData());
                                   },
                                   child: Container(
                                     color: Colors.white,

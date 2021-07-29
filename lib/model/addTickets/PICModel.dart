@@ -31,7 +31,6 @@ class PICDetailModel {
 
   static Future getPICDetail(empID) async {
     var url = gScript.apiLink + '/Employee?employee_id=$empID';
-
     var result = await http.get(Uri.parse(url), headers: {
       'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
       'API-KEYS':
