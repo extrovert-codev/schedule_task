@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:schedule_task/allTicketsPage.dart';
-import 'package:schedule_task/loginPage.dart';
 
 void main() {
   runApp(MyApp());

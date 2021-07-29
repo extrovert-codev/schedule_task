@@ -3,7 +3,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:schedule_task/model/gridView/ticketModel.dart';
 import 'package:schedule_task/widget/button.dart';
-import 'package:schedule_task/widget/editTickets.dart';
 
 class TicketDescPage extends StatefulWidget {
   const TicketDescPage(
@@ -46,23 +45,7 @@ class _TicketDescPageState extends State<TicketDescPage> {
                     btBack(context),
                     SizedBox(width: 10),
                     GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  content: Form(
-                                      child: Container(
-                                    child: EditTickets(
-                                        ticketID: widget.ticketID,
-                                        picID: widget.picID,
-                                        subject: widget.subject,
-                                        sPriority: widget.priority,
-                                        tsID: widget.tsID),
-                                  )),
-                                );
-                              });
-                        },
+                        onTap: () {},
                         child: Row(
                           children: [
                             Button(
@@ -72,7 +55,7 @@ class _TicketDescPageState extends State<TicketDescPage> {
                           ],
                         )),
                     btOnGoing(context),
-                    btSubmit(context),
+                    btFinish(context),
                     btFeedback(context)
                   ],
                 ))
@@ -82,20 +65,72 @@ class _TicketDescPageState extends State<TicketDescPage> {
     );
   }
 
-  Visibility btFeedback(BuildContext context) {
+  GestureDetector btBack(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Button(color: Colors.red, label: 'Back'));
+  }
+
+  Visibility btOnGoing(BuildContext context) {
     return Visibility(
-      visible: (widget.status == 'Finish') ? true : false,
+      visible: (widget.status == 'Waiting List') ? true : false,
       child: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            EasyLoading.show(
+                status: 'Loading', maskType: EasyLoadingMaskType.black);
+            TicketModel.putStatusTicket(widget.ticketID, '1', '').then((value) {
+              if (value == 'success') {
+                EasyLoading.dismiss();
+                Alert(
+                    context: context,
+                    title: 'Noted!',
+                    desc: 'Ticket On Going!',
+                    type: AlertType.success,
+                    buttons: [
+                      DialogButton(
+                          color: Color.fromRGBO(80, 110, 228, 1),
+                          child:
+                              Text('OK', style: TextStyle(color: Colors.white)),
+                          onPressed: () {
+                            setState(() {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            });
+                          })
+                    ]).show();
+              } else {
+                EasyLoading.dismiss();
+                Alert(
+                    context: context,
+                    title: 'Failed!',
+                    desc: 'Ticket update failed!',
+                    type: AlertType.error,
+                    buttons: [
+                      DialogButton(
+                          color: Color.fromRGBO(80, 110, 228, 1),
+                          child:
+                              Text('OK', style: TextStyle(color: Colors.white)),
+                          onPressed: () {
+                            setState(() {
+                              Navigator.pop(context);
+                            });
+                          })
+                    ]).show();
+              }
+            });
           },
           child: Row(
-            children: [Button(color: Colors.blue, label: 'Feedback')],
+            children: [
+              Button(color: Colors.orange, label: 'On Going'),
+              SizedBox(width: 10)
+            ],
           )),
     );
   }
 
-  Visibility btSubmit(BuildContext context) {
+  Visibility btFinish(BuildContext context) {
     return Visibility(
       visible: (widget.status == 'Waiting List' || widget.status == 'On Going')
           ? true
@@ -194,68 +229,16 @@ class _TicketDescPageState extends State<TicketDescPage> {
     );
   }
 
-  Visibility btOnGoing(BuildContext context) {
+  Visibility btFeedback(BuildContext context) {
     return Visibility(
-      visible: (widget.status == 'Waiting List') ? true : false,
+      visible: (widget.status == 'Finish') ? true : false,
       child: GestureDetector(
           onTap: () {
-            EasyLoading.show(
-                status: 'Loading', maskType: EasyLoadingMaskType.black);
-            TicketModel.putStatusTicket(widget.ticketID, '1', '').then((value) {
-              if (value == 'success') {
-                EasyLoading.dismiss();
-                Alert(
-                    context: context,
-                    title: 'Noted!',
-                    desc: 'Ticket On Going!',
-                    type: AlertType.success,
-                    buttons: [
-                      DialogButton(
-                          color: Color.fromRGBO(80, 110, 228, 1),
-                          child:
-                              Text('OK', style: TextStyle(color: Colors.white)),
-                          onPressed: () {
-                            setState(() {
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            });
-                          })
-                    ]).show();
-              } else {
-                EasyLoading.dismiss();
-                Alert(
-                    context: context,
-                    title: 'Failed!',
-                    desc: 'Ticket update failed!',
-                    type: AlertType.error,
-                    buttons: [
-                      DialogButton(
-                          color: Color.fromRGBO(80, 110, 228, 1),
-                          child:
-                              Text('OK', style: TextStyle(color: Colors.white)),
-                          onPressed: () {
-                            setState(() {
-                              Navigator.pop(context);
-                            });
-                          })
-                    ]).show();
-              }
-            });
+            Navigator.pop(context);
           },
           child: Row(
-            children: [
-              Button(color: Colors.orange, label: 'On Going'),
-              SizedBox(width: 10)
-            ],
+            children: [Button(color: Colors.blue, label: 'Feedback')],
           )),
     );
-  }
-
-  GestureDetector btBack(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Button(color: Colors.red, label: 'Back'));
   }
 }
