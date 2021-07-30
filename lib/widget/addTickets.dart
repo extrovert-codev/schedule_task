@@ -253,8 +253,6 @@ class _AddTicketsState extends State<AddTickets> {
                                               TextStyle(color: Colors.white)),
                                       onPressed: () {
                                         setState(() {
-                                          priority = Priority.low;
-                                          valPriority = 0;
                                           txtSubject.text = '';
                                           Navigator.pop(context);
                                         });
@@ -275,8 +273,6 @@ class _AddTicketsState extends State<AddTickets> {
                                               TextStyle(color: Colors.white)),
                                       onPressed: () {
                                         setState(() {
-                                          priority = Priority.low;
-                                          valPriority = 0;
                                           txtSubject.text = '';
                                           Navigator.pop(context);
                                         });
@@ -304,9 +300,10 @@ class _AddTicketsState extends State<AddTickets> {
             onChanged: (Priority? value) {
               setState(() {
                 priority = value;
-                if (priority.toString() == 'low') {
+                print(priority.toString());
+                if (priority == Priority.low) {
                   valPriority = 0;
-                } else if (priority.toString() == 'medium') {
+                } else if (priority == Priority.medium) {
                   valPriority = 1;
                 } else {
                   valPriority = 2;

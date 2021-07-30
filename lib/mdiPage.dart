@@ -5,9 +5,10 @@ import 'package:schedule_task/homePage.dart';
 import 'package:schedule_task/myTicketsPage.dart';
 
 class MDIPage extends StatefulWidget {
-  const MDIPage({Key? key, required this.empID}) : super(key: key);
+  const MDIPage({Key? key, required this.empID, required this.name})
+      : super(key: key);
 
-  final empID;
+  final empID, name;
 
   @override
   _MDIPageState createState() => _MDIPageState();
@@ -34,7 +35,7 @@ class _MDIPageState extends State<MDIPage> {
               Expanded(
                 child: Column(
                   children: [
-                    TopBar(),
+                    topBar(widget.name),
                     Expanded(
                         child: Padding(
                             padding: EdgeInsets.all(20), child: pageSelected))
@@ -72,26 +73,26 @@ class _MDIPageState extends State<MDIPage> {
               ),
             ),
           ),
-          SizedBox(
-            child: Column(
-              children: [
-                Container(
-                    margin: EdgeInsets.only(bottom: 25),
-                    width: 25,
-                    height: 25,
-                    child: Icon(Icons.chat_rounded,
-                        color: Color.fromRGBO(190, 202, 230, 1))),
-                Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  width: 36,
-                  height: 36,
-                  decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(100)),
-                ),
-              ],
-            ),
-          ),
+          // SizedBox(
+          //   child: Column(
+          //     children: [
+          //       Container(
+          //           margin: EdgeInsets.only(bottom: 25),
+          //           width: 25,
+          //           height: 25,
+          //           child: Icon(Icons.chat_rounded,
+          //               color: Color.fromRGBO(190, 202, 230, 1))),
+          //       Container(
+          //         margin: EdgeInsets.only(bottom: 20),
+          //         width: 36,
+          //         height: 36,
+          //         decoration: BoxDecoration(
+          //             color: Colors.amber,
+          //             borderRadius: BorderRadius.circular(100)),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
@@ -126,15 +127,8 @@ class _MDIPageState extends State<MDIPage> {
       ),
     );
   }
-}
 
-class TopBar extends StatelessWidget {
-  const TopBar({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Container topBar(init) {
     return Container(
       padding: EdgeInsets.only(right: 38),
       height: 70,
@@ -149,9 +143,15 @@ class TopBar extends StatelessWidget {
               height: 36,
               width: 36,
               decoration: BoxDecoration(
-                  color: Color.fromRGBO(112, 129, 185, 1),
-                  borderRadius: BorderRadius.circular(100))),
-          Text('Dika',
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(100)),
+              child: Center(
+                  child: Text(
+                      init
+                          .toString()
+                          .substring(0, init.toString().indexOf(' ')),
+                      style: TextStyle(color: Colors.white)))),
+          Text(init.toString().substring(0, 1),
               style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 14,

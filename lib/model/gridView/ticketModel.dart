@@ -11,6 +11,7 @@ class TicketModel {
       status,
       tsID,
       feedback,
+      feedbacktime,
       useredited;
 
   TicketModel(
@@ -22,6 +23,7 @@ class TicketModel {
       this.status,
       this.tsID,
       this.feedback,
+      this.feedbacktime,
       this.useredited});
 
   static Future getTicket(tsID) async {
@@ -91,7 +93,8 @@ class TicketModel {
     }
   }
 
-  static Future putStatusTicket(ticketID, status, feedback) async {
+  static Future putStatusTicket(
+      ticketID, status, feedback, feedbacktime) async {
     var url = gScript.apiLink + '/Tickets';
 
     var result = await http.put(Uri.parse(url), headers: {
@@ -101,7 +104,8 @@ class TicketModel {
     }, body: {
       'ticket_id': ticketID,
       'status': status,
-      'feedback': feedback
+      'feedback': feedback,
+      'feedbacktime': feedbacktime
     });
 
     if (result.statusCode == 201) {

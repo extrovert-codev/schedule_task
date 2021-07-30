@@ -53,7 +53,6 @@ class _LoginPageState extends State<LoginPage> {
                   GestureDetector(
                       onTap: () {
                         EasyLoading.show(
-                          
                             status: 'Loading',
                             maskType: EasyLoadingMaskType.black);
                         LoginModel.getLogin(txtNIK.text).then((value) {
@@ -91,9 +90,12 @@ class _LoginPageState extends State<LoginPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => MDIPage(
-                                          empID: value.listLoginData[0]
-                                                  ['employee_id']
-                                              .toString())));
+                                            empID: value.listLoginData[0]
+                                                    ['employee_id']
+                                                .toString(),
+                                            name: value.listLoginData[0]['name']
+                                                .toString(),
+                                          )));
                             } else {
                               Alert(
                                   context: context,
