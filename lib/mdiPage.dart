@@ -146,12 +146,13 @@ class _MDIPageState extends State<MDIPage> {
                   color: Colors.green,
                   borderRadius: BorderRadius.circular(100)),
               child: Center(
-                  child: Text(
-                      init
-                          .toString()
-                          .substring(0, init.toString().indexOf(' ')),
-                      style: TextStyle(color: Colors.white)))),
-          Text(init.toString().substring(0, 1),
+                  child: Text(init.toString().substring(0, 1),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600)))),
+          Text(init.toString().substring(0, init.toString().indexOf(' ')),
               style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 14,
