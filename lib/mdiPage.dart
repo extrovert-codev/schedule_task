@@ -36,9 +36,7 @@ class _MDIPageState extends State<MDIPage> {
                 child: Column(
                   children: [
                     topBar(widget.name),
-                    Expanded(
-                        child: Padding(
-                            padding: EdgeInsets.all(20), child: pageSelected))
+                    Expanded(child: SizedBox(child: pageSelected))
                   ],
                 ),
               ),
@@ -73,26 +71,6 @@ class _MDIPageState extends State<MDIPage> {
               ),
             ),
           ),
-          // SizedBox(
-          //   child: Column(
-          //     children: [
-          //       Container(
-          //           margin: EdgeInsets.only(bottom: 25),
-          //           width: 25,
-          //           height: 25,
-          //           child: Icon(Icons.chat_rounded,
-          //               color: Color.fromRGBO(190, 202, 230, 1))),
-          //       Container(
-          //         margin: EdgeInsets.only(bottom: 20),
-          //         width: 36,
-          //         height: 36,
-          //         decoration: BoxDecoration(
-          //             color: Colors.amber,
-          //             borderRadius: BorderRadius.circular(100)),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );

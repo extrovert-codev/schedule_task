@@ -14,6 +14,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.all(20),
       children: [
         Text('My Tickets',
             style: TextStyle(
@@ -25,7 +26,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
           elevation: 3,
           child: Container(
               padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-              height: 600,
+              height: 500,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(5)),
               child: Column(

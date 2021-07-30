@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:intl/intl.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:schedule_task/model/gridView/ticketModel.dart';
 import 'package:schedule_task/widget/button.dart';
@@ -189,12 +188,8 @@ class _TicketDescPageState extends State<TicketDescPage> {
                                 EasyLoading.show(
                                     status: 'Loading',
                                     maskType: EasyLoadingMaskType.black);
-                                TicketModel.putStatusTicket(
-                                        widget.ticketID,
-                                        '2',
-                                        txtFeedback.text,
-                                        DateFormat('HH:mm:ss')
-                                            .format(DateTime.now()))
+                                TicketModel.putStatusTicket(widget.ticketID,
+                                        '2', txtFeedback.text, 'true')
                                     .then((value) {
                                   if (value == 'success') {
                                     EasyLoading.dismiss();

@@ -14,6 +14,7 @@ class _AddTicketsPageState extends State<AddTicketsPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.all(20),
       children: [
         Text('Add Tickets',
             style: TextStyle(
@@ -24,8 +25,8 @@ class _AddTicketsPageState extends State<AddTicketsPage> {
         Card(
           elevation: 3,
           child: Container(
-              padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-              height: 430,
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 20),
+              height: 500,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(5)),
               child: Column(
@@ -33,9 +34,8 @@ class _AddTicketsPageState extends State<AddTicketsPage> {
                   children: [
                     SizedBox(height: 18),
                     Expanded(
-                        child: Container(
-                      child: AddTickets(empID: widget.empID),
-                    ))
+                        child:
+                            Container(child: AddTickets(empID: widget.empID)))
                   ])),
         ),
       ],

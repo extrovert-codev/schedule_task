@@ -189,7 +189,12 @@ class _GridViewKuState extends State<GridViewKu> {
                                                   : '')),
                                       DataKu(
                                           width: 150.0,
-                                          content: 'Response Time'),
+                                          content: (gridData[i]
+                                                          ['totalmin'] !=
+                                                      null)
+                                                  ? gridData[i]['totalmin']
+                                                      .toString()
+                                                  : ''),
                                     ]),
                                   ),
                                 ),

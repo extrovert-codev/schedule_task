@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int? ongoing, finish;
+  int? ongoing, finish, timeWork;
 
   void refreshData() {
     ongoing = 0;
@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         ongoing = value.listMyStatusData[0]['ongoing'];
         finish = value.listMyStatusData[0]['finish'];
+        timeWork = value.listMyStatusData[0]['totalmin'];
       });
     });
   }
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.all(20),
       children: [
         Container(
             height: 80,
@@ -55,7 +57,9 @@ class _HomePageState extends State<HomePage> {
               MyStatus(
                   color: Color.fromRGBO(255, 94, 219, 1),
                   ico: Icons.hourglass_bottom,
-                  cnt: '128:07 min',
+                  cnt: (timeWork == null)
+                      ? '0 min'
+                      : timeWork.toString() + ' min',
                   title: 'HOURS WORKED')
             ])),
         SizedBox(height: 25),
@@ -63,7 +67,7 @@ class _HomePageState extends State<HomePage> {
           elevation: 3,
           child: Container(
               padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-              height: 600,
+              height: 500,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(5)),
               child: Column(

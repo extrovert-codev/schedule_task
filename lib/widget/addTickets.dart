@@ -219,10 +219,9 @@ class _AddTicketsState extends State<AddTickets> {
                     child: LabelKu(label: 'PIC Position', content: txtPicPos))
               ]),
               SizedBox(height: 10),
-              Flexible(
-                  flex: 2,
+              Expanded(
                   child: TextBox(controller: txtSubject, label: 'Subject')),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -367,15 +366,16 @@ class TextBox extends StatelessWidget {
                 fontFamily: 'Poppins',
                 fontSize: 13)),
         SizedBox(height: 5),
-        SizedBox(
-          height: 150,
-          child: TextField(
-              controller: controller,
-              maxLines: 100,
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(10),
-                  border: OutlineInputBorder())),
+        Expanded(
+          child: SizedBox(
+            child: TextField(
+                controller: controller,
+                maxLines: 100,
+                style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(10),
+                    border: OutlineInputBorder())),
+          ),
         ),
       ],
     );

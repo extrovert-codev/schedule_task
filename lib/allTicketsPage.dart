@@ -7,6 +7,7 @@ class AllTicketsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.all(20),
       children: [
         Text('All Tickets',
             style: TextStyle(
