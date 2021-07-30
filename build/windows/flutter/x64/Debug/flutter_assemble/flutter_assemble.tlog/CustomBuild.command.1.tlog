@@ -1,0 +1,28 @@
+^D:\__DARI KTR\SCHEDULE_TASK\BUILD\WINDOWS\CMAKEFILES\D49577B019CA398AFD413C370513CDEA\FLUTTER_WINDOWS.DLL.RULE
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=C:\flutter "PROJECT_DIR=D:\__DARI KTR\schedule_task" FLUTTER_ROOT=C:\flutter "FLUTTER_EPHEMERAL_DIR=D:\__DARI KTR\schedule_task\windows\flutter\ephemeral" "PROJECT_DIR=D:\__DARI KTR\schedule_task" "FLUTTER_TARGET=D:\__DARI KTR\schedule_task\lib\main.dart" DART_DEFINES=Zmx1dHRlci5pbnNwZWN0b3Iuc3RydWN0dXJlZEVycm9ycz10cnVl,RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ== DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false "PACKAGE_CONFIG=D:\__DARI KTR\schedule_task\.dart_tool\package_config.json" C:/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Debug
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^D:\__DARI KTR\SCHEDULE_TASK\BUILD\WINDOWS\CMAKEFILES\9615B2B7E7E49D77175CF04B9E28EEE4\FLUTTER_ASSEMBLE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^D:\__DARI KTR\SCHEDULE_TASK\WINDOWS\FLUTTER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SD:/__DARI KTR/schedule_task/windows" "-BD:/__DARI KTR/schedule_task/build/windows" --check-stamp-file "D:/__DARI KTR/schedule_task/build/windows/flutter/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
