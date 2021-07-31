@@ -1,0 +1,10 @@
+^D:\__DARI KTR\SCHEDULE_TASK\WINDOWS\RUNNER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SD:/__DARI KTR/schedule_task/windows" "-BD:/__DARI KTR/schedule_task/build/windows" --check-stamp-file "D:/__DARI KTR/schedule_task/build/windows/runner/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
