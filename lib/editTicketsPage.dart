@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_task/widget/editTickets.dart';
+import 'package:schedule_task/_widget/editTickets.dart';
 
 class EditTicketsPage extends StatefulWidget {
   const EditTicketsPage(
