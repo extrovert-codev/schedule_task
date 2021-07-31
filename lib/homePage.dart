@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
           elevation: 3,
           child: Container(
               padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-              height: 500,
+              height: 600,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(5)),
               child: Column(
