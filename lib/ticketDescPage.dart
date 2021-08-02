@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:schedule_task/model/gridView/ticketModel.dart';
-import 'package:schedule_task/widget/button.dart';
-import 'package:schedule_task/widget/editTickets.dart';
+import 'package:schedule_task/_model/gridView/ticketModel.dart';
+import 'package:schedule_task/_widget/button.dart';
+import 'package:schedule_task/_widget/editTickets.dart';
 
 class TicketDescPage extends StatefulWidget {
   const TicketDescPage(

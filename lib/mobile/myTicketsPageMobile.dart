@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_task/_widget/editTickets.dart';
+import 'package:schedule_task/_widget/gridViewKuMobile.dart';
 
-class EditTicketsPage extends StatefulWidget {
-  const EditTicketsPage(
-      {Key? key,
-      required this.ticketID,
-      required this.picID,
-      required this.subject,
-      required this.valPriority,
-      required this.tsID})
-      : super(key: key);
+class MyTicketsPageMobile extends StatefulWidget {
+  const MyTicketsPageMobile({Key? key, required this.empID}) : super(key: key);
 
-  final ticketID, picID, subject, valPriority, tsID;
+  final empID;
 
   @override
-  _EditTicketsPageState createState() => _EditTicketsPageState();
+  _MyTicketsPageMobileState createState() => _MyTicketsPageMobileState();
 }
 
-class _EditTicketsPageState extends State<EditTicketsPage> {
+class _MyTicketsPageMobileState extends State<MyTicketsPageMobile> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.all(20),
       children: [
-        Text('Edit Tickets',
+        Text('My Tickets',
             style: TextStyle(
                 color: Color.fromRGBO(112, 129, 185, 1),
                 fontFamily: 'Poppins',
@@ -32,21 +26,21 @@ class _EditTicketsPageState extends State<EditTicketsPage> {
           elevation: 3,
           child: Container(
               padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-              height: 430,
+              height: 600,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(5)),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text('Ticket Lists',
+                        style: TextStyle(
+                            color: Color.fromRGBO(48, 62, 103, 1),
+                            fontFamily: 'Poppins',
+                            fontSize: 16)),
                     SizedBox(height: 18),
                     Expanded(
                         child: Container(
-                      child: EditTickets(
-                          ticketID: widget.ticketID,
-                          picID: widget.picID,
-                          subject: widget.subject,
-                          valPriority: widget.valPriority,
-                          tsID: widget.tsID),
+                      child: GridViewKuMobile(cntData: 2, empID: widget.empID),
                     ))
                   ])),
         ),
