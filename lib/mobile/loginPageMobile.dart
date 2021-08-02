@@ -62,7 +62,7 @@ class _LoginPageMobileState extends State<LoginPageMobile> {
                             Alert(
                                 context: context,
                                 title: 'Opss!',
-                                desc: 'Wrong NIK or password!',
+                                desc: 'NIK atau password kamu tidak terdaftar :(',
                                 type: AlertType.error,
                                 buttons: [
                                   DialogButton(
@@ -101,7 +101,7 @@ class _LoginPageMobileState extends State<LoginPageMobile> {
                               Alert(
                                   context: context,
                                   title: 'Opss!',
-                                  desc: 'Wrong NIK or password!',
+                                  desc: 'NIK atau password kamu tidak terdaftar :(',
                                   type: AlertType.error,
                                   buttons: [
                                     DialogButton(

@@ -217,8 +217,8 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
                             EasyLoading.dismiss();
                             Alert(
                                 context: context,
-                                title: 'Success!',
-                                desc: 'Ticket saved!',
+                                title: 'Oke!',
+                                desc: 'Ticket berhasil disimpan.',
                                 type: AlertType.success,
                                 buttons: [
                                   DialogButton(
@@ -237,8 +237,8 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
                             EasyLoading.dismiss();
                             Alert(
                                 context: context,
-                                title: 'Failed!',
-                                desc: 'Ticket save failed!',
+                                title: 'Opss!',
+                                desc: 'Ticket gagal tersimpan :(',
                                 type: AlertType.error,
                                 buttons: [
                                   DialogButton(

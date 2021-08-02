@@ -12,7 +12,7 @@ class MDIPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout(
-      breakpoints: ScreenBreakpoints(watch: 0, tablet: 0, desktop: 930),
+      breakpoints: ScreenBreakpoints(watch: 0, tablet: 0, desktop: 800),
       mobile: MDIPageMobile(empID: empID, name: name),
       desktop: MDIPageWeb(empID: empID, name: name),
     );

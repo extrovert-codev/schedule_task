@@ -110,7 +110,7 @@ class _TicketDescPageState extends State<TicketDescPage> {
                 Alert(
                     context: context,
                     title: 'Noted!',
-                    desc: 'Ticket On Going!',
+                    desc: 'Ticket on going! :)',
                     type: AlertType.success,
                     buttons: [
                       DialogButton(
@@ -128,8 +128,8 @@ class _TicketDescPageState extends State<TicketDescPage> {
                 EasyLoading.dismiss();
                 Alert(
                     context: context,
-                    title: 'Failed!',
-                    desc: 'Ticket update failed!',
+                    title: 'Opss!',
+                    desc: 'Ticket gagal terupdate :(',
                     type: AlertType.error,
                     buttons: [
                       DialogButton(
@@ -195,8 +195,8 @@ class _TicketDescPageState extends State<TicketDescPage> {
                                     EasyLoading.dismiss();
                                     Alert(
                                         context: context,
-                                        title: 'Noted!',
-                                        desc: 'Ticket Finished!',
+                                        title: 'Done!',
+                                        desc: 'Ticket selesai! :)',
                                         type: AlertType.success,
                                         buttons: [
                                           DialogButton(
@@ -217,8 +217,8 @@ class _TicketDescPageState extends State<TicketDescPage> {
                                     EasyLoading.dismiss();
                                     Alert(
                                         context: context,
-                                        title: 'Failed!',
-                                        desc: 'Ticket update failed!',
+                                        title: 'Opss!',
+                                        desc: 'Ticket gagal terupdate :(',
                                         type: AlertType.error,
                                         buttons: [
                                           DialogButton(

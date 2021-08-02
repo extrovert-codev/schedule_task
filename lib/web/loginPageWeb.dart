@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:schedule_task/mdiPage.dart';
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
 import 'package:schedule_task/mobile/homePageMobile.dart';
+import 'package:schedule_task/web/homePageWeb.dart';
 
 class LoginPageWeb extends StatefulWidget {
   const LoginPageWeb({Key? key}) : super(key: key);
@@ -63,7 +64,8 @@ class _LoginPageWebState extends State<LoginPageWeb> {
                             Alert(
                                 context: context,
                                 title: 'Opss!',
-                                desc: 'Wrong NIK or password!',
+                                desc:
+                                    'NIK atau password kamu tidak terdaftar :(',
                                 type: AlertType.error,
                                 buttons: [
                                   DialogButton(
@@ -81,7 +83,7 @@ class _LoginPageWebState extends State<LoginPageWeb> {
                             EasyLoading.dismiss();
                             gScript.pageMobileSelected = HomePageMobile(
                                 empID: value.listLoginData[0]['employee_id']);
-                            gScript.pageWebSelected = HomePageMobile(
+                            gScript.pageWebSelected = HomePageWeb(
                                 empID: value.listLoginData[0]['employee_id']);
 
                             yr = DateFormat('yyyy').format(DateTime.parse(
@@ -107,7 +109,8 @@ class _LoginPageWebState extends State<LoginPageWeb> {
                               Alert(
                                   context: context,
                                   title: 'Opss!',
-                                  desc: 'Wrong NIK or password!',
+                                  desc:
+                                      'NIK atau password kamu tidak terdaftar :(',
                                   type: AlertType.error,
                                   buttons: [
                                     DialogButton(

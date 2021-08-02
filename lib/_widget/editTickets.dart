@@ -260,8 +260,8 @@ class _EditTicketsState extends State<EditTickets> {
                             EasyLoading.dismiss();
                             Alert(
                                 context: context,
-                                title: 'Success!',
-                                desc: 'Ticket updated!',
+                                title: 'Oke!',
+                                desc: 'Ticket berhasil disimpan.',
                                 type: AlertType.success,
                                 buttons: [
                                   DialogButton(
@@ -280,8 +280,8 @@ class _EditTicketsState extends State<EditTickets> {
                             EasyLoading.dismiss();
                             Alert(
                                 context: context,
-                                title: 'Failed!',
-                                desc: 'Ticket update failed!',
+                                title: 'Opss!',
+                                desc: 'Ticket gagal tersimpan :(',
                                 type: AlertType.error,
                                 buttons: [
                                   DialogButton(
@@ -311,8 +311,8 @@ class _EditTicketsState extends State<EditTickets> {
                             EasyLoading.dismiss();
                             Alert(
                                 context: context,
-                                title: 'Success!',
-                                desc: 'Ticket deleted!',
+                                title: 'Oke!',
+                                desc: 'Ticket berhasil dihapus.',
                                 type: AlertType.success,
                                 buttons: [
                                   DialogButton(
@@ -331,8 +331,8 @@ class _EditTicketsState extends State<EditTickets> {
                             EasyLoading.dismiss();
                             Alert(
                                 context: context,
-                                title: 'Failed!',
-                                desc: 'Ticket delete failed!',
+                                title: 'Opss!',
+                                desc: 'Ticket gagal terhapus :(',
                                 type: AlertType.error,
                                 buttons: [
                                   DialogButton(
