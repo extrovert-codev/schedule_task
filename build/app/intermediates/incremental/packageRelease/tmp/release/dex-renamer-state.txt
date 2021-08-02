@@ -1,4 +1,4 @@
-#Mon Aug 02 15:33:42 ICT 2021
+#Mon Aug 02 15:38:06 ICT 2021
 base.0=D\:\\__DARI KTR\\schedule_task\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
