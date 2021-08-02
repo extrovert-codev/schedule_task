@@ -4,6 +4,8 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:schedule_task/_model/loginModel.dart';
 import 'package:intl/intl.dart';
 import 'package:schedule_task/mdiPage.dart';
+import 'package:schedule_task/_GlobalScript.dart' as gScript;
+import 'package:schedule_task/mobile/homePageMobile.dart';
 
 class LoginPageWeb extends StatefulWidget {
   const LoginPageWeb({Key? key}) : super(key: key);
@@ -77,6 +79,11 @@ class _LoginPageWebState extends State<LoginPageWeb> {
                                 ]).show();
                           } else {
                             EasyLoading.dismiss();
+                            gScript.pageMobileSelected = HomePageMobile(
+                                empID: value.listLoginData[0]['employee_id']);
+                            gScript.pageWebSelected = HomePageMobile(
+                                empID: value.listLoginData[0]['employee_id']);
+
                             yr = DateFormat('yyyy').format(DateTime.parse(
                                 value.listLoginData[0]['dob'].toString()));
                             mth = DateFormat('MM').format(DateTime.parse(

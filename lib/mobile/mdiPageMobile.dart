@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:schedule_task/mobile/addTicketsPageMobile.dart';
 import 'package:schedule_task/mobile/allTicketsPageMobile.dart';
 import 'package:schedule_task/mobile/homePageMobile.dart';
+import 'package:schedule_task/mobile/loginPageMobile.dart';
 import 'package:schedule_task/mobile/myTicketsPageMobile.dart';
-import 'package:schedule_task/web/homePageWeb.dart';
-import 'package:schedule_task/web/mdiPageWeb.dart' as mdiPageWeb;
+import 'package:schedule_task/_GlobalScript.dart' as gScript;
 
 class MDIPageMobile extends StatefulWidget {
   const MDIPageMobile({Key? key, required this.empID, required this.name})
@@ -16,14 +16,10 @@ class MDIPageMobile extends StatefulWidget {
   _MDIPageMobileState createState() => _MDIPageMobileState();
 }
 
-Widget? pageMobileSelected;
-
 class _MDIPageMobileState extends State<MDIPageMobile> {
   @override
   void initState() {
     super.initState();
-    pageMobileSelected = HomePageMobile(empID: widget.empID);
-    mdiPageWeb.pageWebSelected = HomePageWeb(empID: widget.empID);
   }
 
   @override
@@ -48,7 +44,7 @@ class _MDIPageMobileState extends State<MDIPageMobile> {
           child: Column(
             children: [
               topBar(widget.name),
-              Expanded(child: SizedBox(child: pageMobileSelected))
+              Expanded(child: SizedBox(child: gScript.pageMobileSelected))
             ],
           )),
     );
@@ -64,8 +60,8 @@ class _MDIPageMobileState extends State<MDIPageMobile> {
         ]),
         onTap: () {
           setState(() {
-            pageMobileSelected = page;
-            mdiPageWeb.pageWebSelected = page;
+            gScript.pageMobileSelected = page;
+            Navigator.of(context).pop();
           });
         });
   }
@@ -116,8 +112,20 @@ class _MDIPageMobileState extends State<MDIPageMobile> {
                         fontFamily: 'Poppins',
                         fontSize: 14,
                         color: Color.fromRGBO(112, 129, 185, 1))),
-                Icon(Icons.keyboard_arrow_down,
-                    color: Color.fromRGBO(112, 129, 185, 1), size: 15)
+                PopupMenuButton(
+                  tooltip: 'Options',
+                  child: Center(
+                      child: Icon(Icons.keyboard_arrow_down,
+                          color: Color.fromRGBO(112, 129, 185, 1), size: 15)),
+                  itemBuilder: (context) =>
+                      [PopupMenuItem(child: Text('Keluar'), value: 1)],
+                  onSelected: (val) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginPageMobile()));
+                  },
+                ),
               ],
             )),
           )
