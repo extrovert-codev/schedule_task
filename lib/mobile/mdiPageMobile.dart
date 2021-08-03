@@ -5,6 +5,7 @@ import 'package:schedule_task/mobile/homePageMobile.dart';
 import 'package:schedule_task/mobile/loginPageMobile.dart';
 import 'package:schedule_task/mobile/myTicketsPageMobile.dart';
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MDIPageMobile extends StatefulWidget {
   const MDIPageMobile({Key? key, required this.empID, required this.name})
@@ -26,27 +27,37 @@ class _MDIPageMobileState extends State<MDIPageMobile> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: ListView(children: [
-          DrawerHeader(
-              decoration: BoxDecoration(color: Color.fromRGBO(80, 110, 228, 1)),
-              child: Image.asset('assets/images/Trisco.png',
-                  fit: BoxFit.scaleDown)),
-          menu('Home', Icons.home, HomePageMobile(empID: widget.empID)),
-          menu('My Ticket', Icons.list,
-              MyTicketsPageMobile(empID: widget.empID)),
-          menu('Add Ticket', Icons.add,
-              AddTicketsPageMobile(empID: widget.empID)),
-          menu('All Ticket', Icons.list_alt, AllTicketsPageMobile()),
-        ]),
+        child: RefreshIndicator(
+          onRefresh: () {
+            return Future.delayed(Duration(seconds: 2), () {
+              setState(() {});
+            });
+          },
+          child: ListView(children: [
+            DrawerHeader(
+                decoration:
+                    BoxDecoration(color: Color.fromRGBO(80, 110, 228, 1)),
+                child: Image.asset('assets/images/Trisco.png',
+                    fit: BoxFit.scaleDown)),
+            menu('Home', Icons.home, HomePageMobile(empID: widget.empID)),
+            menu('My Ticket', Icons.list,
+                MyTicketsPageMobile(empID: widget.empID)),
+            menu('Add Ticket', Icons.add,
+                AddTicketsPageMobile(empID: widget.empID)),
+            menu('All Ticket', Icons.list_alt, AllTicketsPageMobile()),
+          ]),
+        ),
       ),
-      body: Container(
-          color: Color.fromRGBO(237, 240, 245, 1),
-          child: Column(
-            children: [
-              topBar(widget.name),
-              Expanded(child: SizedBox(child: gScript.pageMobileSelected))
-            ],
-          )),
+      body: SafeArea(
+        child: Container(
+            color: Color.fromRGBO(237, 240, 245, 1),
+            child: Column(
+              children: [
+                topBar(widget.name),
+                Expanded(child: SizedBox(child: gScript.pageMobileSelected))
+              ],
+            )),
+      ),
     );
   }
 
@@ -68,7 +79,7 @@ class _MDIPageMobileState extends State<MDIPageMobile> {
 
   Container topBar(init) {
     return Container(
-      padding: EdgeInsets.only(right: 38),
+      padding: EdgeInsets.only(left: 15, right: 15),
       height: 70,
       color: Colors.white,
       child: Row(
@@ -80,10 +91,8 @@ class _MDIPageMobileState extends State<MDIPageMobile> {
                   onTap: () {
                     Scaffold.of(context).openDrawer();
                   },
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 12),
-                      child: Icon(Icons.menu,
-                          color: Color.fromRGBO(112, 129, 185, 1), size: 30)));
+                  child: Icon(Icons.menu,
+                      color: Color.fromRGBO(112, 129, 185, 1), size: 30));
             },
           ),
           Expanded(
@@ -119,7 +128,10 @@ class _MDIPageMobileState extends State<MDIPageMobile> {
                           color: Color.fromRGBO(112, 129, 185, 1), size: 15)),
                   itemBuilder: (context) =>
                       [PopupMenuItem(child: Text('Keluar'), value: 1)],
-                  onSelected: (val) {
+                  onSelected: (val) async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.clear();
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

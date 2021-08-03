@@ -7,6 +7,7 @@ import 'package:schedule_task/mdiPage.dart';
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
 import 'package:schedule_task/mobile/homePageMobile.dart';
 import 'package:schedule_task/web/homePageWeb.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPageWeb extends StatefulWidget {
   const LoginPageWeb({Key? key}) : super(key: key);
@@ -21,6 +22,16 @@ class _LoginPageWebState extends State<LoginPageWeb> {
   bool isRemember = false;
   String yr = '', mth = '', dy = '';
   int? pass;
+
+  putSession(title, val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(title, val);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,87 +57,13 @@ class _LoginPageWebState extends State<LoginPageWeb> {
                   Text('Schedule Task',
                       style: TextStyle(fontFamily: 'Poppins', fontSize: 25)),
                   SizedBox(height: 10),
-                  TextBox(controller: txtNIK, label: 'NIK'),
+                  textBox(txtNIK, 'NIK', false, TextInputAction.next),
                   SizedBox(height: 10),
-                  TextBox(
-                      controller: txtPassword,
-                      label: 'Password',
-                      isPassword: true),
+                  textBox(txtPassword, 'Password', true, TextInputAction.go),
                   SizedBox(height: 10),
                   GestureDetector(
                       onTap: () {
-                        EasyLoading.show(
-                            status: 'Loading',
-                            maskType: EasyLoadingMaskType.black);
-                        LoginModel.getLogin(txtNIK.text).then((value) {
-                          if (value.listLoginData == null) {
-                            EasyLoading.dismiss();
-                            Alert(
-                                context: context,
-                                title: 'Opss!',
-                                desc:
-                                    'NIK atau password kamu tidak terdaftar :(',
-                                type: AlertType.error,
-                                buttons: [
-                                  DialogButton(
-                                      color: Color.fromRGBO(80, 110, 228, 1),
-                                      child: Text('OK',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      onPressed: () {
-                                        setState(() {
-                                          Navigator.pop(context);
-                                        });
-                                      })
-                                ]).show();
-                          } else {
-                            EasyLoading.dismiss();
-                            gScript.pageMobileSelected = HomePageMobile(
-                                empID: value.listLoginData[0]['employee_id']);
-                            gScript.pageWebSelected = HomePageWeb(
-                                empID: value.listLoginData[0]['employee_id']);
-
-                            yr = DateFormat('yyyy').format(DateTime.parse(
-                                value.listLoginData[0]['dob'].toString()));
-                            mth = DateFormat('MM').format(DateTime.parse(
-                                value.listLoginData[0]['dob'].toString()));
-                            dy = DateFormat('dd').format(DateTime.parse(
-                                value.listLoginData[0]['dob'].toString()));
-                            pass =
-                                int.parse(yr) + int.parse(mth) + int.parse(dy);
-                            if (txtPassword.text == pass.toString()) {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MDIPage(
-                                            empID: value.listLoginData[0]
-                                                    ['employee_id']
-                                                .toString(),
-                                            name: value.listLoginData[0]['name']
-                                                .toString(),
-                                          )));
-                            } else {
-                              Alert(
-                                  context: context,
-                                  title: 'Opss!',
-                                  desc:
-                                      'NIK atau password kamu tidak terdaftar :(',
-                                  type: AlertType.error,
-                                  buttons: [
-                                    DialogButton(
-                                        color: Color.fromRGBO(80, 110, 228, 1),
-                                        child: Text('OK',
-                                            style:
-                                                TextStyle(color: Colors.white)),
-                                        onPressed: () {
-                                          setState(() {
-                                            Navigator.pop(context);
-                                          });
-                                        })
-                                  ]).show();
-                            }
-                          }
-                        });
+                        login();
                       },
                       child: Button(
                           label: 'Login',
@@ -138,6 +75,99 @@ class _LoginPageWebState extends State<LoginPageWeb> {
         ),
       ),
     );
+  }
+
+  Column textBox(controller, label, isPassword, action) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 40,
+          child: TextField(
+            controller: controller,
+            obscureText: isPassword,
+            style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+            textInputAction: action,
+            decoration: InputDecoration(
+                hintText: label,
+                contentPadding: EdgeInsets.all(10),
+                border: OutlineInputBorder()),
+            onSubmitted: (val) {
+              if (label == 'Password') {
+                login();
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  login() {
+    EasyLoading.show(status: 'Loading', maskType: EasyLoadingMaskType.black);
+    LoginModel.getLogin(txtNIK.text).then((value) {
+      if (value.listLoginData == null) {
+        EasyLoading.dismiss();
+        Alert(
+            context: context,
+            title: 'Opss!',
+            desc: 'NIK atau password kamu tidak terdaftar :(',
+            type: AlertType.error,
+            buttons: [
+              DialogButton(
+                  color: Color.fromRGBO(80, 110, 228, 1),
+                  child: Text('OK', style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    setState(() {
+                      Navigator.pop(context);
+                    });
+                  })
+            ]).show();
+      } else {
+        EasyLoading.dismiss();
+        yr = DateFormat('yyyy')
+            .format(DateTime.parse(value.listLoginData[0]['dob'].toString()));
+        mth = DateFormat('MM')
+            .format(DateTime.parse(value.listLoginData[0]['dob'].toString()));
+        dy = DateFormat('dd')
+            .format(DateTime.parse(value.listLoginData[0]['dob'].toString()));
+        pass = int.parse(yr) + int.parse(mth) + int.parse(dy);
+        if (txtPassword.text == pass.toString()) {
+          putSession(
+              'employee_id', value.listLoginData[0]['employee_id'].toString());
+          putSession('name', value.listLoginData[0]['name'].toString());
+
+          gScript.pageMobileSelected = HomePageMobile(
+              empID: value.listLoginData[0]['employee_id'].toString());
+          gScript.pageWebSelected = HomePageWeb(
+              empID: value.listLoginData[0]['employee_id'].toString());
+
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MDIPage(
+                        empID: value.listLoginData[0]['employee_id'].toString(),
+                        name: value.listLoginData[0]['name'].toString(),
+                      )));
+        } else {
+          Alert(
+              context: context,
+              title: 'Opss!',
+              desc: 'NIK atau password kamu tidak terdaftar :(',
+              type: AlertType.error,
+              buttons: [
+                DialogButton(
+                    color: Color.fromRGBO(80, 110, 228, 1),
+                    child: Text('OK', style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      setState(() {
+                        Navigator.pop(context);
+                      });
+                    })
+              ]).show();
+        }
+      }
+    });
   }
 }
 
@@ -161,37 +191,6 @@ class Button extends StatelessWidget {
                       color: Colors.white,
                       fontFamily: 'Poppins',
                       fontSize: 12)))),
-    );
-  }
-}
-
-class TextBox extends StatelessWidget {
-  const TextBox(
-      {Key? key,
-      required this.controller,
-      required this.label,
-      this.isPassword})
-      : super(key: key);
-
-  final controller, label, isPassword;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 40,
-          child: TextField(
-              controller: controller,
-              obscureText: (isPassword == true) ? true : false,
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
-              decoration: InputDecoration(
-                  hintText: label,
-                  contentPadding: EdgeInsets.all(10),
-                  border: OutlineInputBorder())),
-        ),
-      ],
     );
   }
 }

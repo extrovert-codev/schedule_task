@@ -5,6 +5,7 @@ import 'package:schedule_task/web/homePageWeb.dart';
 import 'package:schedule_task/web/loginPageWeb.dart';
 import 'package:schedule_task/web/myTicketsPageWeb.dart';
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MDIPageWeb extends StatefulWidget {
   const MDIPageWeb({Key? key, required this.empID, required this.name})
@@ -141,7 +142,9 @@ class _MDIPageWebState extends State<MDIPageWeb> {
                     color: Color.fromRGBO(112, 129, 185, 1), size: 15)),
             itemBuilder: (context) =>
                 [PopupMenuItem(child: Text('Keluar'), value: 1)],
-            onSelected: (val) {
+            onSelected: (val) async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.clear();
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => LoginPageWeb()));
             },
