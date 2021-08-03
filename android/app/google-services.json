@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "521261776593",
+    "project_id": "trisco-schedule-task-e4e88",
+    "storage_bucket": "trisco-schedule-task-e4e88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521261776593:android:8dc4bdbac33413d3cc0ff0",
+        "android_client_info": {
+          "package_name": "com.example.schedule_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "521261776593-jr500fhcfucvp2hmtevjfmjtv99dqb9d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8yJqIKGhvlkBEGFMtmseOKUy4h0oay6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "521261776593-jr500fhcfucvp2hmtevjfmjtv99dqb9d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

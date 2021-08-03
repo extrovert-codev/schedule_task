@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_task/loginPage.dart';
 import 'package:schedule_task/web/addTicketsPageWeb.dart';
 import 'package:schedule_task/web/allTicketsPageWeb.dart';
 import 'package:schedule_task/web/homePageWeb.dart';
-import 'package:schedule_task/web/loginPageWeb.dart';
 import 'package:schedule_task/web/myTicketsPageWeb.dart';
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -114,8 +114,8 @@ class _MDIPageWebState extends State<MDIPageWeb> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Icon(Icons.notifications_none,
-              color: Color.fromRGBO(112, 129, 185, 1), size: 30),
+          // NotifBadge(
+          //     ico: Icons.notifications_sharp, cnt: '10', color: Colors.red),
           Container(
               margin: EdgeInsets.only(left: 17, right: 12),
               height: 36,
@@ -146,7 +146,7 @@ class _MDIPageWebState extends State<MDIPageWeb> {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.clear();
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => LoginPageWeb()));
+                  MaterialPageRoute(builder: (context) => LoginPage()));
             },
           ),
         ],
