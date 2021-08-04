@@ -137,7 +137,22 @@ class _AddTicketsWebState extends State<AddTicketsWeb> {
                 ],
               ),
               SizedBox(height: 10),
-              textBox(txtPIC, 'PIC'),
+              Row(children: [
+                Flexible(flex: 2, child: textBox(txtPIC, 'PIC')),
+                SizedBox(width: 20),
+                Flexible(
+                    flex: 1,
+                    child: LabelKu(label: 'PIC Site', content: txtPicSite)),
+                SizedBox(width: 20),
+                Flexible(
+                    flex: 1,
+                    child:
+                        LabelKu(label: 'PIC Department', content: txtPicDept)),
+                SizedBox(width: 20),
+                Flexible(
+                    flex: 1,
+                    child: LabelKu(label: 'PIC Position', content: txtPicPos))
+              ]),
               SizedBox(height: 10),
               Expanded(
                   child: RichTextBox(controller: txtSubject, label: 'Subject')),
@@ -218,62 +233,61 @@ class _AddTicketsWebState extends State<AddTicketsWeb> {
                 fontFamily: 'Poppins',
                 fontSize: 13)),
         SizedBox(height: 5),
-        Expanded(
-          child: SizedBox(
-            child: TextField(
-              controller: controller,
-              textInputAction: TextInputAction.done,
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
-              decoration: InputDecoration(
-                  hintText: 'Enter PIC NIK',
-                  hintStyle: TextStyle(fontFamily: 'Poppins', fontSize: 14),
-                  contentPadding: EdgeInsets.all(10),
-                  border: OutlineInputBorder()),
-              onSubmitted: (val) {
-                EasyLoading.show(
-                    status: 'Loading', maskType: EasyLoadingMaskType.black);
-                PICModel.getPIC(val).then((value) {
-                  if (value.listPICData != null) {
-                    EasyLoading.dismiss();
-                    setState(() {
-                      picID = value.listPICData[0]['employee_id'];
-                      txtPICName = value.listPICData[0]['name'];
-                      txtPICNIK = value.listPICData[0]['nik'];
-                      txtPicDept = value.listPICData[0]['department'];
-                      txtPicPos = value.listPICData[0]['position'];
-                      txtPicSite = value.listPICData[0]['site'];
-                      txtPIC.text = '$txtPICName | $txtPICNIK';
-                    });
-                  } else {
-                    EasyLoading.dismiss();
-                    setState(() {
-                      picID = null;
-                      txtPICName = '';
-                      txtPICNIK = '';
-                      txtPicDept = '';
-                      txtPicPos = '';
-                      txtPicSite = '';
-                    });
-                    Alert(
-                        context: context,
-                        title: 'Opss!',
-                        desc: 'PIC dengan NIK itu ga ada :(',
-                        type: AlertType.error,
-                        buttons: [
-                          DialogButton(
-                              color: Color.fromRGBO(80, 110, 228, 1),
-                              child: Text('OK',
-                                  style: TextStyle(color: Colors.white)),
-                              onPressed: () {
-                                setState(() {
-                                  Navigator.pop(context);
-                                });
-                              })
-                        ]).show();
-                  }
-                });
-              },
-            ),
+        SizedBox(
+          height: 40,
+          child: TextField(
+            controller: controller,
+            textInputAction: TextInputAction.done,
+            style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+            decoration: InputDecoration(
+                hintText: 'Enter PIC NIK',
+                hintStyle: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+                contentPadding: EdgeInsets.all(10),
+                border: OutlineInputBorder()),
+            onSubmitted: (val) {
+              EasyLoading.show(
+                  status: 'Loading', maskType: EasyLoadingMaskType.black);
+              PICModel.getPIC(val).then((value) {
+                if (value.listPICData != null) {
+                  EasyLoading.dismiss();
+                  setState(() {
+                    picID = value.listPICData[0]['employee_id'];
+                    txtPICName = value.listPICData[0]['name'];
+                    txtPICNIK = value.listPICData[0]['nik'];
+                    txtPicDept = value.listPICData[0]['department'];
+                    txtPicPos = value.listPICData[0]['position'];
+                    txtPicSite = value.listPICData[0]['site'];
+                    txtPIC.text = '$txtPICName | $txtPICNIK';
+                  });
+                } else {
+                  EasyLoading.dismiss();
+                  setState(() {
+                    picID = null;
+                    txtPICName = '';
+                    txtPICNIK = '';
+                    txtPicDept = '';
+                    txtPicPos = '';
+                    txtPicSite = '';
+                  });
+                  Alert(
+                      context: context,
+                      title: 'Opss!',
+                      desc: 'PIC dengan NIK itu ga ada :(',
+                      type: AlertType.error,
+                      buttons: [
+                        DialogButton(
+                            color: Color.fromRGBO(80, 110, 228, 1),
+                            child: Text('OK',
+                                style: TextStyle(color: Colors.white)),
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pop(context);
+                              });
+                            })
+                      ]).show();
+                }
+              });
+            },
           ),
         ),
       ],
