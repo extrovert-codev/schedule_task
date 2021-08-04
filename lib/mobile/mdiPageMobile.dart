@@ -5,6 +5,10 @@ import 'package:schedule_task/mobile/allTicketsPageMobile.dart';
 import 'package:schedule_task/mobile/homePageMobile.dart';
 import 'package:schedule_task/mobile/myTicketsPageMobile.dart';
 import 'package:schedule_task/_GlobalScript.dart' as gScript;
+import 'package:schedule_task/web/addTicketsPageWeb.dart';
+import 'package:schedule_task/web/allTicketsPageWeb.dart';
+import 'package:schedule_task/web/homePageWeb.dart';
+import 'package:schedule_task/web/myTicketsPageWeb.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MDIPageMobile extends StatefulWidget {
@@ -19,34 +23,29 @@ class MDIPageMobile extends StatefulWidget {
 
 class _MDIPageMobileState extends State<MDIPageMobile> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: RefreshIndicator(
-          onRefresh: () {
-            return Future.delayed(Duration(seconds: 2), () {
-              setState(() {});
-            });
-          },
-          child: ListView(children: [
-            DrawerHeader(
-                decoration:
-                    BoxDecoration(color: Color.fromRGBO(80, 110, 228, 1)),
-                child: Image.asset('assets/images/Trisco.png',
-                    fit: BoxFit.scaleDown)),
-            menu('Home', Icons.home, HomePageMobile(empID: widget.empID)),
-            menu('My Ticket', Icons.list,
-                MyTicketsPageMobile(empID: widget.empID)),
-            menu('Add Ticket', Icons.add,
-                AddTicketsPageMobile(empID: widget.empID)),
-            menu('All Ticket', Icons.list_alt, AllTicketsPageMobile()),
-          ]),
-        ),
+        child: ListView(children: [
+          DrawerHeader(
+              decoration: BoxDecoration(color: Color.fromRGBO(80, 110, 228, 1)),
+              child: Image.asset('assets/images/Trisco.png',
+                  fit: BoxFit.scaleDown)),
+          menu('Home', Icons.home, HomePageMobile(empID: widget.empID),
+              HomePageWeb(empID: widget.empID)),
+          menu(
+              'My Ticket',
+              Icons.list,
+              MyTicketsPageMobile(empID: widget.empID),
+              MyTicketsPageWeb(empID: widget.empID)),
+          menu(
+              'Add Ticket',
+              Icons.add,
+              AddTicketsPageMobile(empID: widget.empID),
+              AddTicketsPageWeb(empID: widget.empID)),
+          menu('All Ticket', Icons.list_alt, AllTicketsPageMobile(),
+              AllTicketsPageWeb())
+        ]),
       ),
       body: SafeArea(
         child: Container(
@@ -61,7 +60,7 @@ class _MDIPageMobileState extends State<MDIPageMobile> {
     );
   }
 
-  ListTile menu(title, ico, page) {
+  ListTile menu(title, ico, page, webPage) {
     return ListTile(
         title: Row(children: [
           Icon(ico, color: Color.fromRGBO(190, 202, 230, 1)),
@@ -72,6 +71,7 @@ class _MDIPageMobileState extends State<MDIPageMobile> {
         onTap: () {
           setState(() {
             gScript.pageMobileSelected = page;
+            gScript.pageWebSelected = webPage;
             Navigator.of(context).pop();
           });
         });

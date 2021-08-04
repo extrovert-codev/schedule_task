@@ -21,9 +21,7 @@ class MyStatus extends StatelessWidget {
             padding: EdgeInsets.only(left: 15, right: 30),
             height: 80,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
-            ),
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
             child: Row(
               children: [
                 Icon(ico, size: 50, color: color),
@@ -42,7 +40,7 @@ class MyStatus extends StatelessWidget {
                       SizedBox(height: 5),
                       Stack(children: [
                         Container(height: 3, color: Colors.grey[300]),
-                        Container(height: 3, width: 100, color: color)
+                        Container(height: 3, color: color)
                       ]),
                       SizedBox(height: 5),
                       Text(title,

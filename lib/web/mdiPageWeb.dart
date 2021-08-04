@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_task/loginPage.dart';
+import 'package:schedule_task/mobile/addTicketsPageMobile.dart';
+import 'package:schedule_task/mobile/allTicketsPageMobile.dart';
+import 'package:schedule_task/mobile/homePageMobile.dart';
+import 'package:schedule_task/mobile/myTicketsPageMobile.dart';
 import 'package:schedule_task/web/addTicketsPageWeb.dart';
 import 'package:schedule_task/web/allTicketsPageWeb.dart';
 import 'package:schedule_task/web/homePageWeb.dart';
@@ -61,12 +65,20 @@ class _MDIPageWebState extends State<MDIPageWeb> {
                       height: 50,
                       child: Image.asset('assets/images/Trisco.png',
                           fit: BoxFit.fill)),
-                  menu('Home', Icons.home, HomePageWeb(empID: widget.empID)),
-                  menu('My Ticket', Icons.list,
-                      MyTicketsPageWeb(empID: widget.empID)),
-                  menu('Add Ticket', Icons.add,
-                      AddTicketsPageWeb(empID: widget.empID)),
-                  menu('All Ticket', Icons.list_alt, AllTicketsPageWeb()),
+                  menu('Home', Icons.home, HomePageWeb(empID: widget.empID),
+                      HomePageMobile(empID: widget.empID)),
+                  menu(
+                      'My Ticket',
+                      Icons.list,
+                      MyTicketsPageWeb(empID: widget.empID),
+                      MyTicketsPageMobile(empID: widget.empID)),
+                  menu(
+                      'Add Ticket',
+                      Icons.add,
+                      AddTicketsPageWeb(empID: widget.empID),
+                      AddTicketsPageMobile(empID: widget.empID)),
+                  menu('All Ticket', Icons.list_alt, AllTicketsPageWeb(),
+                      AllTicketsPageMobile()),
                 ],
               ),
             ),
@@ -76,7 +88,7 @@ class _MDIPageWebState extends State<MDIPageWeb> {
     );
   }
 
-  Tooltip menu(tooltip, ico, page) {
+  Tooltip menu(tooltip, ico, page, mobilePage) {
     return Tooltip(
       message: tooltip,
       decoration: BoxDecoration(
@@ -91,6 +103,7 @@ class _MDIPageWebState extends State<MDIPageWeb> {
         onTap: () {
           setState(() {
             gScript.pageWebSelected = page;
+            gScript.pageMobileSelected = mobilePage;
           });
         },
         child: MouseRegion(

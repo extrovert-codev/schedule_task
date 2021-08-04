@@ -28,9 +28,9 @@ class _GridViewKuWebState extends State<GridViewKuWeb> {
         if (value.listTicketData != null) {
           gridData = value.listTicketData;
         }
+        isLoading = false;
       });
     });
-    isLoading = false;
   }
 
   @override
@@ -107,6 +107,7 @@ class _GridViewKuWebState extends State<GridViewKuWeb> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return TicketDescPage(
+                                        empID: widget.empID,
                                         ticketID:
                                             gridData[i]['ticket_id'].toString(),
                                         picID: gridData[i]['pic_id'].toString(),
@@ -189,11 +190,11 @@ class _GridViewKuWebState extends State<GridViewKuWeb> {
                                                   : '')),
                                       DataKu(
                                           width: 150.0,
-                                          content: (gridData[i]
-                                                          ['totalmin'] !=
-                                                      null)
+                                          content:
+                                              (gridData[i]['totalmin'] != null)
                                                   ? gridData[i]['totalmin']
-                                                      .toString()
+                                                          .toString() +
+                                                      ' min'
                                                   : ''),
                                     ]),
                                   ),

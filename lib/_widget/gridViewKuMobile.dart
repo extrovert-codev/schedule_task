@@ -67,6 +67,7 @@ class _GridViewKuMobileState extends State<GridViewKuMobile> {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return TicketDescPage(
+                                empID: widget.empID,
                                 ticketID: gridData[i]['ticket_id'].toString(),
                                 picID: gridData[i]['pic_id'].toString(),
                                 valPriority: gridData[i]['priority'].toString(),
@@ -157,7 +158,8 @@ class _GridViewKuMobileState extends State<GridViewKuMobile> {
                                 ColumnKu(width: 180.0, title: 'Response Time'),
                                 DataKu(
                                     content: (gridData[i]['totalmin'] != null)
-                                        ? gridData[i]['totalmin'].toString()
+                                        ? gridData[i]['totalmin'].toString() +
+                                            ' min'
                                         : '')
                               ]),
                             ],

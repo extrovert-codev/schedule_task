@@ -37,6 +37,7 @@ class _AddTicketsWebState extends State<AddTicketsWeb> {
     PICModel.getPIC().then((value) {
       setState(() {
         picData = value.listPICData;
+        isLoading = false;
       });
     });
 
@@ -46,7 +47,6 @@ class _AddTicketsWebState extends State<AddTicketsWeb> {
         tsData = value.listTSData;
       });
     });
-    isLoading = false;
   }
 
   @override

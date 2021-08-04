@@ -9,6 +9,7 @@ import 'package:schedule_task/_widget/editTickets.dart';
 class TicketDescPage extends StatefulWidget {
   const TicketDescPage(
       {Key? key,
+      required this.empID,
       required this.ticketID,
       required this.picID,
       required this.subject,
@@ -18,7 +19,14 @@ class TicketDescPage extends StatefulWidget {
       required this.feedback})
       : super(key: key);
 
-  final ticketID, picID, subject, valPriority, statusname, tsID, feedback;
+  final empID,
+      ticketID,
+      picID,
+      subject,
+      valPriority,
+      statusname,
+      tsID,
+      feedback;
 
   @override
   _TicketDescPageState createState() => _TicketDescPageState();
@@ -48,8 +56,12 @@ class _TicketDescPageState extends State<TicketDescPage> {
                     btBack(context),
                     SizedBox(width: 10),
                     // btEdit(context),
-                    btOnGoing(context),
-                    btFinish(context),
+                    Visibility(
+                        visible: (widget.empID == widget.tsID) ? true : false,
+                        child: btOnGoing(context)),
+                    Visibility(
+                        visible: (widget.empID == widget.tsID) ? true : false,
+                        child: btFinish(context)),
                     btFeedback(context)
                   ],
                 ))
@@ -173,23 +185,33 @@ class _TicketDescPageState extends State<TicketDescPage> {
                         child: Column(
                           children: [
                             Expanded(
-                              child: TextField(
-                                  controller: txtFeedback,
-                                  maxLines: 100,
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins', fontSize: 14),
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.all(10),
-                                      border: OutlineInputBorder())),
-                            ),
+                                child: TextField(
+                                    controller: txtFeedback,
+                                    maxLines: 100,
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins', fontSize: 14),
+                                    decoration: InputDecoration(
+                                        hintText: 'Done',
+                                        hintStyle: TextStyle(
+                                            color: Color.fromRGBO(
+                                                101, 109, 154, 1),
+                                            fontFamily: 'Poppins',
+                                            fontSize: 14),
+                                        contentPadding: EdgeInsets.all(10),
+                                        border: OutlineInputBorder()))),
                             SizedBox(height: 5),
                             GestureDetector(
                               onTap: () {
                                 EasyLoading.show(
                                     status: 'Loading',
                                     maskType: EasyLoadingMaskType.black);
-                                TicketModel.putStatusTicket(widget.ticketID,
-                                        '2', txtFeedback.text, 'true')
+                                TicketModel.putStatusTicket(
+                                        widget.ticketID,
+                                        '2',
+                                        (txtFeedback.text == '')
+                                            ? 'Done'
+                                            : txtFeedback.text,
+                                        'true')
                                     .then((value) {
                                   if (value == 'success') {
                                     EasyLoading.dismiss();

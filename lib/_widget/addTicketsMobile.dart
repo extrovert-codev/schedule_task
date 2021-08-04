@@ -37,6 +37,7 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
     PICModel.getPIC().then((value) {
       setState(() {
         picData = value.listPICData;
+        isLoading = false;
       });
     });
 
@@ -46,7 +47,6 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
         tsData = value.listTSData;
       });
     });
-    isLoading = false;
   }
 
   @override

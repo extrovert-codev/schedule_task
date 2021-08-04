@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 10),
                   textBox(txtNIK, 'NIK', false, TextInputAction.next),
                   SizedBox(height: 10),
-                  textBox(txtPassword, 'Password', true, TextInputAction.go),
+                  textBox(txtPassword, 'Password', true, TextInputAction.done),
                   SizedBox(height: 10),
                   GestureDetector(
                       onTap: () {
