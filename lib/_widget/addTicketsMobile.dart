@@ -19,32 +19,28 @@ enum Priority { low, medium, critical }
 
 class _AddTicketsMobileState extends State<AddTicketsMobile> {
   bool isLoading = false;
+  TextEditingController txtPIC = TextEditingController();
   TextEditingController txtSubject = TextEditingController();
   Priority? priority;
-  int? tsSelectedValue, picSelectedValue, valPriority;
-  String? txtTS, txtTPICName, txtPicDept, txtPicPos, txtPicSite;
-  List<dynamic> picData = [], tsData = [];
+  int? tsSelectedValue, picID, valPriority;
+  String? txtTS,
+      txtPICName,
+      txtPICNIK,
+      txtPicDept = '',
+      txtPicPos = '',
+      txtPicSite = '';
+  List<dynamic> tsData = [];
 
   void addDropDownItems() {
     isLoading = true;
     priority = Priority.low;
     valPriority = 0;
-    txtPicDept = '';
-    txtPicPos = '';
-    txtPicSite = '';
-
-    picData = [];
-    PICModel.getPIC().then((value) {
-      setState(() {
-        picData = value.listPICData;
-        isLoading = false;
-      });
-    });
 
     tsData = [];
     TSModel.getTS().then((value) {
       setState(() {
         tsData = value.listTSData;
+        isLoading = false;
       });
     });
   }
@@ -130,64 +126,7 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
                 ],
               ),
               SizedBox(height: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('PIC',
-                      style: TextStyle(
-                          color: Color.fromRGBO(101, 109, 154, 1),
-                          fontFamily: 'Poppins',
-                          fontSize: 13)),
-                  SizedBox(height: 5),
-                  SizedBox(
-                    height: 40,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(
-                              color: Color.fromRGBO(158, 158, 158, 1))),
-                      child: Center(
-                          child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          hint: Text('--Select PIC--',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: 'Poppins', fontSize: 14)),
-                          value: picSelectedValue,
-                          isExpanded: true,
-                          items: picData.map((value) {
-                            return DropdownMenuItem(
-                                value: value['employee_id'],
-                                child: Text(
-                                    value['name'].toString() +
-                                        ' | ' +
-                                        value['nik'].toString(),
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins', fontSize: 14)));
-                          }).toList(),
-                          onChanged: (dynamic val) {
-                            setState(() {
-                              picSelectedValue = val;
-                              PICDetailModel.getPICDetail(picSelectedValue)
-                                  .then((value) {
-                                setState(() {
-                                  txtPicDept =
-                                      value.listPICDetailData[0]['department'];
-                                  txtPicPos =
-                                      value.listPICDetailData[0]['position'];
-                                  txtPicSite =
-                                      value.listPICDetailData[0]['site'];
-                                });
-                              });
-                            });
-                          },
-                        ),
-                      )),
-                    ),
-                  ),
-                ],
-              ),
+              textBox(txtPIC, 'PIC'),
               SizedBox(height: 10),
               LabelKu(label: 'PIC Site', content: txtPicSite),
               SizedBox(height: 10),
@@ -196,7 +135,7 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
               LabelKu(label: 'PIC Position', content: txtPicPos),
               SizedBox(height: 10),
               Expanded(
-                  child: TextBox(controller: txtSubject, label: 'Subject')),
+                  child: RichTextBox(controller: txtSubject, label: 'Subject')),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -207,7 +146,7 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
                             status: 'Loading',
                             maskType: EasyLoadingMaskType.black);
                         TicketModel.postTicket(
-                                picSelectedValue.toString(),
+                                txtPIC.text,
                                 txtSubject.text,
                                 valPriority.toString(),
                                 tsSelectedValue.toString(),
@@ -248,7 +187,6 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
                                               TextStyle(color: Colors.white)),
                                       onPressed: () {
                                         setState(() {
-                                          txtSubject.text = '';
                                           Navigator.pop(context);
                                         });
                                       })
@@ -263,6 +201,77 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
               )
             ],
           );
+  }
+
+  Column textBox(controller, label) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label,
+            style: TextStyle(
+                color: Color.fromRGBO(101, 109, 154, 1),
+                fontFamily: 'Poppins',
+                fontSize: 13)),
+        SizedBox(height: 5),
+        SizedBox(
+          height: 40,
+          child: TextField(
+            controller: controller,
+            textInputAction: TextInputAction.done,
+            style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+            decoration: InputDecoration(
+                hintText: 'Enter PIC NIK',
+                hintStyle: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+                contentPadding: EdgeInsets.all(10),
+                border: OutlineInputBorder()),
+            onSubmitted: (val) {
+              EasyLoading.show(
+                  status: 'Loading', maskType: EasyLoadingMaskType.black);
+              PICModel.getPIC(val).then((value) {
+                if (value.listPICData != null) {
+                  EasyLoading.dismiss();
+                  setState(() {
+                    picID = value.listPICData[0]['employee_id'];
+                    txtPICName = value.listPICData[0]['name'];
+                    txtPICNIK = value.listPICData[0]['nik'];
+                    txtPicDept = value.listPICData[0]['department'];
+                    txtPicPos = value.listPICData[0]['position'];
+                    txtPicSite = value.listPICData[0]['site'];
+                    txtPIC.text = '$txtPICName | $txtPICNIK';
+                  });
+                } else {
+                  EasyLoading.dismiss();
+                  setState(() {
+                    picID = null;
+                    txtPICName = '';
+                    txtPICNIK = '';
+                    txtPicDept = '';
+                    txtPicPos = '';
+                    txtPicSite = '';
+                  });
+                  Alert(
+                      context: context,
+                      title: 'Opss!',
+                      desc: 'PIC dengan NIK itu ga ada :(',
+                      type: AlertType.error,
+                      buttons: [
+                        DialogButton(
+                            color: Color.fromRGBO(80, 110, 228, 1),
+                            child: Text('OK',
+                                style: TextStyle(color: Colors.white)),
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pop(context);
+                              });
+                            })
+                      ]).show();
+                }
+              });
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   Row radioButtonKu(Priority value, label) {
@@ -325,8 +334,8 @@ class LabelKu extends StatelessWidget {
   }
 }
 
-class TextBox extends StatelessWidget {
-  const TextBox({Key? key, required this.controller, required this.label})
+class RichTextBox extends StatelessWidget {
+  const RichTextBox({Key? key, required this.controller, required this.label})
       : super(key: key);
 
   final controller, label;

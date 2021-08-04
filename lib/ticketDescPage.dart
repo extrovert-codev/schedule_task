@@ -4,7 +4,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:schedule_task/_model/gridView/ticketModel.dart';
 import 'package:schedule_task/_widget/button.dart';
-import 'package:schedule_task/_widget/editTickets.dart';
 
 class TicketDescPage extends StatefulWidget {
   const TicketDescPage(
@@ -90,12 +89,12 @@ class _TicketDescPageState extends State<TicketDescPage> {
                       child: Container(
                     height: 400,
                     width: 600,
-                    child: EditTickets(
-                        ticketID: widget.ticketID,
-                        picID: widget.picID,
-                        subject: widget.subject,
-                        valPriority: widget.valPriority,
-                        tsID: widget.tsID),
+                    // child: EditTickets(
+                    //     ticketID: widget.ticketID,
+                    //     picID: widget.picID,
+                    //     subject: widget.subject,
+                    //     valPriority: widget.valPriority,
+                    //     tsID: widget.tsID),
                   )),
                 );
               });
