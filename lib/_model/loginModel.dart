@@ -12,8 +12,7 @@ class LoginModel {
         .get(Uri.parse(gScript.apiLink + '/Login?nik=$nik'), headers: {
       'Authorization': 'Basic MHAzbkMwbm4zY3QhMG46YzB1bnQzcjR0dDRjaw==',
       'API-KEYS':
-          '\$2y\$10\$EaoautcFP3mNIZ/Kg5OIMurSdS9dgsqNQ0vTrYGe83CCikxhLGuOi',
-      'Access-Control-Allow-Origin': '*'
+          '\$2y\$10\$EaoautcFP3mNIZ/Kg5OIMurSdS9dgsqNQ0vTrYGe83CCikxhLGuOi'
     });
 
     if (result.statusCode == 200) {
