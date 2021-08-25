@@ -166,7 +166,7 @@ class _AddTicketsWebState extends State<AddTicketsWeb> {
                             status: 'Loading',
                             maskType: EasyLoadingMaskType.black);
                         TicketModel.postTicket(
-                                txtPIC.text,
+                                picID.toString(),
                                 txtSubject.text,
                                 valPriority.toString(),
                                 tsSelectedValue.toString(),
@@ -194,6 +194,7 @@ class _AddTicketsWebState extends State<AddTicketsWeb> {
                                 ]).show();
                           } else {
                             EasyLoading.dismiss();
+                            print(value);
                             Alert(
                                 context: context,
                                 title: 'Opss!',

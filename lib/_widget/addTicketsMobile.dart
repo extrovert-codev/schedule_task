@@ -146,7 +146,7 @@ class _AddTicketsMobileState extends State<AddTicketsMobile> {
                             status: 'Loading',
                             maskType: EasyLoadingMaskType.black);
                         TicketModel.postTicket(
-                                txtPIC.text,
+                                picID,
                                 txtSubject.text,
                                 valPriority.toString(),
                                 tsSelectedValue.toString(),
